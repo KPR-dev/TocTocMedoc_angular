@@ -12,26 +12,26 @@ export class EpharmaService {
   getAllProduit() {
     return this.http.get(`${environment.apiURL}/open-api/produit/14/100`, {
       headers: {
-        "x-api-key": "dbab1b45-f454-4568-9fcc-47692b8e6319"
+        "x-api-key": environment.apiKey,
       }
     })
   }
 
-  getDisponibiliteProduit(cip: any) {
+  getDisponibiliteProduit(cip: any, pharmacy: any) {
     return this.http.post(`${environment.apiURL}/open-api/disponibilite`, {
-      pharmacy: "6259ac72e657f409c30ace5f",
+      pharmacy,
       cips: [cip]
     }, {
       headers: {
-        "x-api-key": "dbab1b45-f454-4568-9fcc-47692b8e6319",
+        "x-api-key": environment.apiKey,
         "content-type": "application/json"
       },
     })
   }
 
-  reservationProduit(cip: any, quantity: number, buyer: any, buyerPhone: any, buyerEmail: any) {
+  reservationProduit(cip: any, quantity: number, buyer: any, buyerPhone: any, buyerEmail: any, pharmacy: any) {
     return this.http.post(`${environment.apiURL}/open-api/reservation`, {
-      pharmacy: "6259ac72e657f409c30ace5f",
+      pharmacy,
       buyer,
       buyerPhone,
       buyerEmail,

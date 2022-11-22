@@ -1,39 +1,109 @@
 <div class="wrapper">
-  <div class="main-content">
-    <h1 class="logo"><span>TocTocToc</span><span class="logo-medoc">Medoc</span></h1>
-    <p>Vérifiez la disponibilité des produits au niveau de la pharmacie TOTO.</p>
-    <div class="form-group">
-      <label>Rechercher un produit</label>
-      <input type="search" (keyup)="applyFilter($event)" placeholder="Saisissez
-        le nom du produit...">
-    </div>
+  <main>
+    <header>
+      <h1>TocTocMedoc</h1>
+      <h2>By ePharma</h2>
+      <p>Cette solution vous permet d'avoir la disponibilité des produits et faire des réservations dans toutes les
+        pharmacies possédant le logiciel ePharma</p>
+    </header>
 
-    <div class="row">
-      <button class="show-more">En savoir plus</button>
-    </div>
-
-    <div class="results">
-      <div class="result" *ngFor="let produit of filteredProduit">
-        <div class="img-container">
-          <img [src]="produit.photoURL" alt="">
-        </div>
-        <div class="row-between">
-          <h4>{{produit.libelle}}</h4>
-          <p class="gray">{{produit.prix_vente}} FCFA</p>
-          <div class="row">
-            <button (click)="verify(produit.CIP)">Vérifier</button>
-            <p class="feedback" [ngClass]="{'is-green':
-              getLastDisponibiliteByCIP(produit.CIP)}"
-              *ngIf="getLastDisponibiliteByCIP(produit.CIP) != null">{{getLastDisponibiliteByCIP(produit.CIP)
-              ? 'Disponible' :
-              'Indisponible'}}</p>
+    <div class="produit-container">
+      <div class="form-group-search">
+        <input type="search" name="search" id="search" (keyup)="applyFilter($event)"
+          placeholder="Trouver un produit...">
+      </div>
+      <div class="loader-container" *ngIf="filteredProduit.length == 0">
+        <div class="loader"></div>
+      </div>
+      <div class="produits">
+        <div class="produit" *ngFor="let produit of filteredProduit">
+          <div class="img-container">
+            <img [src]="produit.photoURL" alt="">
           </div>
+          <div class="row-between">
+            <h4>{{produit.libelle}}</h4>
+            <p class="gray">{{produit.prix_vente}} FCFA</p>
+            <div class="row">
+              <button (click)="verify(produit.CIP)">Vérifier</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
 
-          <div class="column" *ngIf="getLastDisponibiliteByCIP(produit.CIP) == true">
-            <button (click)="commander(produit)">Commander</button>
+<div class="modal" *ngIf="selectedProduit">
+  <div class="verify-container">
+    <div class="verify-content">
+      <div class="verify-produit">
+        <div class="img-container">
+          <img [src]="selectedProduit.photoURL" alt="Image produit">
+        </div>
+        <div>
+          <h3>{{selectedProduit.libelle}}</h3>
+          <h4>{{selectedProduit.prix_achat}} FCFA</h4>
+        </div>
+        <button (click)="clear()">Rechercher d'autres produits</button>
+      </div>
+      <div class="verify-result" *ngIf="!selectedPharmacy">
+        <h3>
+          <div class="loader-container">
+            <div class="loader"></div>
+          </div>
+          <span>
+            Recherche de la disponibilité en pharmacie...
+          </span>
+        </h3>
+
+        <div class="pharmacies">
+          <div class="pharmacy" *ngFor="let pharmacy of verifiedPharmacies">
+            <div>
+              <p class="name">{{pharmacy.nom}}</p>
+              <p>{{pharmacy.adresse}}</p>
+              <p>{{pharmacy.telephone}}</p>
+            </div>
+            <button (click)="select(pharmacy)">Commander</button>
           </div>
         </div>
       </div>
 
+      <div class="verify-commande" *ngIf="selectedPharmacy">
+        <h3>
+            Formulaire de commande
+        </h3>
+        <h4>{{selectedPharmacy.nom}}</h4>
+
+        <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
+          <div class="loader"></div>
+        </div>
+
+        <div class="form-container" *ngIf="commandeResult.start == false && commandeResult.success == null">
+          <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" [(ngModel)]="buyer" name="nom">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" [(ngModel)]="buyerEmail" name="email">
+          </div>
+          <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="text" [(ngModel)]="buyerPhone" name="telephone">
+          </div>
+          <div class="form-group">
+            <label for="quantite">Quantité</label>
+            <input type="number" [(ngModel)]="quantity" name="quantite">
+          </div>
+          <button (click)="commander()">Envoyer la commande</button>
+        </div>
+
+        <div *ngIf="commandeResult.start == false && commandeResult.success != null">
+          <div class="result-message">{{commandeResult.message}}</div>
+        </div>
+
+      </div>
+
     </div>
   </div>
+</div>
