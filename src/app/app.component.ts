@@ -24,6 +24,11 @@ export class AppComponent implements OnInit {
 
   disponibilites: any[] = [];
 
+  currentPageIndex: number = 0;
+  pageCount: number = 0;
+  totalCount: number = 0;
+
+  hasResult = false;
 
   constructor(private epharmaService: EpharmaService) { }
 
@@ -32,14 +37,36 @@ export class AppComponent implements OnInit {
   }
 
   loadAllProduit() {
-    this.epharmaService.getAllProduit().subscribe({
-      next: (response) => {
+    this.hasResult = false;
+    this.filteredProduit = [];
+    this.epharmaService.getAllProduit(this.currentPageIndex, environment.pageItemCount).subscribe({
+      next: (response: any) => {
         this.produits = response;
-        this.filteredProduit = this.produits.items.filter((p: any) => p.photoURL != null);
+        this.hasResult = true;
+        this.pageCount = response.pageCount;
+        this.filteredProduit = this.produits.items;
       }, error: (err) => {
         console.log(err);
       }
     })
+  }
+
+  nextPage(){
+    this.currentPageIndex++;
+    if(this.currentPageIndex > this.pageCount){
+      this.currentPageIndex = this.pageCount;
+    } else {
+      this.loadAllProduit();
+    }
+  }
+
+  previousPage(){
+    this.currentPageIndex--;
+    if(this.currentPageIndex < 0){
+      this.currentPageIndex = 0;
+    } else {
+      this.loadAllProduit();
+    }
   }
 
   verify(cip: any) {
@@ -66,7 +93,11 @@ export class AppComponent implements OnInit {
 
   applyFilter(event: any) {
     const value = event.target.value.toLowerCase().trim();
-    this.filteredProduit = this.produits.items.filter((p: any) => p.photoURL != null && p.libelle && p.libelle.toLowerCase().trim().includes(value));
+    if(value == ""){
+      this.filteredProduit = this.produits.items;
+    } else {
+      this.filteredProduit = this.produits.items.filter((p: any) => p.photoURL != null && p.libelle && p.libelle.toLowerCase().trim().includes(value));
+    }
   }
 
   getLastDisponibiliteByCIP(cip: any) {

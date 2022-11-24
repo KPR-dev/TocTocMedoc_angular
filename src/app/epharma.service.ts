@@ -9,8 +9,8 @@ export class EpharmaService {
 
   constructor(private http: HttpClient) { }
 
-  getAllProduit() {
-    return this.http.get(`${environment.apiURL}/open-api/produit/14/100`, {
+  getAllProduit(page: number, count: number) {
+    return this.http.get(`${environment.apiURL}/open-api/produit/${page}/${count}`, {
       headers: {
         "x-api-key": environment.apiKey,
       }
