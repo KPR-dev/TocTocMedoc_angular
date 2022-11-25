@@ -53,8 +53,8 @@ export class AppComponent implements OnInit {
 
   nextPage(){
     this.currentPageIndex++;
-    if(this.currentPageIndex > this.pageCount){
-      this.currentPageIndex = this.pageCount;
+    if(this.currentPageIndex >= this.pageCount){
+      this.currentPageIndex = this.pageCount-1;
     } else {
       this.loadAllProduit();
     }
