@@ -80,8 +80,7 @@
           <div class="pharmacy" *ngFor="let pharmacy of verifiedPharmacies">
             <div>
               <p class="name">{{pharmacy.nom}}</p>
-              <p>{{pharmacy.adresse}}</p>
-              <p>{{pharmacy.telephone}}</p>
+              <p>{{pharmacy.adresse}}, Tel: {{pharmacy.telephone}}</p>
             </div>
             <button (click)="select(pharmacy)">Commander</button>
           </div>
@@ -93,8 +92,7 @@
           Confirmation de la reservation
         </h3>
         <h4>{{selectedPharmacy.nom}}</h4>
-        <h5>{{selectedPharmacy.telephone}}</h5>
-        <h5>{{selectedPharmacy.adresse}}</h5>
+        <h5>{{selectedPharmacy.adresse}}, Tel: {{selectedPharmacy.telephone}}</h5>
 
         <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
           <div class="loader"></div>
@@ -114,12 +112,13 @@
             <label for="telephone">Téléphone</label>
             <input type="text" [(ngModel)]="buyerPhone" name="telephone">
           </div>
+        -->
           <div class="form-group">
             <label for="quantite">Quantité</label>
             <input type="number" [(ngModel)]="quantity" name="quantite">
           </div>
-               -->
-          <button (click)="commander()">Confirmer la reservation</button>
+               
+          <button *ngIf="quantity > 0" (click)="commander()">Confirmer la reservation</button>
 
         </div>
 

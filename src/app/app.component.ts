@@ -113,6 +113,9 @@ export class AppComponent implements OnInit {
   }
 
   commander() {
+    if(this.quantity < 1){
+      return;
+    }
     this.commandeResult = { start: true };
     this.epharmaService.reservationProduit(this.selectedProduit.CIP, this.quantity, this.buyer, this.buyerPhone, this.buyerEmail, this.selectedPharmacy._id).subscribe({
       next: (response: any) => {
