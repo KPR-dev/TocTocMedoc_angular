@@ -8,6 +8,8 @@ export const environment = {
     "6237594a2fb38ca16715489f",
     "6248135de657f409c30acdd4",
     "633c5a44fa44def3b5dbbaa4",
-    "637e392c125548fd0b09ac60"
+    "637e392c125548fd0b09ac60",
+    "63c2a72fd9da78af9d6ccb54",
+    "63b441e4d9da78af9d6c6a50"
   ]
 };

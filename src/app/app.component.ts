@@ -2,6 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EpharmaService } from './epharma.service';
 
+class ProductQuantity {
+  produitCIP!: string;
+  quantity!: number;
+  produitName!: string;
+}
+
+class Cart {
+  pharmacyName!: string;
+  pharmacyId!: string;
+  products!: ProductQuantity[];
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -30,6 +42,10 @@ export class AppComponent implements OnInit {
 
   hasResult = false;
 
+  carts: Cart[] = [];
+
+  showCart: boolean = false;
+
   constructor(private epharmaService: EpharmaService) { }
 
   ngOnInit(): void {
@@ -51,18 +67,22 @@ export class AppComponent implements OnInit {
     })
   }
 
-  nextPage(){
+  openCartView() {
+    this.showCart = true;
+  }
+
+  nextPage() {
     this.currentPageIndex++;
-    if(this.currentPageIndex >= this.pageCount){
-      this.currentPageIndex = this.pageCount-1;
+    if (this.currentPageIndex >= this.pageCount) {
+      this.currentPageIndex = this.pageCount - 1;
     } else {
       this.loadAllProduit();
     }
   }
 
-  previousPage(){
+  previousPage() {
     this.currentPageIndex--;
-    if(this.currentPageIndex < 0){
+    if (this.currentPageIndex < 0) {
       this.currentPageIndex = 0;
     } else {
       this.loadAllProduit();
@@ -93,7 +113,7 @@ export class AppComponent implements OnInit {
 
   applyFilter(event: any) {
     const value = event.target.value.toLowerCase().trim();
-    if(value == ""){
+    if (value == "") {
       this.filteredProduit = this.produits.items;
     } else {
       this.filteredProduit = this.produits.items.filter((p: any) => p.photoURL != null && p.libelle && p.libelle.toLowerCase().trim().includes(value));
@@ -112,24 +132,75 @@ export class AppComponent implements OnInit {
     this.selectedPharmacy = pharmacy;
   }
 
-  commander() {
-    if(this.quantity < 1){
+  commander(cart: Cart, cartIndex: number) {
+    if (cart.products.length == 0) {
+      alert("Vous n'avez aucun produit");
       return;
     }
     this.commandeResult = { start: true };
-    this.epharmaService.reservationProduit(this.selectedProduit.CIP, this.quantity, this.buyer, this.buyerPhone, this.buyerEmail, this.selectedPharmacy._id).subscribe({
+    const array = [];
+    for (let i = 0; i < cart.products.length; i++) {
+      array.push({
+        cip: cart.products[i].produitCIP,
+        quantity: cart.products[i].quantity
+      })
+    }
+    this.epharmaService.reservationProduit(array, this.buyer, this.buyerPhone, this.buyerEmail, cart.pharmacyId).subscribe({
       next: (response: any) => {
-        this.commandeResult = { start: false, success: true, message: "Votre commande a été envoyée avec succès, Réservation " + response.result.reservation + ", TTC: " + response.result.ttc + " FCFA"};
+        this.commandeResult = { start: false, success: true, message: "Votre commande a été envoyée avec succès à la pharmacie [" + cart.pharmacyName +"], Réservation " + response.result.reservation + ", TTC: " + response.result.ttc + " FCFA" };
+        this.removeCart(cartIndex); 
       }, error: (err) => {
         console.log(err);
-        this.commandeResult = { start: false, success: false, message: "Votre commande a échouée !"};
+        this.commandeResult = { start: false, success: false, message: "Votre commande a échouée !" };
       }
     })
   }
 
-  clear(){
+  clear() {
     this.selectedPharmacy = null;
     this.selectedProduit = null;
+    this.showCart = false;
   }
 
+  addToCart(productCIP: string, productName: string) {
+    let index = -1;
+    for (let i = 0; i < this.carts.length; i++) {
+      if (this.carts[i].pharmacyId == this.selectedPharmacy._id) {
+        index = i;
+      }
+    }
+    if (index < 0) {
+      this.carts.push({ pharmacyId: this.selectedPharmacy._id, pharmacyName: this.selectedPharmacy.nom, products: [] });
+      index = this.carts.length - 1;
+    }
+    if (this.quantity) {
+      let addNew = true;
+      for (let i = 0; i < this.carts[index].products.length; i++) {
+        if (this.carts[index].products[i].produitCIP == productCIP) {
+          this.carts[index].products[i].quantity += this.quantity;
+          addNew = false;
+        }
+      }
+      if (addNew) {
+        this.carts[index].products.push({ quantity: this.quantity, produitCIP: productCIP, produitName: productName })
+      }
+    }
+    this.clear()
+  }
+
+  removeFromCart(productCIP: string, cartIndex: number) {
+    for (let i = 0; i < this.carts[cartIndex].products.length; i++) {
+      if (this.carts[cartIndex].products[i].produitCIP == productCIP) {
+        this.carts[cartIndex].products.splice(i, 1);
+        break;
+      }
+    }
+    if (this.carts[cartIndex].products.length == 0) {
+      this.carts.splice(cartIndex, 1);
+    }
+  }
+
+  removeCart(cartIndex: number) {
+    this.carts.splice(cartIndex, 1);
+  }
 }

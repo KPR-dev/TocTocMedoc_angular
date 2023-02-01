@@ -43,6 +43,7 @@
           <div class="row-between">
             <h4>{{produit.libelle}}</h4>
             <!-- <p class="gray">{{produit.prix_vente}} FCFA</p> -->
+            <p class="gray">{{produit.code_table ? 'Sous ordonnance' : ''}}</p>
             <div class="row">
               <button (click)="verify(produit.CIP)">Vérifier</button>
             </div>
@@ -52,6 +53,10 @@
     </div>
   </main>
 </div>
+
+<button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
+<button class="shopping-cart-btn" (click)="openCartView()"><span class="count"
+    *ngIf="carts.length > 0">{{carts.length}}</span> <img src="../assets/add-to-cart.png" alt="Panier"></button>
 
 <div class="modal" *ngIf="selectedProduit">
   <div class="verify-container">
@@ -82,7 +87,7 @@
               <p class="name">{{pharmacy.nom}}</p>
               <p>{{pharmacy.adresse}}, Tel: {{pharmacy.telephone}}</p>
             </div>
-            <button (click)="select(pharmacy)">Commander</button>
+            <button (click)="select(pharmacy)">Ajouter au panier</button>
           </div>
         </div>
       </div>
@@ -117,19 +122,47 @@
             <label for="quantite">Quantité</label>
             <input type="number" [(ngModel)]="quantity" name="quantite">
           </div>
-               
-          <button *ngIf="quantity > 0" (click)="commander()">Confirmer la reservation</button>
+          <button *ngIf="quantity > 0"
+            (click)="addToCart(selectedProduit.CIP, selectedProduit.libelle)">Valider</button>
 
         </div>
 
         <div *ngIf="commandeResult.start == false && commandeResult.success != null">
           <div class="result-message">{{commandeResult.message}}</div>
 
-          <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la récuperation</strong></p>
+          <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
+              récuperation</strong></p>
         </div>
 
       </div>
 
+    </div>
+  </div>
+</div>
+
+<div class="modal shopping-modal" *ngIf="showCart">
+  <div class="verify-container">
+    <div class="verify-content">
+      <div *ngIf="commandeResult.start == false && commandeResult.success != null">
+        <div class="result-message">{{commandeResult.message}}</div>
+
+        <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
+            récuperation. Les réservations expirent après 24h.</strong></p>
+      </div>
+      <div class="cart" *ngFor="let cart of carts; let i = index">
+        <h3><img src="../assets/add-to-cart.png" alt=""> {{cart.pharmacyName}}</h3>
+        <div class="products-cart">
+          <div class="product" *ngFor="let produit of cart.products">
+            <span>{{produit.produitName}}</span>
+            <span>{{produit.quantity}}</span>
+            <button (click)="removeFromCart(produit.produitCIP, i)">Retirer</button>
+          </div>
+        </div>
+        <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
+          <div class="loader"></div>
+        </div>
+        <button (click)="commander(cart, i)" *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander</button>
+      </div>
     </div>
   </div>
 </div>
