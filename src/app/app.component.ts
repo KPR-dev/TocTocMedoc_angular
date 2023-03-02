@@ -160,6 +160,9 @@ export class AppComponent implements OnInit {
     this.selectedPharmacy = null;
     this.selectedProduit = null;
     this.showCart = false;
+    this.commandeResult.start = false;
+    this.commandeResult.success = null;
+    this.quantity = 1;
   }
 
   addToCart(productCIP: string, productName: string) {
