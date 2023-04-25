@@ -87,7 +87,9 @@
               <p class="name">{{pharmacy.nom}}</p>
               <p>{{pharmacy.adresse}}, Tel: {{pharmacy.telephone}}</p>
             </div>
-            <button (click)="select(pharmacy)">Ajouter au panier</button>
+            <!-- 
+<button (click)="select(pharmacy)">Ajouter au panier</button>
+            -->
           </div>
         </div>
       </div>
@@ -161,7 +163,8 @@
         <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
           <div class="loader"></div>
         </div>
-        <button (click)="commander(cart, i)" *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander</button>
+        <button (click)="commander(cart, i)"
+          *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander</button>
       </div>
     </div>
   </div>
