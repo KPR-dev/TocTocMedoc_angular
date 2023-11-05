@@ -9,6 +9,7 @@ export class EpharmaService {
 
   constructor(private http: HttpClient) { }
 
+  //Route pour afficher tout les produits
   getAllProduit(page: number, count: number) {
     return this.http.get(`${environment.apiURL}/open-api/produit/${page}/${count}`, {
       headers: {
@@ -17,6 +18,7 @@ export class EpharmaService {
     })
   }
 
+  //Route pour add  les produits disponible
   getDisponibiliteProduit(cip: any, pharmacy: any) {
     return this.http.post(`${environment.apiURL}/open-api/disponibilite`, {
       pharmacy,
@@ -29,6 +31,7 @@ export class EpharmaService {
     })
   }
 
+  //Route pour add  les produits
   reservationProduit(produits: any[], buyer: any, buyerPhone: any, buyerEmail: any, pharmacy: any) {
     return this.http.post(`${environment.apiURL}/open-api/reservation`, {
       pharmacy,

@@ -1,5 +1,7 @@
+//pour les acces de l'api de prod
 export const environment = {
   production: true,
+    // apiURL: "notre_api_backend_prod",
   apiURL: "https://epg-supervisor-api.pivot40.tech",
   apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
   pageItemCount: 1000,

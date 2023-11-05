@@ -2,9 +2,11 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+//pour les acces de l'api
 export const environment = {
   production: false,
-  apiURL: "https://epg-supervisor-api.pivot40.tech",
+  //  apiURL: "https://epg-supervisor-api.pivot40.tech",
+   apiURL: "http://31.207.35.25:8000",
   apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
   pageItemCount: 500,
   pharmacies: [
