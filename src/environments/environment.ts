@@ -6,8 +6,8 @@
 export const environment = {
   production: false,
   //  apiURL: "https://epg-supervisor-api.pivot40.tech",
-   apiURL: "http://31.207.35.25:8000",
-  apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
+    apiURL: "http://31.207.35.25:8000/api_epg",
+  // apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
   pageItemCount: 500,
   pharmacies: [
     "623a45be1b6f66b46e99a03d",

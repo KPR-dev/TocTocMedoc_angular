@@ -11,39 +11,38 @@ export class EpharmaService {
 
   //Route pour afficher tout les produits
   getAllProduit(page: number, count: number) {
-    return this.http.get(`${environment.apiURL}/open-api/produit/${page}/${count}`, {
-      headers: {
-        "x-api-key": environment.apiKey,
-      }
+    return this.http.get(`${environment.apiURL}/all_products/${page}/${count}`, {
+
     })
   }
 
   //Route pour add  les produits disponible
   getDisponibiliteProduit(cip: any, pharmacy: any) {
-    return this.http.post(`${environment.apiURL}/open-api/disponibilite`, {
+    const Data = {
       pharmacy,
       cips: [cip]
-    }, {
-      headers: {
-        "x-api-key": environment.apiKey,
-        "content-type": "application/json"
-      },
-    })
+    };
+    return this.http.post(`${environment.apiURL}/disponibility_product`, Data);
   }
 
   //Route pour add  les produits
   reservationProduit(produits: any[], buyer: any, buyerPhone: any, buyerEmail: any, pharmacy: any) {
-    return this.http.post(`${environment.apiURL}/open-api/reservation`, {
+    const requestData = {
       pharmacy,
       buyer,
       buyerPhone,
       buyerEmail,
       produits
-    }, {
-      headers: {
-        "x-api-key": "dbab1b45-f454-4568-9fcc-47692b8e6319",
-        "content-type": "application/json"
-      },
-    })
+    };
+    return this.http.post(`${environment.apiURL}/reservation`, requestData);
   }
+  // reservationProduit(produits: any[], buyer: any, buyerPhone: any, buyerEmail: any, pharmacy: any) {
+  //   return this.http.post(`${environment.apiURL}/open-api/reservation`, {
+  //     pharmacy,
+  //     buyer,
+  //     buyerPhone,
+  //     buyerEmail,
+  //     produits
+  //   },)
+  // }
 }

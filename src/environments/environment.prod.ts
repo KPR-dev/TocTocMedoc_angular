@@ -1,9 +1,10 @@
 //pour les acces de l'api de prod
 export const environment = {
   production: true,
+  apiURL: "http://31.207.35.25:8000/api_epg",
     // apiURL: "notre_api_backend_prod",
-  apiURL: "https://epg-supervisor-api.pivot40.tech",
-  apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
+  // apiURL: "https://epg-supervisor-api.pivot40.tech",
+  // apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
   pageItemCount: 1000,
   pharmacies: [
     "623a45be1b6f66b46e99a03d",
