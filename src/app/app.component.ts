@@ -47,6 +47,8 @@ export class AppComponent implements OnInit {
 
   showCart: boolean = false;
 
+  modal_register: any;
+
 
   constructor(private epharmaService: EpharmaService) { }
 
@@ -92,10 +94,9 @@ export class AppComponent implements OnInit {
   }
 
 
-  modal_register: boolean = false;
-
   open_register() {
     this.modal_register = true;
+    // console.log("ça passe")
   }
 
   //Ma fonction

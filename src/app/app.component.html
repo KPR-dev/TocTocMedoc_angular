@@ -57,9 +57,68 @@
 <!-- début Bouton inscription -->
 <button id="register" (click)="open_register()"> <img src="../assets/inscription.png" alt="register"></button>
 
-<div class="inscription" *ngIf="modal_register">
-  <div class="modal-register">
-    <p>jhzkjdffk</p>
+<div class="modal" *ngIf="modal_register">
+  <div class="verify-container">
+    <div class="verify-content">
+      <div class="verify-produit">
+        <div class="img-container">
+
+        </div>
+        <div>
+
+        </div>
+        <button (click)="clear()">Rechercher d'autres produits</button>
+      </div>
+      <div class="verify-result" *ngIf="!selectedPharmacy">
+        <h3>
+          <div class="loader-container" *ngIf="verifiedPharmacies.length == 0">
+            <div class="loader"></div>
+          </div>
+          <span>
+            Recherche de la disponibilité en pharmacie...
+          </span>
+        </h3>
+
+        <div class="pharmacies">
+          <div class="pharmacy" *ngFor="let pharmacy of verifiedPharmacies">
+            <div>
+
+            </div>
+            <!--
+<button (click)="select(pharmacy)">Ajouter au panier</button>
+            -->
+          </div>
+        </div>
+      </div>
+
+      <div class="verify-commande" *ngIf="selectedPharmacy">
+        <h3>
+          Confirmation de la reservation
+        </h3>
+
+        <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
+          <div class="loader"></div>
+        </div>
+
+        <div class="form-container" *ngIf="commandeResult.start == false && commandeResult.success == null">
+          <div class="form-group">
+            <label for="quantite">Quantité</label>
+          </div>
+          <button *ngIf="quantity > 0"
+            (click)="addToCart(selectedProduit.CIP, selectedProduit.libelle)">Valider</button>
+
+        </div>
+
+        <div *ngIf="commandeResult.start == false && commandeResult.success != null">
+          <div class="result-message"></div>
+
+          <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
+              récuperation</strong></p>
+        </div>
+
+      </div>
+
+    </div>
   </div>
 </div>
 <!-- fin Bouton inscription -->
