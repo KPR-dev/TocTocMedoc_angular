@@ -54,9 +54,28 @@
   </main>
 </div>
 
+<!-- début Bouton inscription -->
+<button id="register" (click)="open_register()"> <img src="../assets/inscription.png" alt="register"></button>
+
+<div class="inscription" *ngIf="modal_register">
+  <div class="modal-register">
+    <p>jhzkjdffk</p>
+  </div>
+</div>
+<!-- fin Bouton inscription -->
+
+
+
 <button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
+
 <button class="shopping-cart-btn" (click)="openCartView()"><span class="count"
-    *ngIf="carts.length > 0">{{carts.length}}</span> <img src="../assets/add-to-cart.png" alt="Panier"></button>
+    *ngIf="carts.length > 0">{{carts.length}}</span>
+    <img src="../assets/add-to-cart.png" alt="Panier">
+</button>
+
+
+
+
 
 <div class="modal" *ngIf="selectedProduit">
   <div class="verify-container">

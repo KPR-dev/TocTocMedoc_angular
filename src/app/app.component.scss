@@ -60,6 +60,35 @@
   }
 }
 
+
+#register {
+  position: fixed;
+  top: 2rem;
+  left: 10rem; /* Ajustez la valeur left pour positionner le bouton d'inscription */
+  width: 50px;
+  height: 50px;
+  font-size: 3.0em;
+  margin-right: 6px; /* Ajoutez une marge à droite pour espacer les boutons */
+  border-radius: 100px;
+  background-color: white;
+  color: white;
+  font-size: 3.0em;
+  box-shadow: 1px 0.5px 20px #00000025;
+  z-index: 99999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+
+  img {
+    width: 32px;
+    position: absolute;
+  }
+}
+
+
+
 .no-result {
   display: flex;
   justify-content: center;

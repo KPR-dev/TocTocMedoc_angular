@@ -17,12 +17,11 @@ export class EpharmaService {
   }
 
   //Route pour add  les produits disponible
-  getDisponibiliteProduit(cip: any, pharmacy: any) {
-    const Data = {
+  getDisponibiliteProduit(cip:any, pharmacy: any) {
+    return this.http.post(`${environment.apiURL}/disponibility_product`,{
       pharmacy,
       cips: [cip]
-    };
-    return this.http.post(`${environment.apiURL}/disponibility_product`, Data);
+    });
   }
 
   //Route pour add  les produits

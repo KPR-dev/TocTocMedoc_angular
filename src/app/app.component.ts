@@ -21,6 +21,7 @@ class Cart {
 })
 export class AppComponent implements OnInit {
 
+
   produits: any;
   filteredProduit: any[] = [];
 
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit {
   carts: Cart[] = [];
 
   showCart: boolean = false;
+
 
   constructor(private epharmaService: EpharmaService) { }
 
@@ -89,27 +91,62 @@ export class AppComponent implements OnInit {
     }
   }
 
+
+  modal_register: boolean = false;
+
+  open_register() {
+    this.modal_register = true;
+  }
+
+  //Ma fonction
+
   verify(cip: any) {
-    this.selectedProduit = this.filteredProduit.find(p => p.CIP == cip);
+    this.selectedProduit = this.filteredProduit.find(p => p.CIP === cip);
     this.verifiedPharmacies = [];
     for (let i = 0; i < environment.pharmacies.length; i++) {
       this.epharmaService.getDisponibiliteProduit(cip, environment.pharmacies[i]).subscribe({
         next: (response: any) => {
-          this.disponibilites.push(response.disponibilites[0]);
-          if (response.disponibilites) {
+          if (response.disponibilites && response.disponibilites.length > 0) {
+            this.disponibilites.push(response.disponibilites[0]);
             for (let j = 0; j < response.disponibilites.length; j++) {
               if (response.disponibilites[j].isAvailable) {
-                //Display pharmacy for commande
-                this.verifiedPharmacies.push(response.pharmacy);
+                // Display pharmacy for commande
+                if (response.pharmacy) {
+                  this.verifiedPharmacies.push(response.pharmacy);
+                }
               }
             }
           }
-        }, error: (err) => {
+        },
+        error: (err) => {
           console.log(err);
         }
-      })
+      });
     }
   }
+
+
+  // verify(cip: any) {
+  //   this.selectedProduit = this.filteredProduit.find(p => p.CIP == cip);
+  //   this.verifiedPharmacies = [];
+  //   for (let i = 0; i < environment.pharmacies.length; i++) {
+  //     this.epharmaService.getDisponibiliteProduit(cip, environment.pharmacies[i]).subscribe({
+  //       next: (response: any) => {
+  //         this.disponibilites.push(response.disponibilites[0]);
+  //         if (response.disponibilites) {
+  //           for (let j = 0; j < response.disponibilites.length; j++) {
+  //             if (response.disponibilites[j].isAvailable) {
+  //               //Display pharmacy for commande
+  //               this.verifiedPharmacies.push(response.pharmacy);
+  //             }
+  //           }
+  //         }
+  //       }, error: (err) => {
+  //         console.log(err);
+  //       }
+  //     })
+  //   }
+  // }
 
   applyFilter(event: any) {
     const value = event.target.value.toLowerCase().trim();
@@ -148,7 +185,7 @@ export class AppComponent implements OnInit {
     this.epharmaService.reservationProduit(array, this.buyer, this.buyerPhone, this.buyerEmail, cart.pharmacyId).subscribe({
       next: (response: any) => {
         this.commandeResult = { start: false, success: true, message: "Votre commande a été envoyée avec succès à la pharmacie [" + cart.pharmacyName +"], Réservation " + response.result.reservation + ", TTC: " + response.result.ttc + " FCFA" };
-        this.removeCart(cartIndex); 
+        this.removeCart(cartIndex);
       }, error: (err) => {
         console.log(err);
         this.commandeResult = { start: false, success: false, message: "Votre commande a échouée !" };
@@ -163,6 +200,7 @@ export class AppComponent implements OnInit {
     this.commandeResult.start = false;
     this.commandeResult.success = null;
     this.quantity = 1;
+    this.modal_register = false;
   }
 
   addToCart(productCIP: string, productName: string) {
