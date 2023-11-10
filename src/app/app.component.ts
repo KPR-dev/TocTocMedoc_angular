@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EpharmaService } from './epharma.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 class ProductQuantity {
   produitCIP!: string;
@@ -20,6 +21,27 @@ class Cart {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  registerForm = new FormGroup({
+    firstname: new FormControl("",[Validators.required]),
+    lastname: new FormControl("",[Validators.required]),
+    email: new FormControl("",[Validators.required, Validators.email]),
+    phone: new FormControl("",[Validators.required]),
+
+  })
+
+  get lastname(): FormControl{
+    return this.registerForm.get("lastname") as FormControl;
+  }
+  get firstname(): FormControl{
+    return this.registerForm.get("firstname") as FormControl;
+  }
+  get email(): FormControl{
+    return this.registerForm.get("email") as FormControl;
+  }
+  get phone(): FormControl{
+    return this.registerForm.get("phone") as FormControl;
+  }
 
 
   produits: any;
@@ -47,10 +69,15 @@ export class AppComponent implements OnInit {
 
   showCart: boolean = false;
 
-  modal_register: any;
+  modal_register: boolean = false;
+  loginFormVisible: boolean = false;
+  registerFormVisible: boolean = false;
+  isLoggedIn: boolean = false;
 
 
   constructor(private epharmaService: EpharmaService) { }
+
+
 
   ngOnInit(): void {
     this.loadAllProduit();
@@ -98,6 +125,29 @@ export class AppComponent implements OnInit {
     this.modal_register = true;
     // console.log("ça passe")
   }
+
+  submitRegistrationForm() {
+    if(this.registerForm.value == "none"){
+      alert('bad')
+    }
+    else{
+          // Logique de soumission pour le formulaire d'inscription
+    console.log('Formulaire d\'inscription soumis!', this.registerForm);
+    }
+
+  }
+
+  submitLoginForm() {
+    // Logique de soumission pour le formulaire de connexion
+    console.log('Formulaire de connexion soumis!');
+  }
+
+  toggleForms() {
+    // Bascule entre les formulaires d'inscription et de connexion
+    this.loginFormVisible = !this.loginFormVisible;
+    this.registerFormVisible = !this.registerFormVisible;
+  }
+
 
   //Ma fonction
 
@@ -201,6 +251,7 @@ export class AppComponent implements OnInit {
     this.commandeResult.start = false;
     this.commandeResult.success = null;
     this.quantity = 1;
+    this.loginFormVisible = false;
     this.modal_register = false;
   }
 
@@ -245,4 +296,6 @@ export class AppComponent implements OnInit {
   removeCart(cartIndex: number) {
     this.carts.splice(cartIndex, 1);
   }
+
+
 }

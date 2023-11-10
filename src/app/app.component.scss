@@ -64,11 +64,13 @@
 #register {
   position: fixed;
   top: 2rem;
-  left: 10rem; /* Ajustez la valeur left pour positionner le bouton d'inscription */
+  left: 85rem;
+  /* Ajustez la valeur left pour positionner le bouton d'inscription */
   width: 50px;
   height: 50px;
   font-size: 3.0em;
-  margin-right: 6px; /* Ajoutez une marge à droite pour espacer les boutons */
+  margin-right: 6px;
+  /* Ajoutez une marge à droite pour espacer les boutons */
   border-radius: 100px;
   background-color: white;
   color: white;
@@ -593,6 +595,111 @@ button:hover {
 
       button {
         margin-left: 1rem;
+      }
+    }
+  }
+}
+
+//modal inscription
+
+
+//fin modal inscription
+
+//
+.inscription {
+  background: linear-gradient(#000000c7, #000000c7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+
+  display: flex;
+  justify-content: center;
+  /* Centre le contenu horizontalement */
+  align-items: center;
+  /* Centre le contenu verticalement */
+
+  .verify-container {
+
+    padding: 1rem;
+    background: white;
+    max-width: 500px;
+    /* Largeur maximale de 1024 pixels */
+    width: 100%;
+    /* Pour s'assurer que la largeur ne dépasse pas l'écran */
+
+    /* ... le reste de votre code ... */
+  }
+
+  .verify-commande {
+
+    /* Largeur maximale du formulaire */
+    margin: 0 auto;
+    /* Centre le formulaire horizontalement */
+    padding: 1rem;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    p {
+      color: #27318D;
+      font-weight: normal;
+      margin-bottom: 3rem;
+      text-align: center;
+      /* Centre le texte horizontalement */
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        label {
+          font-size: 14px;
+          color: #27318D;
+        }
+
+        input {
+          padding: 0.8rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 14px;
+          width: 100%;
+          /* 100% de la largeur de son conteneur */
+          transition: border-color 0.3s ease-in-out;
+          /* Animation de transition pour la couleur de la bordure */
+
+          &:focus {
+            border-color: #27318D;
+            /* Couleur bleue lorsqu'il est cliqué */
+            outline: none;
+            /* Supprime la bordure par défaut de certains navigateurs */
+          }
+        }
+      }
+
+      button {
+        background: #27318D;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s ease-in-out;
+        /* Animation de transition pour la couleur de fond */
+
+        &:hover {
+          background: #1a237e;
+          /* Couleur légèrement plus sombre au survol */
+        }
       }
     }
   }
