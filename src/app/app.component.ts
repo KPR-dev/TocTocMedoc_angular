@@ -150,42 +150,48 @@ export class AppComponent implements OnInit {
   };
 
 
-  submitLoginForm(): void {
+  submitLoginForm(): any {
     if (this.users.username && this.users.password) {
-      try {
-        const users = { username: this.users.username, password: this.users.password, grant_type: 'password' };
-        console.log('users =', users);
-        this.epharmaService.PostUsers(users).subscribe({
-          next: (response: any) => {
-            console.log('connexion réussie =', response.data);
-          },
-          error: (error) => {
-            console.error('Erreur lors de la connexion :', error);
-          }
-        });
-      } catch {
-        // console.log(error.response.data.detail) ;
-        const user = {
-          lastname: "TOCTOCMEDOC",
-          firstname: "TOCTOC",
-          email: "toctocmedoc@gmail.com",
-          code_user: "toctocmedoc",
-          direction_slug: 'ADMIN',
-          is_director: true,
-          entity_slug: 'ADMIN',
-          password: "root",
-          role: 'ADMIN',
-          attribution: 0
-        }
-        if (this.users.username == "root" && this.users.password == "root") {
-            this.loginFormVisible = false;
-            console.log("okzu")
-        }
-        else {
-
-        }
-
+      if (this.users.username === 'user@toctocmedoc.com' && this.users.password === 'root') {
+        console.log("Connxion réussit")
+        this.modal_register = false
+        this.toggleForms()
+        return true
       }
+      // try {
+      //   const users = { username: this.users.username, password: this.users.password, grant_type: 'password' };
+      //   console.log('users =', users);
+      //   this.epharmaService.PostUsers(users).subscribe({
+      //     next: (response: any) => {
+      //       console.log('connexion réussie =', response.data);
+      //     },
+      //     error: (error) => {
+      //       console.error('Erreur lors de la connexion :', error);
+      //     }
+      //   });
+      // } catch {
+      //   // console.log(error.response.data.detail) ;
+      //   const user = {
+      //     lastname: "TOCTOCMEDOC",
+      //     firstname: "TOCTOC",
+      //     email: "toctocmedoc@gmail.com",
+      //     code_user: "toctocmedoc",
+      //     direction_slug: 'ADMIN',
+      //     is_director: true,
+      //     entity_slug: 'ADMIN',
+      //     password: "root",
+      //     role: 'ADMIN',
+      //     attribution: 0
+      //   }
+      //   if (this.users.username == "root" && this.users.password == "root") {
+      //       this.loginFormVisible = false;
+      //       console.log("okzu")
+      //   }
+      //   else {
+
+      //   }
+
+      // }
     } else {
       console.error('Veuillez fournir un nom d\'utilisateur et un mot de passe.');
     }
