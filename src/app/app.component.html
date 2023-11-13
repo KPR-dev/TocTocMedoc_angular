@@ -45,7 +45,7 @@
             <!-- <p class="gray">{{produit.prix_vente}} FCFA</p> -->
             <p class="gray">{{produit.code_table ? 'Sous ordonnance' : ''}}</p>
             <div class="row">
-              
+
               <button (click)="verify(produit.CIP)">Vérifier</button>
             </div>
           </div>
@@ -55,8 +55,8 @@
   </main>
 </div>
 
-<!-- début Bouton inscription -->
-<button id="register" (click)="open_register()"> <img src="../assets/lock.png" alt="register"></button>
+
+
 
 <button class="close-modal" *ngIf="selectedProduit || loginFormVisible || modal_register"
   (click)="clear()">&times;</button>
@@ -100,13 +100,27 @@
               Veuillez renseigner votre numero télephone!
             </div>
           </div>
+          <div class="form-group">
+            <label for="phone">Mot de passe *:</label>
+            <input type="password" id="password" formControlName="password">
+            <div style="color: red;"  *ngIf="password.errors?.['required']&& password.touched">
+              Veuillez renseigner votre mot de passe!
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Confirmer le mot de passe *:</label>
+            <input type="password" id="confirm_password" formControlName="confirm_password">
+            <div style="color: red;"  *ngIf="confirm_password.errors?.['required']&& phone.touched">
+              Veuillez renseigner votre mot de passe!
+            </div>
+          </div>
           <!-- ... Vos champs d'inscription existants ... -->
           <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
         </form><br>
         <small style="color: red;">* champs obligatoire</small>
         <br>
 
-        <button (click)="toggleForms()">Connectez-vous ici</button>
+        <button (click)="toggleForms()" id="change">Connectez-vous ici</button>
       </div>
     </div>
   </div>
@@ -125,25 +139,17 @@
           </div>
           <div class="form-group">
             <label for="password">Mot de passe *:</label>
-            <input type="password" id="email" name="password" required>
+            <input type="password" id="password" name="password" required>
           </div>
           <button type="submit">Se connecter</button>
         </form>
         <small style="color: red;">* champs obligatoire</small><br>
         <br>
-        <button (click)="toggleForms()">Aller au formulaire d'inscription</button>
+        <button (click)="toggleForms()" id="change">Aller au formulaire d'inscription</button>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
 
 
 <!-- fin Bouton inscription -->
@@ -152,6 +158,7 @@
 
 <button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
 
+<button class="register" (click)="open_register()"> <img src="../assets/lock.png" alt="register"></button>
 <button class="shopping-cart-btn" (click)="openCartView()"><span class="count"
     *ngIf="carts.length > 0">{{carts.length}}</span>
   <img src="../assets/add-to-cart.png" alt="Panier">
