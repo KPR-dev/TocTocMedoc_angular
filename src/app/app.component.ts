@@ -23,31 +23,31 @@ class Cart {
 export class AppComponent implements OnInit {
 
   registerForm = new FormGroup({
-    firstname: new FormControl("",[Validators.required]),
-    lastname: new FormControl("",[Validators.required]),
-    email: new FormControl("",[Validators.required, Validators.email]),
-    phone: new FormControl("",[Validators.required]),
-    password: new FormControl("",[Validators.required]),
-    confirm_password: new FormControl("",[Validators.required]),
+    firstname: new FormControl("", [Validators.required]),
+    lastname: new FormControl("", [Validators.required]),
+    email: new FormControl("", [Validators.required, Validators.email]),
+    phone: new FormControl("", [Validators.required]),
+    password: new FormControl("", [Validators.required]),
+    confirm_password: new FormControl("", [Validators.required]),
 
   })
 
-  get lastname(): FormControl{
+  get lastname(): FormControl {
     return this.registerForm.get("lastname") as FormControl;
   }
-  get firstname(): FormControl{
+  get firstname(): FormControl {
     return this.registerForm.get("firstname") as FormControl;
   }
-  get email(): FormControl{
+  get email(): FormControl {
     return this.registerForm.get("email") as FormControl;
   }
-  get phone(): FormControl{
+  get phone(): FormControl {
     return this.registerForm.get("phone") as FormControl;
   }
-  get password(): FormControl{
+  get password(): FormControl {
     return this.registerForm.get("password") as FormControl;
   }
-  get confirm_password(): FormControl{
+  get confirm_password(): FormControl {
     return this.registerForm.get("confirm_password") as FormControl;
   }
 
@@ -135,20 +135,41 @@ export class AppComponent implements OnInit {
   }
 
   submitRegistrationForm() {
-    if(this.registerForm.value == "none"){
+    if (this.registerForm.value == "none") {
       alert('bad')
     }
-    else{
-          // Logique de soumission pour le formulaire d'inscription
-    console.log('Formulaire d\'inscription soumis!', this.registerForm);
+    else {
+      // Logique de soumission pour le formulaire d'inscription
+      console.log('Formulaire d\'inscription soumis!', this.registerForm);
+    }
+  }
+
+  users = {
+     username: '',
+     password: ''
+    };
+
+
+    submitLoginForm(): void {
+      if (this.users.username && this.users.password) {
+        const users = { username: this.users.username, password: this.users.password, grant_type: 'password' };
+        console.log('users =', users);
+
+
+       this.epharmaService.PostUsers(users).subscribe({
+          next: (response: any) => {
+            console.log('connexion réussie =', response.data);
+          },
+          error: (error) => {
+            console.error('Erreur lors de la connexion :', error);
+          }
+        });
+      } else {
+        console.error('Veuillez fournir un nom d\'utilisateur et un mot de passe.');
+      }
     }
 
-  }
 
-  submitLoginForm() {
-    // Logique de soumission pour le formulaire de connexion
-    console.log('Formulaire de connexion soumis!');
-  }
 
   toggleForms() {
     // Bascule entre les formulaires d'inscription et de connexion
@@ -243,7 +264,7 @@ export class AppComponent implements OnInit {
     }
     this.epharmaService.reservationProduit(array, this.buyer, this.buyerPhone, this.buyerEmail, cart.pharmacyId).subscribe({
       next: (response: any) => {
-        this.commandeResult = { start: false, success: true, message: "Votre commande a été envoyée avec succès à la pharmacie [" + cart.pharmacyName +"], Réservation " + response.result.reservation + ", TTC: " + response.result.ttc + " FCFA" };
+        this.commandeResult = { start: false, success: true, message: "Votre commande a été envoyée avec succès à la pharmacie [" + cart.pharmacyName + "], Réservation " + response.result.reservation + ", TTC: " + response.result.ttc + " FCFA" };
         this.removeCart(cartIndex);
       }, error: (err) => {
         console.log(err);
