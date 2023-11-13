@@ -61,16 +61,12 @@
 }
 
 
-#register {
+.register {
   position: fixed;
   top: 2rem;
-  left: 85rem;
-  /* Ajustez la valeur left pour positionner le bouton d'inscription */
+  right: 5rem;
   width: 50px;
   height: 50px;
-  font-size: 3.0em;
-  margin-right: 6px;
-  /* Ajoutez une marge à droite pour espacer les boutons */
   border-radius: 100px;
   background-color: white;
   color: white;
@@ -646,7 +642,6 @@ button:hover {
     p {
       color: #27318D;
       font-weight: normal;
-      margin-bottom: 3rem;
       text-align: center;
       /* Centre le texte horizontalement */
     }
@@ -702,5 +697,12 @@ button:hover {
         }
       }
     }
+  }
+  #change{
+    background: #b4cce5;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
   }
 }
