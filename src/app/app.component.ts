@@ -27,6 +27,8 @@ export class AppComponent implements OnInit {
     lastname: new FormControl("",[Validators.required]),
     email: new FormControl("",[Validators.required, Validators.email]),
     phone: new FormControl("",[Validators.required]),
+    password: new FormControl("",[Validators.required]),
+    confirm_password: new FormControl("",[Validators.required]),
 
   })
 
@@ -41,6 +43,12 @@ export class AppComponent implements OnInit {
   }
   get phone(): FormControl{
     return this.registerForm.get("phone") as FormControl;
+  }
+  get password(): FormControl{
+    return this.registerForm.get("password") as FormControl;
+  }
+  get confirm_password(): FormControl{
+    return this.registerForm.get("confirm_password") as FormControl;
   }
 
 
