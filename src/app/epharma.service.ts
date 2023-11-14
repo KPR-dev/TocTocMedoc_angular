@@ -8,12 +8,14 @@ import { Observable } from 'rxjs';
 })
 export class EpharmaService {
 
-  constructor(private http: HttpClient ) { }
+  constructor(private http: HttpClient) { }
 
-    //Route pour authentification
-    PostUsers(users: { username: string, password: string }) {
-      return this.http.post(`${environment.api}/auth/login`, users);
-    }
+  //Route pour authentification
+
+  PostUsers(formData: FormData) {
+    return this.http.post(`${environment.api}/auth/login`, formData);
+  }
+
 
 
   //Route pour afficher tout les produits
@@ -24,8 +26,8 @@ export class EpharmaService {
   }
 
   //Route pour add  les produits disponible
-  getDisponibiliteProduit(cip:any, pharmacy: any) {
-    return this.http.post(`${environment.apiURL}/disponibility_product`,{
+  getDisponibiliteProduit(cip: any, pharmacy: any) {
+    return this.http.post(`${environment.apiURL}/disponibility_product`, {
       pharmacy,
       cips: [cip]
     });

@@ -154,6 +154,10 @@
 </div>
 
 
+<div *ngIf="loggedInUser" id="username">
+  <p>{{ loggedInUser.lastname }} &timesb; {{ loggedInUser.firstname }}</p>
+  <!-- Ajoutez d'autres champs selon les données de votre utilisateur -->
+</div>
 <!-- fin Bouton inscription -->
 
 

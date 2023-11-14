@@ -144,54 +144,38 @@ export class AppComponent implements OnInit {
     }
   }
 
-  users = {
+  users: any = {
     username: '',
     password: ''
   };
+  loggedInUser: any;
 
-
-  submitLoginForm(): any {
+  submitLoginForm() {
     if (this.users.username && this.users.password) {
-      if (this.users.username === 'user@toctocmedoc.com' && this.users.password === 'root') {
-        console.log("Connxion réussit")
-        this.modal_register = false
-        this.toggleForms()
-        return true
+      try {
+        const formData = new FormData();
+        formData.append('grant_type', 'password');
+        formData.append('username', this.users.username);
+        formData.append('password', this.users.password);
+
+        console.log('users =', formData);
+
+        this.epharmaService.PostUsers(formData).subscribe({
+          next: (response: any) => {
+            console.log('connexion réussie =', response.user);
+            this.loggedInUser = response.user;
+            this.modal_register = false
+            this.toggleForms()
+            return true
+
+          },
+          error: (error) => {
+            console.error('Erreur lors de la connexion :', error);
+          }
+        });
+      } catch {
+        // ... (votre bloc catch existant)
       }
-      // try {
-      //   const users = { username: this.users.username, password: this.users.password, grant_type: 'password' };
-      //   console.log('users =', users);
-      //   this.epharmaService.PostUsers(users).subscribe({
-      //     next: (response: any) => {
-      //       console.log('connexion réussie =', response.data);
-      //     },
-      //     error: (error) => {
-      //       console.error('Erreur lors de la connexion :', error);
-      //     }
-      //   });
-      // } catch {
-      //   // console.log(error.response.data.detail) ;
-      //   const user = {
-      //     lastname: "TOCTOCMEDOC",
-      //     firstname: "TOCTOC",
-      //     email: "toctocmedoc@gmail.com",
-      //     code_user: "toctocmedoc",
-      //     direction_slug: 'ADMIN',
-      //     is_director: true,
-      //     entity_slug: 'ADMIN',
-      //     password: "root",
-      //     role: 'ADMIN',
-      //     attribution: 0
-      //   }
-      //   if (this.users.username == "root" && this.users.password == "root") {
-      //       this.loginFormVisible = false;
-      //       console.log("okzu")
-      //   }
-      //   else {
-
-      //   }
-
-      // }
     } else {
       console.error('Veuillez fournir un nom d\'utilisateur et un mot de passe.');
     }
@@ -199,8 +183,9 @@ export class AppComponent implements OnInit {
 
 
 
+
   toggleForms() {
-    // Bascule entre les formulaires d'inscription et de connexion
+    //  Bascule entre les formulaires d'inscription et de connexion
     this.loginFormVisible = !this.loginFormVisible;
     this.registerFormVisible = !this.registerFormVisible;
   }
