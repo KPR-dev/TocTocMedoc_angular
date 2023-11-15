@@ -16,6 +16,10 @@ export class EpharmaService {
     return this.http.post(`${environment.api}/auth/login`, formData);
   }
 
+  AddUser(formData: any) {
+    return this.http.post(`${environment.api}/user/add`, formData);
+  }
+
 
 
   //Route pour afficher tout les produits

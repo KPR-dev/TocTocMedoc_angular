@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { EpharmaService } from './epharma.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+
 class ProductQuantity {
   produitCIP!: string;
   quantity!: number;
@@ -80,6 +81,7 @@ export class AppComponent implements OnInit {
   modal_register: boolean = false;
   loginFormVisible: boolean = false;
   registerFormVisible: boolean = false;
+  ResetPassword: boolean = false;
   isLoggedIn: boolean = false;
 
 
@@ -134,13 +136,41 @@ export class AppComponent implements OnInit {
     // console.log("ça passe")
   }
 
+  open_reset_password(){
+    this.ResetPassword = true
+  }
+
   submitRegistrationForm() {
-    if (this.registerForm.value == "none") {
-      alert('bad')
-    }
-    else {
-      // Logique de soumission pour le formulaire d'inscription
-      console.log('Formulaire d\'inscription soumis!', this.registerForm);
+    if (this.users.lastname && this.users.firstname && this.users.email && this.users.phone && this.users.password) {
+      try {
+        const formData = {
+          lastname: this.users.lastname,
+          firstname: this.users.firstname,
+          email: this.users.email,
+          phone: this.users.phone,
+          role: 'USER',
+          password: this.users.password,
+        };
+
+
+        console.log('users =', formData);
+
+        this.epharmaService.AddUser(formData).subscribe({
+          next: (response: any) => {
+            console.log('enregistrement réussi =', response);
+
+            this.modal_register = false
+
+          },
+          error: (error) => {
+            console.error('Erreur lors d enrefistrement :', error);
+          }
+        });
+      } catch {
+        // ... (votre bloc catch existant)
+      }
+    } else {
+      console.error('remplir le formulaire');
     }
   }
 
@@ -162,11 +192,13 @@ export class AppComponent implements OnInit {
 
         this.epharmaService.PostUsers(formData).subscribe({
           next: (response: any) => {
-            console.log('connexion réussie =', response.user);
+            console.log('connexion réussie =', response);
             this.loggedInUser = response.user;
+            environment.token = response.token.access_token
+            console.log('token = ', environment.token)
             this.modal_register = false
             this.toggleForms()
-            return true
+            return response.token.access_token
 
           },
           error: (error) => {
@@ -184,13 +216,14 @@ export class AppComponent implements OnInit {
 
 
 
+
+
   toggleForms() {
     //  Bascule entre les formulaires d'inscription et de connexion
     this.loginFormVisible = !this.loginFormVisible;
     this.registerFormVisible = !this.registerFormVisible;
+
   }
-
-
   //Ma fonction
 
   verify(cip: any) {
@@ -295,6 +328,7 @@ export class AppComponent implements OnInit {
     this.quantity = 1;
     this.loginFormVisible = false;
     this.modal_register = false;
+    this.ResetPassword = false
   }
 
   addToCart(productCIP: string, productName: string) {
