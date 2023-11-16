@@ -182,18 +182,58 @@
     </div>
 </div>
 
+<!-- formulaire d'infomation user  -->
 
-<button *ngIf="loggedInUser" id="username">
-  <p style="font-size: small;">{{ loggedInUser.lastname }}&nbsp; {{ loggedInUser.firstname }}</p>
-  <select name="" id="">
-    <option value="">Déconnexion</option>
-  </select>
+<button class="close-modal" *ngIf="modal_modification" (click)="clear()">&times;</button>
+<div class="inscription" *ngIf="modal_modification">
+    <div class="verify-container">
+        <div class="verify-content">
+            <!-- Formulaire d'inscription -->
+            <div class="verify-commande">
+                <p>Information utilisateur</p>
+                <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
+                    <div class="form-group">
+                        <label for="nom">Nom *:</label>
+                        <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenom">Prénom *:</label>
+                        <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *:</label>
+                        <input type="email" id="email" formControlName="email" [(ngModel)]="users.email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Téléphone *:</label>
+                        <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone">
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="phone">Mot de passe *:</label>
+                        <input type="password" id="password" formControlName="password" [(ngModel)]="users.password">
+                    </div> -->
+                    <!-- ... Vos champs d'inscription existants ... -->
+                    <button type="submit">Mise à jour</button>
+                </form><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- fin -->
+
+<button *ngIf="loggedInUser" id="username" (click)="open_modal_modification()">
+    <p style="font-size: 25px;">{{ loggedInUser.lastname }}&nbsp; {{ loggedInUser.firstname }}</p>
+
     <!-- <p>{{ loggedInUser.lastname }} &timesb; {{ loggedInUser.firstname }}</p> -->
     <!-- Ajoutez d'autres champs selon les données de votre utilisateur -->
 </button>
 <!-- fin Bouton inscription -->
 
 
+<button class="logout" *ngIf="loggedInUser"> <i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</button>
 
 <button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
 
