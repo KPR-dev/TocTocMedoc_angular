@@ -151,16 +151,11 @@ export class AppComponent implements OnInit {
           role: 'USER',
           password: this.users.password,
         };
-
-
         console.log('users =', formData);
-
         this.epharmaService.AddUser(formData).subscribe({
           next: (response: any) => {
             console.log('enregistrement réussi =', response);
-
             this.modal_register = false
-
           },
           error: (error) => {
             console.error('Erreur lors d enrefistrement :', error);
