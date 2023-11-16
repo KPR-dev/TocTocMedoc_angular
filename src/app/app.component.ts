@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EpharmaService } from './epharma.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { window } from 'rxjs';
+
 
 
 class ProductQuantity {
@@ -21,6 +23,9 @@ class Cart {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
+
+
 export class AppComponent implements OnInit {
 
   registerForm = new FormGroup({
@@ -79,6 +84,7 @@ export class AppComponent implements OnInit {
   showCart: boolean = false;
 
   modal_register: boolean = false;
+  modal_modification: boolean = false;
   loginFormVisible: boolean = false;
   registerFormVisible: boolean = false;
   ResetPassword: boolean = false;
@@ -140,6 +146,28 @@ export class AppComponent implements OnInit {
     this.ResetPassword = true
   }
 
+  open_modal_modification(){
+    this.modal_modification = true
+    this.epharmaService.getUserId(environment.user_id).subscribe({
+      next: (response: any) => {
+        console.log('information user =', response);
+        this.users.lastname = response.user.lastname
+        this.users.firstname = response.user.firstname
+        this.users.email = response.user.email
+        this.users.phone = response.user.phone
+        return true
+
+      },
+      error: (error) => {
+        console.error('Erreur lors de la connexion :', error);
+      }
+    });
+  }
+
+  open_tarif(){
+
+  }
+
   submitRegistrationForm() {
     if (this.users.lastname && this.users.firstname && this.users.email && this.users.phone && this.users.password) {
       try {
@@ -190,6 +218,7 @@ export class AppComponent implements OnInit {
             console.log('connexion réussie =', response);
             this.loggedInUser = response.user;
             environment.token = response.token.access_token
+            environment.user_id = response.user.id
             console.log('token = ', environment.token)
             this.modal_register = false
             this.toggleForms()
@@ -209,6 +238,36 @@ export class AppComponent implements OnInit {
   }
 
 
+  updateForm(){
+    console.log('ID =', environment.user_id)
+    try {
+      const formData = {
+        lastname: this.users.lastname,
+        firstname: this.users.firstname,
+        email: this.users.email,
+        phone: this.users.phone,
+        role: 'USER',
+        id: environment.user_id
+      };
+
+
+      console.log('users modification =', formData);
+
+      this.epharmaService.updateUser(environment.user_id, formData).subscribe({
+        next: (response: any) => {
+          console.log('modification réussi =', response);
+
+          this.modal_modification = false
+
+        },
+        error: (error) => {
+          console.error('Erreur lors de la modification :', error);
+        }
+      });
+    } catch {
+      // ... (votre bloc catch existant)
+    }
+  }
 
 
 
@@ -323,7 +382,8 @@ export class AppComponent implements OnInit {
     this.quantity = 1;
     this.loginFormVisible = false;
     this.modal_register = false;
-    this.ResetPassword = false
+    this.ResetPassword = false;
+    this.modal_modification = false
   }
 
   addToCart(productCIP: string, productName: string) {

@@ -20,7 +20,13 @@ export class EpharmaService {
     return this.http.post(`${environment.api}/user/add`, formData);
   }
 
+  getUserId(id: number) {
+    return this.http.get(`${environment.api}/account/get_by_user_id/${id}`);
+  }
 
+  updateUser(id: number, formData: any) {
+    return this.http.put(`${environment.api}/user/update/${id}`, formData);
+  }
 
   //Route pour afficher tout les produits
   getAllProduit(page: number, count: number) {

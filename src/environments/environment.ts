@@ -9,6 +9,7 @@ export const environment = {
     apiURL: "http://31.207.35.25:8000/api_epg",
     api: "http://31.207.35.25:8000",
     token: '',
+    user_id: 0,
   // apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
    pageItemCount: 500,
    pharmacies: [
