@@ -97,6 +97,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAllProduit();
+    this.checkAuthenticationStatus();
   }
 
   loadAllProduit() {
@@ -112,6 +113,13 @@ export class AppComponent implements OnInit {
         console.log(err);
       }
     })
+  }
+
+  checkAuthenticationStatus() {
+    const authToken = environment.token
+    console.log('authToken =', authToken)
+
+    this.isLoggedIn = !!authToken;
   }
 
   openCartView() {
@@ -142,11 +150,11 @@ export class AppComponent implements OnInit {
     // console.log("ça passe")
   }
 
-  open_reset_password(){
+  open_reset_password() {
     this.ResetPassword = true
   }
 
-  open_modal_modification(){
+  open_modal_modification() {
     this.modal_modification = true
     this.epharmaService.getUserId(environment.user_id).subscribe({
       next: (response: any) => {
@@ -164,7 +172,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  open_tarif(){
+  open_tarif() {
 
   }
 
@@ -220,6 +228,8 @@ export class AppComponent implements OnInit {
             environment.token = response.token.access_token
             environment.user_id = response.user.id
             console.log('token = ', environment.token)
+            this.isLoggedIn = response.token.access_token
+            console.log('isLoggedIn =', this.isLoggedIn)
             this.modal_register = false
             this.toggleForms()
             return response.token.access_token
@@ -238,7 +248,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  updateForm(){
+  updateForm() {
     console.log('ID =', environment.user_id)
     try {
       const formData = {
