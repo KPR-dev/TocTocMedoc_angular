@@ -228,8 +228,9 @@ export class AppComponent implements OnInit {
             environment.token = response.token.access_token
             environment.user_id = response.user.id
             console.log('token = ', environment.token)
+            //je stocke le token dans ma fonction isLoggedIn
             this.isLoggedIn = response.token.access_token
-            console.log('isLoggedIn =', this.isLoggedIn)
+            console.log('isLoggedIn token is =', this.isLoggedIn)
             this.modal_register = false
             this.toggleForms()
             return response.token.access_token
