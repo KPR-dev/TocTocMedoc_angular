@@ -100,7 +100,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAllProduit();
+<<<<<<< HEAD
     this.loadAllTarif()
+=======
+    this.checkAuthenticationStatus();
+>>>>>>> 400208c3469efbea15bbd035a31f9a4d022afae0
   }
 
   loadAllProduit() {
@@ -118,6 +122,7 @@ export class AppComponent implements OnInit {
     })
   }
 
+<<<<<<< HEAD
   loadAllTarif() {
     this.listTarif = [];
     this.epharmaService.getAllTarif().subscribe({
@@ -127,6 +132,13 @@ export class AppComponent implements OnInit {
         console.log(err);
       }
     })
+=======
+  checkAuthenticationStatus() {
+    const authToken = environment.token
+    console.log('authToken =', authToken)
+
+    this.isLoggedIn = !!authToken;
+>>>>>>> 400208c3469efbea15bbd035a31f9a4d022afae0
   }
 
   openCartView() {
@@ -158,10 +170,11 @@ export class AppComponent implements OnInit {
     // console.log("ça passe")
   }
 
-  open_reset_password(){
+  open_reset_password() {
     this.ResetPassword = true
   }
 
+<<<<<<< HEAD
   open_tarif(){
     this.modal_tarif = true
   }
@@ -171,6 +184,9 @@ export class AppComponent implements OnInit {
   }
 
   open_modal_modification(){
+=======
+  open_modal_modification() {
+>>>>>>> 400208c3469efbea15bbd035a31f9a4d022afae0
     this.modal_modification = true
     this.epharmaService.getUserId(environment.user_id).subscribe({
       next: (response: any) => {
@@ -188,11 +204,15 @@ export class AppComponent implements OnInit {
     });
   }
 
+<<<<<<< HEAD
   clickTarif(idTarif: any){
     console.log('tarif = ',idTarif)
     environment.tarif_id = idTarif
     this.modal_tarif = false
   }
+=======
+  open_tarif() {
+>>>>>>> 400208c3469efbea15bbd035a31f9a4d022afae0
 
   // submitCompteUser(){
   //   const formData = {
@@ -231,13 +251,11 @@ export class AppComponent implements OnInit {
           role: 'USER',
           password: this.users.password,
         };
-
-
         console.log('users =', formData);
-
         this.epharmaService.AddUser(formData).subscribe({
           next: (response: any) => {
             console.log('enregistrement réussi =', response);
+<<<<<<< HEAD
             this.videForm()
             alert('Enregistrement avec success !')
             this.modal_register = false
@@ -256,6 +274,9 @@ export class AppComponent implements OnInit {
                 });
               }
             })
+=======
+            this.modal_register = false
+>>>>>>> 400208c3469efbea15bbd035a31f9a4d022afae0
           },
           error: (error) => {
             console.error('Erreur lors d enrefistrement :', error);
@@ -300,6 +321,9 @@ export class AppComponent implements OnInit {
             environment.token = response.token.access_token
             environment.user_id = response.user.id
             console.log('token = ', environment.token)
+            //je stocke le token dans ma fonction isLoggedIn
+            this.isLoggedIn = response.token.access_token
+            console.log('isLoggedIn token is =', this.isLoggedIn)
             this.modal_register = false
             alert('Connexion reussie !!!')
             this.toggleForms()
@@ -321,7 +345,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  updateForm(){
+  updateForm() {
     console.log('ID =', environment.user_id)
     try {
       const formData = {
