@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EpharmaService } from './epharma.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { window } from 'rxjs';
+
 
 
 
@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
   produits: any;
   filteredProduit: any[] = [];
 
+  listTarif: any[] = [];
   selectedProduit: any;
   verifiedPharmacies: any[] = [];
   selectedPharmacy: any;
@@ -85,7 +86,9 @@ export class AppComponent implements OnInit {
 
   modal_register: boolean = false;
   modal_modification: boolean = false;
+  modal_tarif: boolean = false;
   loginFormVisible: boolean = false;
+  InscriptionFormVisible: boolean = false;
   registerFormVisible: boolean = false;
   ResetPassword: boolean = false;
   isLoggedIn: boolean = false;
@@ -97,6 +100,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAllProduit();
+    this.loadAllTarif()
   }
 
   loadAllProduit() {
@@ -108,6 +112,17 @@ export class AppComponent implements OnInit {
         this.hasResult = true;
         this.pageCount = response.pageCount;
         this.filteredProduit = this.produits.items;
+      }, error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  loadAllTarif() {
+    this.listTarif = [];
+    this.epharmaService.getAllTarif().subscribe({
+      next: (response: any) => {
+        this.listTarif = response
       }, error: (err) => {
         console.log(err);
       }
@@ -139,11 +154,20 @@ export class AppComponent implements OnInit {
 
   open_register() {
     this.modal_register = true;
+    this.modal_tarif = true
     // console.log("ça passe")
   }
 
   open_reset_password(){
     this.ResetPassword = true
+  }
+
+  open_tarif(){
+    this.modal_tarif = true
+  }
+
+  open_inscription(){
+    this.loginFormVisible = true
   }
 
   open_modal_modification(){
@@ -164,8 +188,36 @@ export class AppComponent implements OnInit {
     });
   }
 
-  open_tarif(){
+  clickTarif(idTarif: any){
+    console.log('tarif = ',idTarif)
+    environment.tarif_id = idTarif
+    this.modal_tarif = false
+  }
 
+  // submitCompteUser(){
+  //   const formData = {
+  //     idTarif: environment.tarif_id
+  //   }
+
+  //   this.epharmaService.getSubscribeCompte(formData).subscribe({
+  //     next: (response: any) => {
+  //       console.log('compte subscribe =', response);
+  //     },
+  //     error: (error) => {
+  //       console.error('Erreur lors d enrefistrement :', error);
+  //     }
+  //   });
+  // }
+
+  getCompteUser(id: number){
+    this.epharmaService.getUserId(id).subscribe({
+      next: (response: any) => {
+        console.log('compte réussi =', response);
+      },
+      error: (error) => {
+        console.error('Erreur lors d enrefistrement :', error);
+      }
+    });
   }
 
   submitRegistrationForm() {
@@ -186,9 +238,24 @@ export class AppComponent implements OnInit {
         this.epharmaService.AddUser(formData).subscribe({
           next: (response: any) => {
             console.log('enregistrement réussi =', response);
-
+            this.videForm()
+            alert('Enregistrement avec success !')
             this.modal_register = false
+            this.epharmaService.getUserId(response.id).subscribe({
+              next: (response: any) => {
+                console.log('idcompte =', response.id)
+                console.log('idtarif =', environment.tarif_id)
 
+                this.epharmaService.getSubscribeCompte(environment.tarif_id, response.id).subscribe({
+                  next: (response: any) => {
+                    console.log('compte subscribe =', response);
+                  },
+                  error: (error) => {
+                    console.error('Erreur lors d enrefistrement :', error);
+                  }
+                });
+              }
+            })
           },
           error: (error) => {
             console.error('Erreur lors d enrefistrement :', error);
@@ -200,6 +267,14 @@ export class AppComponent implements OnInit {
     } else {
       console.error('remplir le formulaire');
     }
+  }
+
+  videForm(){
+    this.users.lastname = '',
+    this.users.firstname = '',
+    this.users.email = '',
+    this.users.phone = '',
+    this.users.password = ''
   }
 
   users: any = {
@@ -226,12 +301,14 @@ export class AppComponent implements OnInit {
             environment.user_id = response.user.id
             console.log('token = ', environment.token)
             this.modal_register = false
+            alert('Connexion reussie !!!')
             this.toggleForms()
             return response.token.access_token
 
           },
           error: (error) => {
             console.error('Erreur lors de la connexion :', error);
+            alert('Mauvais identifiants')
           }
         });
       } catch {
@@ -239,6 +316,7 @@ export class AppComponent implements OnInit {
       }
     } else {
       console.error('Veuillez fournir un nom d\'utilisateur et un mot de passe.');
+      alert('Veuillez fournir un nom d\'utilisateur et un mot de passe')
     }
   }
 
@@ -388,7 +466,8 @@ export class AppComponent implements OnInit {
     this.loginFormVisible = false;
     this.modal_register = false;
     this.ResetPassword = false;
-    this.modal_modification = false
+    this.modal_modification = false;
+    this.modal_tarif = false
   }
 
   addToCart(productCIP: string, productName: string) {

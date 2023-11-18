@@ -28,12 +28,24 @@ export class EpharmaService {
     return this.http.put(`${environment.api}/user/update/${id}`, formData);
   }
 
+  getAllTarif(){
+    return this.http.get(`${environment.api}/rate/all`);
+  }
+
   //Route pour afficher tout les produits
   getAllProduit(page: number, count: number) {
     return this.http.get(`${environment.apiURL}/all_products/${page}/${count}`, {
 
     })
   }
+
+  getSubscribeCompte(idtarif: number, idcompte: number){
+    return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, {
+      rate_id: idtarif
+    });
+  }
+
+
 
   //Route pour add  les produits disponible
   getDisponibiliteProduit(cip: any, pharmacy: any) {

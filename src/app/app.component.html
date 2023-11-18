@@ -4,6 +4,8 @@
     <button (click)="nextPage()"><i class="fa-solid fa-chevron-right"></i></button>
 </div>
 
+
+
 <div class="wrapper">
     <main>
         <header>
@@ -22,6 +24,8 @@
             <div class="form-group-search">
                 <input type="search" name="search" id="search" (keyup)="applyFilter($event)" placeholder="Trouver un produit...">
             </div>
+
+            <!-- loader -->
             <div class="loader-container" *ngIf="filteredProduit.length == 0 && hasResult == false">
                 <div class="loader"></div>
             </div>
@@ -58,6 +62,10 @@
 <button class="close-modal" *ngIf="selectedProduit || loginFormVisible || modal_register" (click)="clear()">&times;</button>
 <div class="inscription" *ngIf="modal_register">
     <div class="verify-container">
+        <!-- loader -->
+        <div class="loader-container">
+            <div class="loader"></div>
+        </div>
         <div class="verify-content">
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
@@ -111,12 +119,12 @@
                         </div>
                     </div>
                     <!-- ... Vos champs d'inscription existants ... -->
-                    <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
+                    <button type="submit" [disabled]="registerForm.invalid" id="reset">S'inscrire</button>
                 </form><br>
                 <!-- <small style="color: red;">* champs obligatoire</small> -->
                 <br>
-
-                <button (click)="toggleForms()" id="change">Connectez-vous ici</button>
+                <!--
+                <button (click)="toggleForms()" id="change">Connectez-vous ici</button> -->
             </div>
         </div>
     </div>
@@ -184,39 +192,24 @@
 
 <!-- formulaire d'infomation user  -->
 
-<button class="close-modal" *ngIf="modal_modification" (click)="clear()">&times;</button>
-<div class="inscription" *ngIf="modal_modification">
+<button class="close-modal" *ngIf="modal_tarif" (click)="clear()">&times;</button>
+<div class="inscription" *ngIf="modal_tarif">
     <div class="verify-container">
         <div class="verify-content">
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
-                <p>Information utilisateur</p>
-                <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
-                    <div class="form-group">
-                        <label for="nom">Nom *:</label>
-                        <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname">
-                    </div>
+                <p>Choisir un tarif avant inscription</p>
 
-                    <div class="form-group">
-                        <label for="prenom">Prénom *:</label>
-                        <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname">
+                <div class="tarif">
+                    <div class="produit" *ngFor="let produit of listTarif" (click)="clickTarif(produit.id)">
+                        <div class="card">
+                            <!-- Vous pouvez ajouter ici une image du produit -->
+                            <h6> Titre : {{produit.libelle}}</h6>
+                            <h6>Prix : {{produit.price}}</h6>
+                            <h6>Nombre de crédit : {{produit.credit}}</h6>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="email">Email *:</label>
-                        <input type="email" id="email" formControlName="email" [(ngModel)]="users.email">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Téléphone *:</label>
-                        <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone">
-                    </div>
-                    <!-- <div class="form-group">
-                        <label for="phone">Mot de passe *:</label>
-                        <input type="password" id="password" formControlName="password" [(ngModel)]="users.password">
-                    </div> -->
-                    <!-- ... Vos champs d'inscription existants ... -->
-                    <button type="submit">Mise à jour</button>
-                </form><br>
+                </div>
             </div>
         </div>
     </div>
@@ -224,20 +217,35 @@
 
 <!-- fin -->
 
+
+<!-- modal des grilles tarifaires -->
+
+<button class="close-modal" *ngIf="modal_modification" (click)="clear()">&times;</button>
+<div class="inscription" *ngIf="modal_modification">
+    <div class="verify-container">
+        <div class="verify-content">
+            <!-- Formulaire d'inscription -->
+            <div class="verify-commande">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- fin grille tarifaires -->
 <button *ngIf="loggedInUser" id="username" (click)="open_modal_modification()">
     <p style="font-size: 25px;">{{ loggedInUser.lastname }}&nbsp; {{ loggedInUser.firstname }}</p>
-
-    <!-- <p>{{ loggedInUser.lastname }} &timesb; {{ loggedInUser.firstname }}</p> -->
-    <!-- Ajoutez d'autres champs selon les données de votre utilisateur -->
 </button>
 <!-- fin Bouton inscription -->
-
 
 <button class="logout" *ngIf="loggedInUser"> <i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</button>
 
 <button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
 
-<button *ngIf="!loggedInUser" class="register" (click)="open_register()"> <img src="../assets/lock.png" alt="register"></button>
+<div class="logout">
+    <button *ngIf="!loggedInUser" (click)="open_inscription()" class="connexion"> Connexion</button> <button *ngIf="!loggedInUser" class="inscriptions" (click)="open_register()"> Inscription</button>
+</div>
 <button class="shopping-cart-btn" (click)="openCartView()"><span class="count"
     *ngIf="carts.length > 0">{{carts.length}}</span>
   <img src="../assets/add-to-cart.png" alt="Panier">

@@ -10,6 +10,7 @@ export const environment = {
     api: "http://31.207.35.25:8000",
     token: '',
     user_id: 0,
+    tarif_id: 0,
   // apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
    pageItemCount: 500,
    pharmacies: [

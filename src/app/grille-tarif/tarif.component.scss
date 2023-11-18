@@ -1,6 +1,6 @@
 .close-modal {
     position: fixed;
-    top: 5rem;
+    top: 2rem;
     right: 2rem;
     width: 50px;
     height: 50px;
@@ -93,41 +93,6 @@
     font-size: 3.0em;
     box-shadow: 1px 0.5px 20px #00000025;
     z-index: 99999999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    outline: none;
-    font-size: small;
-}
-
-.connexion {
-    position: fixed;
-    top: 2rem;
-    right: 5px;
-    width: 100px;
-    height: 45px;
-    border-radius: 100px;
-    background-color: #27318D;
-    color: black;
-    font-size: 3.0em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    outline: none;
-    font-size: small;
-}
-
-.inscriptions {
-    position: fixed;
-    top: 2rem;
-    width: 100px;
-    height: 45px;
-    border-radius: 100px;
-    background-color: white;
-    color: black;
-    font-size: 3.0em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -526,65 +491,6 @@
     }
 }
 
-.tarif {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 2rem;
-    .produit {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-        width: 300px;
-        max-width: 100%;
-        box-shadow: 1px 0.5px 10px #00000025;
-        padding: 1rem;
-        h6 {
-            text-align: center;
-            color: #27318D;
-            font-size: 1.0em;
-            padding-bottom: 1rem;
-        }
-        button {
-            width: 100%;
-            background: transparent;
-            border: 1px solid #27318D;
-            color: #27318D;
-            border-radius: 100px;
-            padding: 0.5rem;
-            font-weight: bold;
-            margin-top: 2rem;
-            transition: 0.4s;
-        }
-        .gray {
-            font-size: 0.9em;
-            font-weight: 200;
-            text-align: center;
-            color: #777;
-        }
-        button:hover {
-            cursor: pointer;
-            background: #27318D;
-            color: white;
-        }
-        .img-container {
-            width: 200px;
-            height: 200px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            img {
-                width: 200px;
-            }
-        }
-    }
-}
-
 button {
     transition: 0.4s;
 }
@@ -759,26 +665,4 @@ button:hover {
         padding: 0.5rem 1rem;
         border-radius: 4px;
     }
-}
-
-.tarif {
-    max-height: 400px;
-    /* Ajustez la hauteur maximale selon vos besoins */
-    overflow-y: auto;
-    /* Ajoute une barre de défilement vertical si nécessaire */
-}
-
-.produit {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -5px;
-}
-
-.card {
-    width: calc(70% - 10px);
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
