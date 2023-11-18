@@ -39,10 +39,8 @@ export class EpharmaService {
     })
   }
 
-  getSubscribeCompte(idtarif: number, idcompte: number){
-    return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, {
-      rate_id: idtarif
-    });
+  getSubscribeCompte(idcompte: number, formData: any){
+    return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, formData);
   }
 
 
