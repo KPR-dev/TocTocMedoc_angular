@@ -47,7 +47,7 @@
                         <p class="gray">{{produit.code_table ? 'Sous ordonnance' : ''}}</p>
                         <div class="row">
 
-                            <button (click)="verify(produit.CIP)">Vérifier</button>
+                            <button *ngIf="isLoggedIn"  (click)="verify(produit.CIP)">Vérifier</button>
                         </div>
                     </div>
                 </div>

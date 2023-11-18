@@ -101,6 +101,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.loadAllProduit();
     this.loadAllTarif()
+    this.checkAuthenticationStatus();
   }
 
   loadAllProduit() {
@@ -127,6 +128,11 @@ export class AppComponent implements OnInit {
         console.log(err);
       }
     })
+  }
+  checkAuthenticationStatus() {
+    const authToken = environment.token
+    console.log('authToken =', authToken)
+    this.isLoggedIn = !!authToken;
   }
 
   openCartView() {
@@ -246,15 +252,12 @@ export class AppComponent implements OnInit {
                 console.log('idcompte =', response.id)
                 console.log('idtarif =', environment.tarif_id)
 
-                const formData = {
-                  rate_id: environment.tarif_id
-                }
-                this.epharmaService.getSubscribeCompte(response.id, formData).subscribe({
+                this.epharmaService.getSubscribeCompte(response.id, environment.tarif_id.toString()).subscribe({
                   next: (response: any) => {
                     console.log('compte subscribe =', response);
                   },
                   error: (error) => {
-                    console.error('Erreur lors d enrefistrement :', error);
+                    console.error('Erreur lors d enregistrement :', error);
                   }
                 });
               }
@@ -264,8 +267,8 @@ export class AppComponent implements OnInit {
             console.error('Erreur lors d enrefistrement :', error);
           }
         });
-      } catch {
-        // ... (votre bloc catch existant)
+      } catch(error) {
+       console.error('errer du catch :', error);
       }
     } else {
       console.error('remplir le formulaire');
@@ -303,6 +306,8 @@ export class AppComponent implements OnInit {
             environment.token = response.token.access_token
             environment.user_id = response.user.id
             console.log('token = ', environment.token)
+            this.isLoggedIn = response.token.access_token
+            console.log('isLoggedIn =', this.isLoggedIn)
             this.modal_register = false
             alert('Connexion reussie !!!')
             this.toggleForms()

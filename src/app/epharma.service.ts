@@ -39,11 +39,12 @@ export class EpharmaService {
     })
   }
 
-  getSubscribeCompte(idcompte: number, formData: any){
-    return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, formData);
+  getSubscribeCompte(idcompte: number, rateId: string) {
+    const params = { rate_id: rateId };  // je cree un objet avec le paramètre de requête
+    const options = { params };  // j'ajoute les paramètres à la configuration de la requête
+
+    return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, null, options);
   }
-
-
 
   //Route pour add  les produits disponible
   getDisponibiliteProduit(cip: any, pharmacy: any) {
