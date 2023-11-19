@@ -67,6 +67,7 @@ export class AppComponent implements OnInit {
   selectedPharmacy: any;
   commandeResult: any = { start: false };
 
+
   quantity!: number;
   buyer!: string;
   buyerPhone!: string;
@@ -85,8 +86,11 @@ export class AppComponent implements OnInit {
   showCart: boolean = false;
 
   modal_register: boolean = false;
+  modal: boolean = false;
   modal_modification: boolean = false;
+  formInscription: boolean = false;
   modal_tarif: boolean = false;
+  loader: boolean = false;
   loginFormVisible: boolean = false;
   InscriptionFormVisible: boolean = false;
   registerFormVisible: boolean = false;
@@ -102,6 +106,19 @@ export class AppComponent implements OnInit {
     this.loadAllProduit();
     this.loadAllTarif()
     this.checkAuthenticationStatus();
+    setTimeout(() => {
+      this.hidePopup();
+    }, 5000);
+  }
+
+  hidePopup(): void {
+    // Obtenez la référence du popup par son ID
+    const popup = document.getElementById('popup1');
+
+    // Masquez le popup en définissant la classe "hidden" (à définir dans votre CSS)
+    if (popup) {
+      popup.classList.add('hidden');
+    }
   }
 
   loadAllProduit() {
@@ -198,6 +215,7 @@ export class AppComponent implements OnInit {
     console.log('tarif = ',idTarif)
     environment.tarif_id = idTarif
     this.modal_tarif = false
+    this.formInscription = true
   }
 
   // submitCompteUser(){
@@ -246,7 +264,10 @@ export class AppComponent implements OnInit {
             console.log('enregistrement réussi =', response);
             this.videForm()
             alert('Enregistrement avec success !')
-            this.modal_register = false
+            this.formInscription = false
+            this.modal_register = true
+            this.formInscription = false
+            this.loader = true
             this.epharmaService.getUserId(response.id).subscribe({
               next: (response: any) => {
                 console.log('idcompte =', response.id)
@@ -255,6 +276,7 @@ export class AppComponent implements OnInit {
                 this.epharmaService.getSubscribeCompte(response.id, environment.tarif_id.toString()).subscribe({
                   next: (response: any) => {
                     console.log('compte subscribe =', response);
+                    this.loader = false
                   },
                   error: (error) => {
                     console.error('Erreur lors d enregistrement :', error);
@@ -265,6 +287,7 @@ export class AppComponent implements OnInit {
           },
           error: (error) => {
             console.error('Erreur lors d enrefistrement :', error);
+            alert('Erreur lors d enrefistrement')
           }
         });
       } catch(error) {
@@ -347,12 +370,13 @@ export class AppComponent implements OnInit {
       this.epharmaService.updateUser(environment.user_id, formData).subscribe({
         next: (response: any) => {
           console.log('modification réussi =', response);
-
+          alert('Utilisateur mise à jour')
           this.modal_modification = false
 
         },
         error: (error) => {
           console.error('Erreur lors de la modification :', error);
+          alert('Erreur lors de la mise à jour')
         }
       });
     } catch {

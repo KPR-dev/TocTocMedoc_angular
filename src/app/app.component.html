@@ -14,7 +14,7 @@
             <p>Cette solution vous permet d'avoir la disponibilité des produits et faire des réservations dans toutes les pharmacies possédant le logiciel ePharma</p>
 
             <p>
-                <a href="http://epharma.ga">En savoir plus</a>
+                <a href="https://epharma.ga">En savoir plus</a>
             </p>
         </header>
 
@@ -24,6 +24,16 @@
             <div class="form-group-search">
                 <input type="search" name="search" id="search" (keyup)="applyFilter($event)" placeholder="Trouver un produit...">
             </div>
+
+            <!-- <div id="popup1" class="overlay">
+                <div class="popup">
+                    <h2>Here i am</h2>
+                    <a class="close" href="#">&times;</a>
+                    <div class="content">
+                        Thank to pop me out of that button, but now i'm done so you can close this window.
+                    </div>
+                </div>
+            </div> -->
 
             <!-- loader -->
             <div class="loader-container" *ngIf="filteredProduit.length == 0 && hasResult == false">
@@ -46,8 +56,7 @@
                         <!-- <p class="gray">{{produit.prix_vente}} FCFA</p> -->
                         <p class="gray">{{produit.code_table ? 'Sous ordonnance' : ''}}</p>
                         <div class="row">
-
-                            <button *ngIf="isLoggedIn"  (click)="verify(produit.CIP)">Vérifier</button>
+                            <button *ngIf="isLoggedIn" (click)="verify(produit.CIP)">Vérifier</button>
                         </div>
                     </div>
                 </div>
@@ -61,12 +70,14 @@
 
 <button class="close-modal" *ngIf="selectedProduit || loginFormVisible || modal_register" (click)="clear()">&times;</button>
 <div class="inscription" *ngIf="modal_register">
-    <div class="verify-container">
+    <div class="loader-container" *ngIf="loader">
+        <div class="loader"></div>
+    </div>
+    <div class="verify-container" *ngIf="formInscription">
         <!-- loader -->
-        <div class="loader-container">
-            <div class="loader"></div>
-        </div>
-        <div class="verify-content">
+
+        <div class="verify-content" *ngIf="formInscription">
+
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
                 <p>Veuillez remplir le formulaire d'inscription!</p>
@@ -133,6 +144,11 @@
     <div class="verify-container">
         <button (click)="toggleForms()" id="change">X</button>
         <div class="verify-content">
+            <div id="popup1" class="overlay">
+                <div class="popup">
+                    <h2>Connexion avec success !!!</h2>
+                </div>
+            </div>
             <!-- Formulaire de connexion -->
             <div class="verify-commande">
                 <p>Veuillez remplir le formulaire de connexion!</p>
@@ -218,15 +234,43 @@
 <!-- fin -->
 
 
-<!-- modal des grilles tarifaires -->
+<!-- modal des modification user -->
 
 <button class="close-modal" *ngIf="modal_modification" (click)="clear()">&times;</button>
 <div class="inscription" *ngIf="modal_modification">
     <div class="verify-container">
         <div class="verify-content">
-            <!-- Formulaire d'inscription -->
+            <!-- Formulaire -->
             <div class="verify-commande">
+                <p>Information utilisateur</p>
+                <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
+                    <div class="form-group">
+                        <label for="nom">Nom *:</label>
+                        <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname">
+                    </div>
 
+                    <div class="form-group">
+                        <label for="prenom">Prénom *:</label>
+                        <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *:</label>
+                        <input type="email" id="email" formControlName="email" [(ngModel)]="users.email">
+                        <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
+                            Email non valide
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Téléphone *:</label>
+                        <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone">
+                        <div style="color: red;" *ngIf="phone.errors?.['required']&& phone.touched">
+                            Veuillez renseigner votre numero télephone!
+                        </div>
+                    </div>
+                    <!-- ... Vos champs d'inscription existants ... -->
+                    <button type="submit">Mise à jour</button>
+                </form><br>
 
             </div>
         </div>
@@ -243,7 +287,7 @@
 
 <button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
 
-<div class="logout">
+<div class="logout" *ngIf="!loggedInUser">
     <button *ngIf="!loggedInUser" (click)="open_inscription()" class="connexion"> Connexion</button> <button *ngIf="!loggedInUser" class="inscriptions" (click)="open_register()"> Inscription</button>
 </div>
 <button class="shopping-cart-btn" (click)="openCartView()"><span class="count"
