@@ -89,6 +89,8 @@ export class AppComponent implements OnInit {
   modal: boolean = false;
   modal_modification: boolean = false;
   formInscription: boolean = false;
+  formConnexion: boolean = false;
+  formModification: boolean = false;
   modal_tarif: boolean = false;
   loader: boolean = false;
   loginFormVisible: boolean = false;
@@ -96,7 +98,12 @@ export class AppComponent implements OnInit {
   registerFormVisible: boolean = false;
   ResetPassword: boolean = false;
   isLoggedIn: boolean = false;
-
+  showSnackbar: boolean = false;
+  showSnackbar1: boolean = false;
+  showSnackbar2: boolean = false;
+  showSnackbarError: boolean = false;
+  showSnackbarError1: boolean = false;
+  showSnackbarError2: boolean = false;
 
   constructor(private epharmaService: EpharmaService) { }
 
@@ -106,20 +113,15 @@ export class AppComponent implements OnInit {
     this.loadAllProduit();
     this.loadAllTarif()
     this.checkAuthenticationStatus();
-    setTimeout(() => {
-      this.hidePopup();
-    }, 5000);
+    this.showSnackbar = false;
+    this.showSnackbar1 = false;
+    this.showSnackbar2 = false;
+    this.showSnackbarError = false
+    this.showSnackbarError1 = false
+    this.showSnackbarError2 = false
   }
 
-  hidePopup(): void {
-    // Obtenez la référence du popup par son ID
-    const popup = document.getElementById('popup1');
 
-    // Masquez le popup en définissant la classe "hidden" (à définir dans votre CSS)
-    if (popup) {
-      popup.classList.add('hidden');
-    }
-  }
 
   loadAllProduit() {
     this.hasResult = false;
@@ -195,6 +197,7 @@ export class AppComponent implements OnInit {
 
   open_modal_modification(){
     this.modal_modification = true
+    this.formModification = true
     this.epharmaService.getUserId(environment.user_id).subscribe({
       next: (response: any) => {
         console.log('information user =', response);
@@ -244,6 +247,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+  deconnexion(){
+    location.reload();
+  }
+
   submitRegistrationForm() {
     if (this.users.lastname && this.users.firstname && this.users.email && this.users.phone && this.users.password) {
       try {
@@ -263,11 +270,15 @@ export class AppComponent implements OnInit {
           next: (response: any) => {
             console.log('enregistrement réussi =', response);
             this.videForm()
-            alert('Enregistrement avec success !')
+
             this.formInscription = false
             this.modal_register = true
             this.formInscription = false
             this.loader = true
+            this.showSnackbar1 = true;
+            setTimeout(() => {
+              this.showSnackbar1 = false;
+            }, 2000);
             this.epharmaService.getUserId(response.id).subscribe({
               next: (response: any) => {
                 console.log('idcompte =', response.id)
@@ -287,8 +298,11 @@ export class AppComponent implements OnInit {
             })
           },
           error: (error) => {
-            console.error('Erreur lors d enrefistrement :', error);
-            alert('Erreur lors d enrefistrement')
+
+            this.showSnackbarError1 = true;
+            setTimeout(() => {
+              this.showSnackbarError1 = false;
+            }, 2000);
           }
         });
       } catch(error) {
@@ -332,15 +346,24 @@ export class AppComponent implements OnInit {
             console.log('token = ', environment.token)
             this.isLoggedIn = response.token.access_token
             console.log('isLoggedIn =', this.isLoggedIn)
-            this.modal_register = false
-            alert('Connexion reussie !!!')
-            this.toggleForms()
+
+            this.formConnexion = true
+            this.showSnackbar = true;
+            setTimeout(() => {
+              this.showSnackbar = false;
+              this.loginFormVisible = false;
+              this.modal_register = false;
+            }, 2000);
+
             return response.token.access_token
 
           },
           error: (error) => {
-            console.error('Erreur lors de la connexion :', error);
-            alert('Mauvais identifiants')
+
+            this.showSnackbarError = true;
+            setTimeout(() => {
+              this.showSnackbarError = false;
+            }, 2000);
           }
         });
       } catch {
@@ -371,13 +394,21 @@ export class AppComponent implements OnInit {
       this.epharmaService.updateUser(environment.user_id, formData).subscribe({
         next: (response: any) => {
           console.log('modification réussi =', response);
-          alert('Utilisateur mise à jour')
-          this.modal_modification = false
 
+
+          this.showSnackbar2 = true;
+            setTimeout(() => {
+              this.showSnackbar2 = false;
+              this.formModification = false;
+              this.modal_modification = false
+            }, 2000);
         },
         error: (error) => {
-          console.error('Erreur lors de la modification :', error);
-          alert('Erreur lors de la mise à jour')
+
+          this.showSnackbarError2 = true;
+            setTimeout(() => {
+              this.showSnackbarError2 = false;
+            }, 2000);
         }
       });
     } catch {

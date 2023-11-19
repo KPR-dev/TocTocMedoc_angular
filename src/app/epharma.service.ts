@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
@@ -25,7 +25,10 @@ export class EpharmaService {
   }
 
   updateUser(id: number, formData: any) {
-    return this.http.put(`${environment.api}/user/update/${id}`, formData);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${environment.token}`
+    });
+    return this.http.put(`${environment.api}/user/update/${id}`, formData, {headers});
   }
 
   getAllTarif(){

@@ -21,21 +21,21 @@
         <div class="produit-container">
             <p class="search-title">Recherchez des produits sur la page actuelle, utilisez les flèches pour changer de page
             </p>
-            <div class="form-group-search">
-                <input type="search" name="search" id="search" (keyup)="applyFilter($event)" placeholder="Trouver un produit...">
-            </div>
-
-            <!-- <div id="popup1" class="overlay">
+            <!-- popup inetrface -->
+            <!-- <div id="popup1" class="overlay" *ngIf="showSnackbar">
                 <div class="popup">
                     <h2>Here i am</h2>
-                    <a class="close" href="#">&times;</a>
                     <div class="content">
                         Thank to pop me out of that button, but now i'm done so you can close this window.
                     </div>
                 </div>
             </div> -->
 
-            <!-- loader -->
+            <!-- fin popup -->
+            <div class="form-group-search">
+                <input type="search" name="search" id="search" (keyup)="applyFilter($event)" placeholder="Trouver un produit...">
+            </div>
+
             <div class="loader-container" *ngIf="filteredProduit.length == 0 && hasResult == false">
                 <div class="loader"></div>
             </div>
@@ -70,9 +70,22 @@
 
 <button class="close-modal" *ngIf="selectedProduit || loginFormVisible || modal_register" (click)="clear()">&times;</button>
 <div class="inscription" *ngIf="modal_register">
+    <div id="popup1" class="overlay" *ngIf="showSnackbar1">
+        <div class="popup">
+            <h4 style="color: green;">Inscription success !!!</h4>
+        </div>
+    </div>
+
+    <div id="popup1" class="overlay" *ngIf="showSnackbarError1">
+        <div class="popup">
+            <h4 style="color: red;">Erreur lors de l'enregistrement</h4>
+        </div>
+    </div>
+
     <div class="loader-container" *ngIf="loader">
         <div class="loader"></div>
     </div>
+
     <div class="verify-container" *ngIf="formInscription">
         <!-- loader -->
 
@@ -141,14 +154,20 @@
     </div>
 </div>
 <div class="inscription" *ngIf="loginFormVisible">
-    <div class="verify-container">
+    <div id="popup1" class="overlay" *ngIf="showSnackbar">
+        <div class="popup">
+            <h4 style="color: green;">Connexion success !!!</h4>
+        </div>
+    </div>
+    <div id="popup1" class="overlay" *ngIf="showSnackbarError">
+        <div class="popup">
+            <h4 style="color: red;">Mauvais identifiant !!!</h4>
+        </div>
+    </div>
+    <div class="verify-container" *ngIf="formConnexion === false">
         <button (click)="toggleForms()" id="change">X</button>
         <div class="verify-content">
-            <div id="popup1" class="overlay">
-                <div class="popup">
-                    <h2>Connexion avec success !!!</h2>
-                </div>
-            </div>
+
             <!-- Formulaire de connexion -->
             <div class="verify-commande">
                 <p>Veuillez remplir le formulaire de connexion!</p>
@@ -238,7 +257,17 @@
 
 <button class="close-modal" *ngIf="modal_modification" (click)="clear()">&times;</button>
 <div class="inscription" *ngIf="modal_modification">
-    <div class="verify-container">
+    <div id="popup1" class="overlay" *ngIf="showSnackbar2">
+        <div class="popup">
+            <h4 style="color: green;">Mise à jour success !!!</h4>
+        </div>
+    </div>
+    <div id="popup1" class="overlay" *ngIf="showSnackbarError2">
+        <div class="popup">
+            <h4 style="color: red;">Erreur lors de la modification</h4>
+        </div>
+    </div>
+    <div class="verify-container" *ngIf="formModification">
         <div class="verify-content">
             <!-- Formulaire -->
             <div class="verify-commande">
@@ -283,7 +312,7 @@
 </button>
 <!-- fin Bouton inscription -->
 
-<button class="logout" *ngIf="loggedInUser"> <i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</button>
+<button class="logout" *ngIf="loggedInUser" (click)="deconnexion()"> <i class="fa fa-sign-out" aria-hidden="true" ></i> Déconnexion</button>
 
 <button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
 
