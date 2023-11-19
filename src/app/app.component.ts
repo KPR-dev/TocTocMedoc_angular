@@ -277,6 +277,7 @@ export class AppComponent implements OnInit {
                   next: (response: any) => {
                     console.log('compte subscribe =', response);
                     this.loader = false
+                    this.modal_register = false
                   },
                   error: (error) => {
                     console.error('Erreur lors d enregistrement :', error);
