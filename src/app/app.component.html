@@ -60,7 +60,7 @@
                             <button *ngIf="isLoggedIn" (click)="verify(produit.CIP)">Vérifier</button>
                         </div>
                         <div class="row">
-                            <button *ngIf="!isLoggedIn" (click)="verify(produit.CIP)" disabled class="btn btn-secondary">Vérifier</button>
+                            <button *ngIf="!isLoggedIn" (click)="open_inscription()">Vérifier</button>
                         </div>
                     </div>
                 </div>
