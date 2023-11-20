@@ -35,11 +35,8 @@ export class EpharmaService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${environment.token}`
     });
-    const params = {
-      query: null,
-      new_password: password };  // je cree un objet avec le paramètre de requête
-    const options = { params };
-    return this.http.put(`${environment.api}/user/update_password/${id}`, options, {headers});
+
+    return this.http.put(`${environment.api}/user/update_password/${id}?new_password=`, password, {headers});
   }
 
   getAllTarif(){
