@@ -31,12 +31,12 @@ export class EpharmaService {
     return this.http.put(`${environment.api}/user/update/${id}`, formData, {headers});
   }
 
-  updateMdp(id: number, password: string){
+  updateMdp(id: number, password: any){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${environment.token}`
     });
-
-    return this.http.put(`${environment.api}/user/update_password/${id}?new_password=`, password, {headers});
+    console.log('mpd user verif', password)
+    return this.http.put(`${environment.api}/user/update_password/${id}?new_password=${password}`,null, {headers});
   }
 
   getAllTarif(){
@@ -55,6 +55,18 @@ export class EpharmaService {
     const options = { params };  // j'ajoute les paramètres à la configuration de la requête
 
     return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, null, options);
+  }
+
+  getLibelleTarif(libelle: string){
+    return this.http.get(`${environment.apiURL}/price_list/get_by_libelle/${libelle}`, {
+
+    })
+  }
+
+  getAllPriceCredit(){
+    return this.http.get(`${environment.apiURL}/price_list/all`, {
+
+    })
   }
 
   //Route pour add  les produits disponible

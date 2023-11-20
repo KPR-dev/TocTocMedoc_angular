@@ -82,7 +82,7 @@
 
     <div id="popup1" class="overlay" *ngIf="showSnackbarError1">
         <div class="popup">
-            <h4 style="color: red;">Erreur lors de l'enregistrement</h4>
+            <h4 style="color: red;">{{smserror}}</h4>
         </div>
     </div>
 
@@ -148,7 +148,7 @@
 
                                 <div class="form-group mb-3">
 
-                                    <input type="password" id="confirm_password" formControlName="confirm_password" class="form-control" placeholder="Confirmer le mot de passe">
+                                    <input type="password" id="confirm_password" formControlName="confirm_password" [(ngModel)]="users.confirm_password" class="form-control" placeholder="Confirmer le mot de passe">
                                     <div style="color: red;" *ngIf="confirm_password.errors?.['required'] && confirm_password.touched">
                                         Veuillez renseigner votre mot de passe!
                                     </div>
@@ -175,7 +175,7 @@
                             </div>
                             <!-- <button id="username">Annuler</button> <button id="username" class="btn btn-primary">Accepter</button> -->
                         </div>
-                        <button type="button" id="reset" class="btn btn-secondary">Annuler</button> <button type="submit" id="reset">Accepter</button>
+                        <button type="button" id="reset" class="btn btn-secondary" (click)="annulerText()">Annuler</button> <button type="submit" id="reset">Accepter</button>
                     </div>
                 </form>
 
@@ -193,7 +193,7 @@
     </div>
     <div id="popup1" class="overlay" *ngIf="showSnackbarError">
         <div class="popup">
-            <h4 style="color: red;">Mauvais identifiant !!!</h4>
+            <h4 style="color: red;">{{smserror}}</h4>
         </div>
     </div>
     <!-- Formulaire de connexion -->
@@ -335,7 +335,7 @@
     </div>
     <div id="popup1" class="overlay" *ngIf="showSnackbarError2">
         <div class="popup">
-            <h4 style="color: red;">Erreur lors de la modification</h4>
+            <h4 style="color: red;">{{smserror}}</h4>
         </div>
     </div>
     <div class="verify-container" *ngIf="formModification1">
@@ -390,10 +390,10 @@
     </div>
     <div id="popup1" class="overlay" *ngIf="showSnackbarError3">
         <div class="popup">
-            <h4 style="color: red;">Erreur lors de la modification</h4>
+            <h4 style="color: red;">{{smserror}}</h4>
         </div>
     </div>
-    <div class="verify-container">
+    <div class="verify-container" *ngIf="showMdpForm">
         <button (click)="clearModification()" id="change">X</button>
         <div class="verify-content">
             <!-- Formulaire -->
@@ -401,13 +401,10 @@
                 <p>Information utilisateur</p>
                 <form [formGroup]="registerForm" (ngSubmit)="updatePassword()">
                     <div class="form-group">
-                        <input type="password" [(ngModel)]="users.ancien_password" id="ancien_password" name="ancien_password" placeholder="Entrez le mot de passe actuel">
+                        <input type="password" id="password" formControlName="password" class="form-control" placeholder="Nouveau mot de passe">
                     </div>
                     <div class="form-group">
-                        <input type="password" [(ngModel)]="users.password" id="password" name="password" required placeholder="Nouveau mot de passe">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" [(ngModel)]="users.confirm_password" id="confirm_password" name="confirm_password" required placeholder="Confirmez le mot de passe">
+                        <input type="password" formControlName="confirm_password" id="confirm_password" required placeholder="Confirmez le mot de passe">
                     </div>
                     <button type="submit">Changer</button>
                 </form><br>

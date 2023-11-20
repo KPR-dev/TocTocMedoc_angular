@@ -60,6 +60,7 @@ export class AppComponent implements OnInit {
 
   produits: any;
   filteredProduit: any[] = [];
+  grille: any;
 
   listTarif: any[] = [];
   selectedProduit: any;
@@ -72,6 +73,7 @@ export class AppComponent implements OnInit {
   buyer!: string;
   buyerPhone!: string;
   buyerEmail!: string;
+  smserror: any;
 
   disponibilites: any[] = [];
 
@@ -84,6 +86,7 @@ export class AppComponent implements OnInit {
   carts: Cart[] = [];
 
   showCart: boolean = false;
+  showMdpForm: boolean = false;
   changeMdp: boolean = false;
   modal_register: boolean = false;
   modal_text: boolean = false;
@@ -112,6 +115,7 @@ export class AppComponent implements OnInit {
   modal_modification1: boolean = false;
   formModification1: boolean = false;
 
+
   constructor(private epharmaService: EpharmaService, private router: Router) { }
 
 
@@ -120,6 +124,7 @@ export class AppComponent implements OnInit {
     this.loadAllProduit();
     this.loadAllTarif()
     this.checkAuthenticationStatus();
+    this.grilleTarifaire()
     this.showSnackbar = false;
     this.showSnackbar1 = false;
     this.showSnackbar2 = false;
@@ -143,6 +148,18 @@ export class AppComponent implements OnInit {
         this.hasResult = true;
         this.pageCount = response.pageCount;
         this.filteredProduit = this.produits.items;
+      }, error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  grilleTarifaire(){
+    this.hasResult = false;
+    this.grille = []
+    this.epharmaService.getAllPriceCredit().subscribe({
+      next: (response: any) => {
+        this.grille = response;
       }, error: (err) => {
         console.log(err);
       }
@@ -228,31 +245,54 @@ export class AppComponent implements OnInit {
   }
   updatePassword(){
 
-    const new_password = this.users.password
+    console.log(this.password.value)
+    this.users.password = this.password.value
+    if (this.password.value === this.confirm_password.value) {
+      this.epharmaService.updateMdp(environment.user_id, this.users.password).subscribe({
+        next: (response: any) => {
+          console.log('mdp user =', response);
+          this.showMdpForm = false
+          this.showSnackbar3 = true;
+          setTimeout(() => {
+            this.showSnackbar3 = false;
+            this.changeMdp = false
+          }, 2000);
 
-    this.epharmaService.updateMdp(environment.user_id, 'azerty').subscribe({
-      next: (response: any) => {
-        console.log('mdp user =', response);
-        this.changeMdp = false
-        this.showSnackbar3 = true;
-        setTimeout(() => {
-          this.showSnackbar3 = false;
-        }, 2000);
-        return true
-      },
-      error: (error) => {
-        console.error('Erreur lors de la connexion :', error);
-        this.showSnackbarError3 = true;
-        setTimeout(() => {
-          this.showSnackbarError3 = false;
-        }, 2000);
-      }
-    });
+          return true
+        },
+        error: (error) => {
+          this.smserror = error.error.detail
+          this.showSnackbarError3 = true;
+          setTimeout(() => {
+            this.showSnackbarError3 = false;
+          }, 2000);
+        }
+      });
+    }
+    else{
+      console.log('les mots de passe ne sont pas identique !')
+      this.smserror = "les mots de passe ne sont pas identique !";
+      setTimeout(() => {
+        this.showSnackbarError3 = false;
+      }, 2000);
+    }
   }
 
   forminvisible(){
-    this.form1 = false
-    this.contrat = true
+
+    if (this.users.password === this.users.confirm_password) {
+      this.form1 = false
+      this.contrat = true
+    }
+    else{
+
+      this.smserror = "les mots de passe ne sont pas identique !"
+      this.showSnackbarError1 = true;
+      setTimeout(() => {
+        this.showSnackbarError1 = false;
+      }, 2000);
+    }
+
   }
 
   profil(){
@@ -265,6 +305,7 @@ export class AppComponent implements OnInit {
     environment.tarif_id = idTarif
     this.modal_tarif = false
     this.formInscription = true
+    this.contrat = false
     this.modal_register = false
     this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
       next: (response: any) => {
@@ -318,45 +359,51 @@ export class AppComponent implements OnInit {
           phone: this.users.phone,
           role: 'USER',
           password: this.users.password,
+
         };
 
 
         console.log('users =', formData);
 
-        this.epharmaService.AddUser(formData).subscribe({
-          next: (response: any) => {
-            console.log('enregistrement réussi =', response);
-            this.videForm()
+        if (this.users.password === this.users.confirm_password) {
+          this.epharmaService.AddUser(formData).subscribe({
+            next: (response: any) => {
+              console.log('enregistrement réussi =', response);
+              this.videForm()
 
-            this.formInscription = false
-            this.formInscription = false
-            this.loader = true
-            this.showSnackbar1 = true;
-            setTimeout(() => {
-              this.showSnackbar1 = false;
-            }, 2000);
+              this.formInscription = false
+              this.formInscription = false
+              this.loader = true
+              this.showSnackbar1 = true;
+              setTimeout(() => {
+                this.showSnackbar1 = false;
+              }, 2000);
 
-            this.modal_text = true
-            console.log('user', environment.user_id)
-            this.epharmaService.getUserId(response.id).subscribe({
-              next: (response: any) => {
-                console.log('idcompte =', response.id)
-                environment.id_compte = response.id
-                setTimeout(() => {
-                  this.modal_tarif = true
-                }, 1000);
+              this.modal_text = true
+              console.log('user', environment.user_id)
+              this.epharmaService.getUserId(response.id).subscribe({
+                next: (response: any) => {
+                  console.log('idcompte =', response.id)
+                  environment.id_compte = response.id
+                  setTimeout(() => {
+                    this.modal_tarif = true
+                  }, 1000);
 
-              }
-            })
-          },
-          error: (error) => {
-
-            this.showSnackbarError1 = true;
-            setTimeout(() => {
-              this.showSnackbarError1 = false;
-            }, 2000);
-          }
-        });
+                }
+              })
+            },
+            error: (error) => {
+              this.smserror = error.error.detail
+              this.showSnackbarError1 = true;
+              setTimeout(() => {
+                this.showSnackbarError1 = false;
+              }, 2000);
+            }
+          });
+        }
+        else{
+          console.log('incorrect mdp !!!')
+        }
       } catch(error) {
        console.error('errer du catch :', error);
       }
@@ -421,9 +468,12 @@ export class AppComponent implements OnInit {
           error: (error) => {
 
             this.showSnackbarError = true;
+            this.smserror = error.error.detail;
             setTimeout(() => {
+
               this.showSnackbarError = false;
             }, 2000);
+
           }
         });
       } catch {
@@ -464,7 +514,7 @@ export class AppComponent implements OnInit {
             }, 2000);
         },
         error: (error) => {
-
+          this.smserror = error.error.detail
           this.showSnackbarError2 = true;
             setTimeout(() => {
               this.showSnackbarError2 = false;
@@ -486,6 +536,10 @@ export class AppComponent implements OnInit {
 
   }
   //Ma fonction
+  clickVerify(){
+
+  }
+
 
   verify(cip: any) {
     this.selectedProduit = this.filteredProduit.find(p => p.CIP === cip);
@@ -582,6 +636,7 @@ export class AppComponent implements OnInit {
 
   open_mdp(){
     this.changeMdp = true
+    this.showMdpForm = true
   }
 
   clear() {
