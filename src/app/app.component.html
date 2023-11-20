@@ -15,6 +15,7 @@
 
             <p>
                 <a href="https://epharma.ga">En savoir plus</a>
+
             </p>
         </header>
 
@@ -58,6 +59,9 @@
                         <div class="row">
                             <button *ngIf="isLoggedIn" (click)="verify(produit.CIP)">Vérifier</button>
                         </div>
+                        <div class="row">
+                            <button *ngIf="!isLoggedIn" (click)="verify(produit.CIP)" disabled class="btn btn-secondary">Vérifier</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,70 +90,98 @@
         <div class="loader"></div>
     </div>
 
-    <div class="verify-container" *ngIf="formInscription">
+    <div class="verify-container" *ngIf="formInscription" style="max-width: 70%;">
         <!-- loader -->
 
         <div class="verify-content" *ngIf="formInscription">
 
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
-                <p>Veuillez remplir le formulaire d'inscription!</p>
+                <h3 *ngIf="form1">Veuillez remplir le formulaire d'inscription!</h3>
                 <form [formGroup]="registerForm" (ngSubmit)="submitRegistrationForm()">
-                    <div class="form-group">
-                        <label for="nom">Nom *:</label>
-                        <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname">
-                        <div style="color: red;" *ngIf="lastname.errors?.['required']&& lastname.touched">
-                            Veuillez renseigner votre noms!
-                        </div>
-                    </div>
+                    <div class="d-flex" *ngIf="form1">
+                        <div class="mx-2 px-4" style="margin-top: 15%;">
+                            <div class="row">
+                                <div class="col-6 mb-4">
 
-                    <div class="form-group">
-                        <label for="prenom">Prénom *:</label>
-                        <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname">
-                        <div style="color: red;" *ngIf="firstname.errors?.['required']&& firstname.touched">
-                            Veuillez renseigner votre prénom!
-                        </div>
-                    </div>
+                                    <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control" placeholder="Entrez votre nom">
+                                    <div style="color: red;" *ngIf="lastname.errors?.['required'] && lastname.touched">
+                                        Veuillez renseigner votre nom!
+                                    </div>
+                                </div>
 
-                    <div class="form-group">
-                        <label for="email">Email *:</label>
-                        <input type="email" id="email" formControlName="email" [(ngModel)]="users.email">
-                        <div style="color: red;" *ngIf="email.errors?.['required'] && (email.dirty || email.touched)">
-                            Veuillez renseigner votre email!
+                                <div class="col-6 mb-4">
+
+                                    <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname" class="form-control" placeholder="Entrez votre prénom">
+                                    <div style="color: red;" *ngIf="firstname.errors?.['required'] && firstname.touched">
+                                        Veuillez renseigner votre prénom!
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 mb-4">
+
+                                    <input type="email" id="email" formControlName="email" [(ngModel)]="users.email" class="form-control" placeholder="Votre adresse email">
+                                    <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
+                                        Email non valide
+                                    </div>
+                                </div>
+
+                                <div class="col-6 mb-4">
+
+                                    <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone" class="form-control" placeholder="Votre numéro de téléphone">
+                                    <div style="color: red;" *ngIf="phone.errors?.['required'] && phone.touched">
+                                        Veuillez renseigner votre numéro de téléphone!
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="form-group mb-3">
+
+                                    <input type="password" id="password" formControlName="password" [(ngModel)]="users.password" class="form-control" placeholder="Mot de passe">
+                                    <div style="color: red;" *ngIf="password.errors?.['required'] && password.touched">
+                                        Veuillez renseigner votre mot de passe!
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+
+                                    <input type="password" id="confirm_password" formControlName="confirm_password" class="form-control" placeholder="Confirmer le mot de passe">
+                                    <div style="color: red;" *ngIf="confirm_password.errors?.['required'] && confirm_password.touched">
+                                        Veuillez renseigner votre mot de passe!
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id="reset" (click)="forminvisible()">S'inscrire</button>
                         </div>
-                        <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
-                            Email non valide
+
+                        <div>
+                            <img src="../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png" alt="" width="300px" height="500px" class="rounded">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="phone">Téléphone *:</label>
-                        <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone">
-                        <div style="color: red;" *ngIf="phone.errors?.['required']&& phone.touched">
-                            Veuillez renseigner votre numero télephone!
+                    <div class="verify-container" style="margin-left: 20%;" *ngIf="contrat">
+                        <div class="verify-content">
+                            <!-- Formulaire d'inscription -->
+                            <div class="verify-commande">
+                                <p>
+                                    L'utilisation du service fourni par TocTocMedoc est soumise aux conditions suivantes. En acceptant ces termes, l'utilisateur s'engage à ne pas violer les lois applicables et à respecter les droits des autres utilisateurs du service. L'utilisateur est
+                                    seul responsable de toutes les activités associées à son compte. TocTocMedoc se réserve le droit de suspendre ou de résilier le compte d'un utilisateur en cas de violation flagrante de ces conditions. Les informations
+                                    fournies par l'utilisateur lors de l'inscription doivent être exactes et complètes. TocTocMedoc peut mettre à jour les termes du contrat d'utilisation à tout moment, et l'utilisateur sera informé de ces modifications.
+                                    L'utilisation continue du service après de telles modifications constitue l'acceptation des nouveaux termes.
+                                </p>
+                            </div>
+                            <!-- <button id="username">Annuler</button> <button id="username" class="btn btn-primary">Accepter</button> -->
                         </div>
+                        <button type="button" id="reset" class="btn btn-secondary">Annuler</button> <button type="submit" id="reset">Accepter</button>
                     </div>
-                    <div class="form-group">
-                        <label for="phone">Mot de passe *:</label>
-                        <input type="password" id="password" formControlName="password" [(ngModel)]="users.password">
-                        <div style="color: red;" *ngIf="password.errors?.['required']&& password.touched">
-                            Veuillez renseigner votre mot de passe!
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Confirmer le mot de passe *:</label>
-                        <input type="password" id="confirm_password" formControlName="confirm_password">
-                        <div style="color: red;" *ngIf="confirm_password.errors?.['required']&& phone.touched">
-                            Veuillez renseigner votre mot de passe!
-                        </div>
-                    </div>
-                    <!-- ... Vos champs d'inscription existants ... -->
-                    <button type="submit" [disabled]="registerForm.invalid" id="reset">S'inscrire</button>
-                </form><br>
-                <!-- <small style="color: red;">* champs obligatoire</small> -->
-                <br>
-                <!--
-                <button (click)="toggleForms()" id="change">Connectez-vous ici</button> -->
+                </form>
+
             </div>
+
+
         </div>
     </div>
 </div>
@@ -164,31 +196,29 @@
             <h4 style="color: red;">Mauvais identifiant !!!</h4>
         </div>
     </div>
-    <div class="verify-container" *ngIf="formConnexion === false">
-        <button (click)="toggleForms()" id="change">X</button>
-        <div class="verify-content">
-
-            <!-- Formulaire de connexion -->
+    <!-- Formulaire de connexion -->
+    <div class="verify-container" *ngIf="formConnexion === false" style="max-width: 60%">
+        <div class="verify-content" style="display: flex; margin: 0px">
             <div class="verify-commande">
-                <p>Veuillez remplir le formulaire de connexion!</p>
+
+                <p>Connectez-vous et commencez à chercher des médicaments</p><br><br>
                 <form (ngSubmit)="submitLoginForm()">
                     <!-- ... Champs de connexion ... -->
                     <div class="form-group">
-                        <label for="email">Email * :</label>
-                        <input type="email" [(ngModel)]="users.username" id="email" name="username" required>
+
+                        <input type="email" [(ngModel)]="users.username" id="email" name="username" required placeholder="Entrez votre adresse mail">
                     </div>
                     <div class="form-group">
-                        <label for="password">Mot de passe *:</label>
-                        <input type="password" [(ngModel)]="users.password" id="password" name="password" required>
+
+                        <input type="password" [(ngModel)]="users.password" id="password" name="password" required placeholder="Mot de passe">
                     </div>
+                    <a href="#" (click)="open_reset_password()" style="font-size: 10px">Mot de passe oublié ?</a>
                     <button type="submit">Se connecter</button>
                 </form>
+            </div>
 
-                <!-- <button (click)="open_reset_password()" id="change">modal</button> -->
-                <!-- <small style="color: red;">* champs obligatoire</small><br> -->
-                <a href="#" (click)="open_reset_password()" style="font-size: 10px">Mot de passe oublié ?</a>
-                <br>
-
+            <div style="margin-left: 20px;">
+                <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="300px" height="300px" style="border-radius: 5px;">
             </div>
         </div>
     </div>
@@ -196,30 +226,24 @@
 
 <!-- mot de passe oublié, formulaire  -->
 <div class="inscription" *ngIf="ResetPassword">
-    <div class="verify-container">
-        <button (click)="clear()" id="change">X</button>
-        <div class="verify-content">
+    <div class="verify-container" style="max-width: 45%">
+        <button (click)="clearModification()" id="change">X</button>
+        <div class="verify-content" style="display: flex;">
             <!-- Formulaire de connexion -->
             <div class="verify-commande">
-                <p>Veuillez remplir le formulaire</p>
+                <p>Veuillez remplir le formulaire</p><br><br>
                 <form>
                     <!-- ... Champs de connexion ... -->
                     <div class="form-group">
-                        <label for="email">Email * :</label>
-                        <input type="email" id="email" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Nouveau mot de passe *:</label>
-                        <input type="password" id="password" name="password" required>
+
+                        <input type="email" id="email" name="username" required placeholder="Entrez votre mail">
                     </div>
                     <button type="submit">Rénitialiser</button>
                 </form>
+            </div>
 
-
-                <!-- <small style="color: red;">* champs obligatoire</small><br> -->
-
-                <br>
-
+            <div>
+                <img src="../assets/image.png" alt="" width="300px" height="300px" style="border-radius: 5px;">
             </div>
         </div>
     </div>
@@ -233,7 +257,7 @@
         <div class="verify-content">
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
-                <p>Choisir un tarif avant inscription</p>
+                <p>Choisir un tarif</p>
 
                 <div class="tarif">
                     <div class="produit" *ngFor="let produit of listTarif" (click)="clickTarif(produit.id)">
@@ -250,13 +274,60 @@
     </div>
 </div>
 
+
 <!-- fin -->
 
 
 <!-- modal des modification user -->
 
 <button class="close-modal" *ngIf="modal_modification" (click)="clear()">&times;</button>
-<div class="inscription" *ngIf="modal_modification">
+<div class="inscription d-flex" *ngIf="modal_modification" style="background: white; padding-right: 400px">
+
+    <div class="verify-container" *ngIf="formModification">
+        <div class="verify-content">
+            <!-- Formulaire -->
+            <div class="verify-commande" style="float: left; height: 500px; margin-right: 100px">
+                <h4>Profil</h4>
+                <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
+                    <div class="form-group">
+                        <label for="nom">Nom :</label>
+                        <h6 id="nom">{{users.lastname}}</h6>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenom">Prénom :</label>
+                        <h6 id="prenom">{{users.firstname}}</h6>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email :</label>
+                        <h6 id="email">{{users.email}}</h6>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Téléphone :</label>
+                        <h6 id="phone">{{users.phone}}</h6>
+                    </div>
+
+                </form><br>
+                <a href="#" class="btn btn-secondary" (click)="profil()">Modifier le profil</a><br>
+                <a href="#" class="btn btn-primary mt-2" (click)="open_mdp()">Changer de mot de passe</a>
+            </div>
+        </div>
+    </div>
+    <div class="verify-container" style="margin-bottom: 45%; width: 200px; ">
+        <div class="verify-content">
+            <!-- Formulaire -->
+            <div class="verify-commande">
+                <h4>Crédits</h4><br>
+                <p>{{ users.credit}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="inscription" *ngIf="modal_modification1">
+
     <div id="popup1" class="overlay" *ngIf="showSnackbar2">
         <div class="popup">
             <h4 style="color: green;">Mise à jour success !!!</h4>
@@ -267,7 +338,8 @@
             <h4 style="color: red;">Erreur lors de la modification</h4>
         </div>
     </div>
-    <div class="verify-container" *ngIf="formModification">
+    <div class="verify-container" *ngIf="formModification1">
+        <button (click)="clearModification()" id="change">X</button>
         <div class="verify-content">
             <!-- Formulaire -->
             <div class="verify-commande">
@@ -306,9 +378,48 @@
     </div>
 </div>
 
+
+<!-- mot de passe change -->
+
+<div class="inscription" *ngIf="changeMdp">
+
+    <div id="popup1" class="overlay" *ngIf="showSnackbar3">
+        <div class="popup">
+            <h4 style="color: green;">Mise à jour success !!!</h4>
+        </div>
+    </div>
+    <div id="popup1" class="overlay" *ngIf="showSnackbarError3">
+        <div class="popup">
+            <h4 style="color: red;">Erreur lors de la modification</h4>
+        </div>
+    </div>
+    <div class="verify-container">
+        <button (click)="clearModification()" id="change">X</button>
+        <div class="verify-content">
+            <!-- Formulaire -->
+            <div class="verify-commande">
+                <p>Information utilisateur</p>
+                <form [formGroup]="registerForm" (ngSubmit)="updatePassword()">
+                    <div class="form-group">
+                        <input type="password" [(ngModel)]="users.ancien_password" id="ancien_password" name="ancien_password" placeholder="Entrez le mot de passe actuel">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" [(ngModel)]="users.password" id="password" name="password" required placeholder="Nouveau mot de passe">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" [(ngModel)]="users.confirm_password" id="confirm_password" name="confirm_password" required placeholder="Confirmez le mot de passe">
+                    </div>
+                    <button type="submit">Changer</button>
+                </form><br>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- fin grille tarifaires -->
 <button *ngIf="loggedInUser" id="username" (click)="open_modal_modification()">
-    <p style="font-size: 25px;">{{ loggedInUser.lastname }}&nbsp; {{ loggedInUser.firstname }}</p>
+    <p style="font-size: 25px;">N°00241{{ loggedInUser.id }}</p>
 </button>
 <!-- fin Bouton inscription -->
 

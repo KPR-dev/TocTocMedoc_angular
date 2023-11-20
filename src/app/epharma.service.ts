@@ -31,6 +31,17 @@ export class EpharmaService {
     return this.http.put(`${environment.api}/user/update/${id}`, formData, {headers});
   }
 
+  updateMdp(id: number, password: string){
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${environment.token}`
+    });
+    const params = {
+      query: null,
+      new_password: password };  // je cree un objet avec le paramètre de requête
+    const options = { params };
+    return this.http.put(`${environment.api}/user/update_password/${id}`, options, {headers});
+  }
+
   getAllTarif(){
     return this.http.get(`${environment.api}/rate/all`);
   }

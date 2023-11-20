@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EpharmaService } from './epharma.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router';
 
 
 
@@ -84,8 +84,9 @@ export class AppComponent implements OnInit {
   carts: Cart[] = [];
 
   showCart: boolean = false;
-
+  changeMdp: boolean = false;
   modal_register: boolean = false;
+  modal_text: boolean = false;
   modal: boolean = false;
   modal_modification: boolean = false;
   formInscription: boolean = false;
@@ -101,11 +102,17 @@ export class AppComponent implements OnInit {
   showSnackbar: boolean = false;
   showSnackbar1: boolean = false;
   showSnackbar2: boolean = false;
+  showSnackbar3: boolean = false;
   showSnackbarError: boolean = false;
   showSnackbarError1: boolean = false;
   showSnackbarError2: boolean = false;
+  showSnackbarError3: boolean = false;
+  form1: boolean = false;
+  contrat: boolean = false;
+  modal_modification1: boolean = false;
+  formModification1: boolean = false;
 
-  constructor(private epharmaService: EpharmaService) { }
+  constructor(private epharmaService: EpharmaService, private router: Router) { }
 
 
 
@@ -116,12 +123,16 @@ export class AppComponent implements OnInit {
     this.showSnackbar = false;
     this.showSnackbar1 = false;
     this.showSnackbar2 = false;
+    this.showSnackbar3 = false;
     this.showSnackbarError = false
     this.showSnackbarError1 = false
     this.showSnackbarError2 = false
+    this.showSnackbarError3 = false
   }
 
-
+  allerVersNouvellePage() {
+    this.router.navigate(['/tarif']);
+  }
 
   loadAllProduit() {
     this.hasResult = false;
@@ -179,7 +190,8 @@ export class AppComponent implements OnInit {
 
   open_register() {
     this.modal_register = true;
-    this.modal_tarif = true
+    this.formInscription = true
+    this.form1 = true
     // console.log("ça passe")
   }
 
@@ -205,6 +217,7 @@ export class AppComponent implements OnInit {
         this.users.firstname = response.user.firstname
         this.users.email = response.user.email
         this.users.phone = response.user.phone
+        this.users.credit = response.credit
         return true
 
       },
@@ -213,12 +226,56 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  updatePassword(){
+
+    const new_password = this.users.password
+
+    this.epharmaService.updateMdp(environment.user_id, 'azerty').subscribe({
+      next: (response: any) => {
+        console.log('mdp user =', response);
+        this.changeMdp = false
+        this.showSnackbar3 = true;
+        setTimeout(() => {
+          this.showSnackbar3 = false;
+        }, 2000);
+        return true
+      },
+      error: (error) => {
+        console.error('Erreur lors de la connexion :', error);
+        this.showSnackbarError3 = true;
+        setTimeout(() => {
+          this.showSnackbarError3 = false;
+        }, 2000);
+      }
+    });
+  }
+
+  forminvisible(){
+    this.form1 = false
+    this.contrat = true
+  }
+
+  profil(){
+    this.modal_modification1 = true
+    this.formModification1 = true
+  }
 
   clickTarif(idTarif: any){
     console.log('tarif = ',idTarif)
     environment.tarif_id = idTarif
     this.modal_tarif = false
     this.formInscription = true
+    this.modal_register = false
+    this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
+      next: (response: any) => {
+        console.log('compte subscribe =', response);
+        this.loader = false
+        this.modal_register = false
+      },
+      error: (error) => {
+        console.error('Erreur lors d enregistrement :', error);
+      }
+    });
   }
 
   // submitCompteUser(){
@@ -272,28 +329,23 @@ export class AppComponent implements OnInit {
             this.videForm()
 
             this.formInscription = false
-            this.modal_register = true
             this.formInscription = false
             this.loader = true
             this.showSnackbar1 = true;
             setTimeout(() => {
               this.showSnackbar1 = false;
             }, 2000);
+
+            this.modal_text = true
+            console.log('user', environment.user_id)
             this.epharmaService.getUserId(response.id).subscribe({
               next: (response: any) => {
                 console.log('idcompte =', response.id)
-                console.log('idtarif =', environment.tarif_id)
+                environment.id_compte = response.id
+                setTimeout(() => {
+                  this.modal_tarif = true
+                }, 1000);
 
-                this.epharmaService.getSubscribeCompte(response.id, environment.tarif_id.toString()).subscribe({
-                  next: (response: any) => {
-                    console.log('compte subscribe =', response);
-                    this.loader = false
-                    this.modal_register = false
-                  },
-                  error: (error) => {
-                    console.error('Erreur lors d enregistrement :', error);
-                  }
-                });
               }
             })
           },
@@ -319,6 +371,14 @@ export class AppComponent implements OnInit {
     this.users.email = '',
     this.users.phone = '',
     this.users.password = ''
+  }
+  annulerText(){
+    this.modal_text = false
+    this.modal_register = false
+  }
+
+  accepterText(){
+    this.modal_text = false
   }
 
   users: any = {
@@ -520,6 +580,10 @@ export class AppComponent implements OnInit {
     })
   }
 
+  open_mdp(){
+    this.changeMdp = true
+  }
+
   clear() {
     this.selectedPharmacy = null;
     this.selectedProduit = null;
@@ -529,9 +593,16 @@ export class AppComponent implements OnInit {
     this.quantity = 1;
     this.loginFormVisible = false;
     this.modal_register = false;
-    this.ResetPassword = false;
-    this.modal_modification = false;
+    this.modal_modification = false
+    this.formModification = false
     this.modal_tarif = false
+
+  }
+
+  clearModification(){
+    this.modal_modification1 = false
+    this.changeMdp = false
+    this.ResetPassword = false;
   }
 
   addToCart(productCIP: string, productName: string) {
