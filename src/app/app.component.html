@@ -481,8 +481,14 @@
 
 <button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
 
-<div class="logout" *ngIf="!loggedInUser">
-    <button *ngIf="!loggedInUser" (click)="open_inscription()" class="connexion"> Connexion</button> <button *ngIf="!loggedInUser" class="inscriptions" (click)="open_register()"> Inscription</button>
+<div class="boutton d-flex" *ngIf="!loggedInUser">
+    <div class="" style="margin-right: 100px;">
+        <button *ngIf="!loggedInUser" class="inscriptions" (click)="open_register()"> Inscription</button>
+    </div>
+    <div>
+        <button *ngIf="!loggedInUser" (click)="open_inscription()" class="connexion"> Connexion</button>
+    </div>
+
 </div>
 <button class="shopping-cart-btn" (click)="openCartView()"><span class="count"
     *ngIf="carts.length > 0">{{carts.length}}</span>

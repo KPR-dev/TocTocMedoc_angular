@@ -101,6 +101,25 @@
     font-size: small;
 }
 
+.boutton {
+    position: fixed;
+    top: 2rem;
+    right: 5rem;
+    width: 150px;
+    height: 45px;
+    border-radius: 100px;
+    background-color: transparent;
+    color: black;
+    font-size: 3.0em;
+    z-index: 99999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    font-size: small;
+}
+
 .connexion {
     position: fixed;
     top: 2rem;
