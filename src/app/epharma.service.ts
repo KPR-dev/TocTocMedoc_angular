@@ -83,7 +83,7 @@ export class EpharmaService {
     });
     return this.http.post(`${environment.apiURL}/disponibility_product`, {
       pharmacy: pharmacy,
-      cips: [cip]
+      cip: cip
     }, {headers});
   }
 

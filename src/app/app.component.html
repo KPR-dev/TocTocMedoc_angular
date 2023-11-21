@@ -126,7 +126,7 @@
             <div class="verify-commande">
                 <h3 *ngIf="form1">Veuillez remplir le formulaire d'inscription!</h3>
                 <form [formGroup]="registerForm" (ngSubmit)="submitRegistrationForm()">
-                    <div class="d-flex" *ngIf="form1">
+                    <div class="d-flex d-md-flex" *ngIf="form1">
                         <div class="mx-2 px-4" style="margin-top: 15%;">
                             <div class="row">
                                 <div class="col-6 mb-4">
@@ -185,7 +185,7 @@
                             <button id="reset" (click)="forminvisible()">S'inscrire</button>
                         </div>
 
-                        <div>
+                        <div class="col-6 mb-4 d-none d-md-block">
                             <img src="../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png" alt="" width="300px" height="500px" class="rounded">
                         </div>
                     </div>
@@ -227,29 +227,27 @@
     <div class="verify-container" *ngIf="formConnexion === false" style="max-width: 60%">
         <div class="verify-content" style="display: flex; margin: 0px">
             <div class="verify-commande">
-
                 <p>Connectez-vous et commencez à chercher des médicaments</p><br><br>
                 <form (ngSubmit)="submitLoginForm()">
                     <!-- ... Champs de connexion ... -->
                     <div class="form-group">
-
                         <input type="email" [(ngModel)]="users.username" id="email" name="username" required placeholder="Entrez votre adresse mail">
                     </div>
                     <div class="form-group">
-
                         <input type="password" [(ngModel)]="users.password" id="password" name="password" required placeholder="Mot de passe">
                     </div>
                     <a href="#" (click)="open_reset_password()" style="font-size: 10px">Mot de passe oublié ?</a>
                     <button type="submit">Se connecter</button>
                 </form>
             </div>
-
-            <div style="margin-left: 20px;">
+            <div style="margin-left: 20px;" class="d-none d-md-block">
+                <!-- Utilisation de classes d'utilité pour masquer sur mobile -->
                 <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="300px" height="300px" style="border-radius: 5px;">
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- mot de passe oublié, formulaire  -->
 <div class="inscription" *ngIf="ResetPassword">
@@ -269,7 +267,7 @@
                 </form>
             </div>
 
-            <div>
+            <div class="d-none d-md-block">
                 <img src="../assets/image.png" alt="" width="300px" height="300px" style="border-radius: 5px;">
             </div>
         </div>
@@ -472,13 +470,19 @@
 </div>
 
 <!-- fin grille tarifaires -->
-<button *ngIf="loggedInUser" id="username" (click)="open_modal_modification()">
-    <p style="font-size: 25px;">N°00241{{ loggedInUser.id }}</p>
-</button>
-<!-- fin Bouton inscription -->
+<div class="boutton d-flex">
+    <div style="margin-right: 100%;">
+        <button *ngIf="loggedInUser" class="inscriptions" (click)="open_modal_modification()">
+          N°00241{{ loggedInUser.id }}
+      </button>
+    </div>
+    <!-- fin Bouton inscription -->
 
-<button class="logout" *ngIf="loggedInUser" (click)="deconnexion()"> <i class="fa fa-sign-out" aria-hidden="true" ></i> Déconnexion</button>
+    <div>
+        <button class="connexion" *ngIf="loggedInUser" (click)="deconnexion()"> <i class="fa fa-sign-out" aria-hidden="true" ></i> Déconnexion</button>
 
+    </div>
+</div>
 <button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
 
 <div class="boutton d-flex" *ngIf="!loggedInUser">
