@@ -69,6 +69,33 @@
     </main>
 </div>
 
+<button class="close-modal" *ngIf="modal_verifier" (click)="clear()">&times;</button>
+<div class="inscription" *ngIf="modal_verifier">
+    <div id="popup1" class="overlay" *ngIf="showSnackbar4">
+        <div class="popup">
+            <h4 style="color: green;">Crédit débiter !!!</h4>
+        </div>
+    </div>
+
+    <div id="popup1" class="overlay" *ngIf="showSnackbarError4">
+        <div class="popup">
+            <h4 style="color: red;">{{smserror}}</h4>
+        </div>
+    </div>
+    <div class="verify-container" *ngIf="form_modal_verifier">
+        <div class="verify-content">
+            <!-- Formulaire d'inscription -->
+            <div class="verify-commande">
+                <p>Voulez-vous continuer ?</p>
+
+                <div class="tarif">
+                    <p>Cette action vaut {{creditUser}} crédit(s)</p>
+                </div>
+            </div>
+            <button class="btn btn-secondary" (click)="clear()">Annuler</button><button (click)="validerCredit(creditUser)" class="btn btn-primary">Confirmer</button>
+        </div>
+    </div>
+</div>
 
 
 

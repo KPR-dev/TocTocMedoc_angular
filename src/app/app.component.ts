@@ -80,6 +80,7 @@ export class AppComponent implements OnInit {
   currentPageIndex: number = 0;
   pageCount: number = 0;
   totalCount: number = 0;
+  creditUser: number = 0;
 
   hasResult = false;
 
@@ -106,14 +107,18 @@ export class AppComponent implements OnInit {
   showSnackbar1: boolean = false;
   showSnackbar2: boolean = false;
   showSnackbar3: boolean = false;
+  showSnackbar4: boolean = false;
   showSnackbarError: boolean = false;
   showSnackbarError1: boolean = false;
   showSnackbarError2: boolean = false;
   showSnackbarError3: boolean = false;
+  showSnackbarError4: boolean = false;
   form1: boolean = false;
   contrat: boolean = false;
   modal_modification1: boolean = false;
   formModification1: boolean = false;
+  modal_verifier: boolean = false;
+  form_modal_verifier: boolean = false;
 
 
   constructor(private epharmaService: EpharmaService, private router: Router) { }
@@ -129,10 +134,12 @@ export class AppComponent implements OnInit {
     this.showSnackbar1 = false;
     this.showSnackbar2 = false;
     this.showSnackbar3 = false;
+    this.showSnackbar4 = false;
     this.showSnackbarError = false
     this.showSnackbarError1 = false
     this.showSnackbarError2 = false
     this.showSnackbarError3 = false
+    this.showSnackbarError4 = false
   }
 
   allerVersNouvellePage() {
@@ -242,6 +249,10 @@ export class AppComponent implements OnInit {
         console.error('Erreur lors de la connexion :', error);
       }
     });
+  }
+
+  open_verifier(){
+    this.modal_verifier = true
   }
   updatePassword(){
 
@@ -551,15 +562,12 @@ export class AppComponent implements OnInit {
     try {
       this.epharmaService.getLibelleTarif(libelle).subscribe({
         next: (response: any) => {
+          this.creditUser = response.credit
           console.log('credit reçu =', response.credit);
-          this.epharmaService.souscrireCredit(environment.id_compte, response.credit).subscribe({
-            next: (response: any) => {
-              console.log('credit enlever =', response);
-              this.verify(cp)
-            },
-            error: (error) => {
-            }
-          });
+          this.modal_verifier = true
+          this.form_modal_verifier = true
+          environment.produit = cp
+
         },
         error: (error) => {
         }
@@ -567,6 +575,29 @@ export class AppComponent implements OnInit {
     } catch {
       // ... (votre bloc catch existant)
     }
+  }
+
+  validerCredit(credit: number){
+    this.epharmaService.souscrireCredit(environment.id_compte, credit).subscribe({
+      next: (response: any) => {
+        console.log('credit enlever =', response);
+        this.form_modal_verifier = false
+        this.showSnackbar4 = true;
+        setTimeout(() => {
+          this.showSnackbar4 = false;
+          this.modal_verifier = false
+        }, 2000);
+        this.verify(environment.produit)
+
+      },
+      error: (error) => {
+        this.smserror = error.error.detail
+        this.showSnackbarError4 = true;
+        setTimeout(() => {
+          this.showSnackbarError4 = false;
+        }, 2000);
+      }
+    });
   }
 
 
@@ -680,7 +711,7 @@ export class AppComponent implements OnInit {
     this.modal_modification = false
     this.formModification = false
     this.modal_tarif = false
-
+    this.modal_verifier = false
   }
 
   clearModification(){

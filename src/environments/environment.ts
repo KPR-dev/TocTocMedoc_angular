@@ -12,6 +12,7 @@ export const environment = {
     user_id: 0,
     id_compte: 0,
     tarif_id: 0,
+    produit: null,
   // apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
    pageItemCount: 500,
    pharmacies: [
