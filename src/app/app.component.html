@@ -343,11 +343,14 @@
         </div>
     </div>
     <div class="verify-container" style="margin-bottom: 45%; width: 200px; ">
-        <div class="verify-content">
+        <div class="verify-content d-flex">
             <!-- Formulaire -->
             <div class="verify-commande">
                 <h4>Crédits</h4><br>
                 <p>{{ users.credit}}</p>
+            </div>
+            <div class="mx-2">
+                <button class="btn btn-primary" (click)="open_info_user_tarif()">Souscrire à un tarif</button>
             </div>
         </div>
     </div>
@@ -404,6 +407,33 @@
         </div>
     </div>
 </div>
+
+<!-- tarif à l'espace info users -->
+
+<button class="close-modal" *ngIf="modal_info_tarif_user" (click)="clearInfoTarifUser()">&times;</button>
+<div class="inscription" *ngIf="modal_info_tarif_user">
+    <div class="verify-container">
+        <div class="verify-content">
+            <!-- Formulaire d'inscription -->
+            <div class="verify-commande">
+                <p>Choisir un tarif</p>
+
+                <div class="tarif">
+                    <div class="produit" *ngFor="let produit of listTarif" (click)="clickTarifInfoUser(produit.id)">
+                        <div class="card">
+                            <!-- Vous pouvez ajouter ici une image du produit -->
+                            <h6> Titre : {{produit.libelle}}</h6>
+                            <h6>Prix : {{produit.price}}</h6>
+                            <h6>Nombre de crédit : {{produit.credit}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- fin -->
 
 
 <!-- mot de passe change -->

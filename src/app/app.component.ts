@@ -119,6 +119,7 @@ export class AppComponent implements OnInit {
   formModification1: boolean = false;
   modal_verifier: boolean = false;
   form_modal_verifier: boolean = false;
+  modal_info_tarif_user: boolean = false;
 
 
   constructor(private epharmaService: EpharmaService, private router: Router) { }
@@ -323,6 +324,24 @@ export class AppComponent implements OnInit {
         console.log('compte subscribe =', response);
         this.loader = false
         this.modal_register = false
+      },
+      error: (error) => {
+        console.error('Erreur lors d enregistrement :', error);
+      }
+    });
+  }
+
+  open_info_user_tarif(){
+    this.modal_info_tarif_user = true
+  }
+
+  clickTarifInfoUser(idTarif: any){
+    console.log('tarif = ',idTarif)
+
+    this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
+      next: (response: any) => {
+        console.log('compte subscribe =', response);
+        this.modal_info_tarif_user = false
       },
       error: (error) => {
         console.error('Erreur lors d enregistrement :', error);
@@ -712,6 +731,10 @@ export class AppComponent implements OnInit {
     this.formModification = false
     this.modal_tarif = false
     this.modal_verifier = false
+
+  }
+  clearInfoTarifUser(){
+    this.modal_info_tarif_user = false
   }
 
   clearModification(){
