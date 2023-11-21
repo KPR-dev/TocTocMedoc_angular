@@ -462,6 +462,16 @@ export class AppComponent implements OnInit {
               this.modal_register = false;
             }, 2000);
 
+            this.epharmaService.getUserId(response.user.id).subscribe({
+              next: (response: any) => {
+                console.log('compte = ', response)
+                environment.id_compte = response.id
+
+
+              },
+
+            });
+
             return response.token.access_token
 
           },
@@ -536,8 +546,27 @@ export class AppComponent implements OnInit {
 
   }
   //Ma fonction
-  clickVerify(){
-
+  clickVerify(libelle: string, cp: any){
+    console.log('ID =', environment.user_id)
+    try {
+      this.epharmaService.getLibelleTarif(libelle).subscribe({
+        next: (response: any) => {
+          console.log('credit reçu =', response.credit);
+          this.epharmaService.souscrireCredit(environment.id_compte, response.credit).subscribe({
+            next: (response: any) => {
+              console.log('credit enlever =', response);
+              this.verify(cp)
+            },
+            error: (error) => {
+            }
+          });
+        },
+        error: (error) => {
+        }
+      });
+    } catch {
+      // ... (votre bloc catch existant)
+    }
   }
 
 

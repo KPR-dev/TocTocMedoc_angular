@@ -57,8 +57,15 @@ export class EpharmaService {
     return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, null, options);
   }
 
+  souscrireCredit(idcompte: number, credit: number){
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${environment.token}`
+    });
+    return this.http.put(`${environment.api}/account/spent/${idcompte}?credit=${credit}`,null, { headers: headers });
+  }
+
   getLibelleTarif(libelle: string){
-    return this.http.get(`${environment.apiURL}/price_list/get_by_libelle/${libelle}`, {
+    return this.http.get(`${environment.api}/price_list/get_by_libelle/${libelle}`, {
 
     })
   }
