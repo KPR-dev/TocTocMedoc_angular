@@ -78,10 +78,13 @@ export class EpharmaService {
 
   //Route pour add  les produits disponible
   getDisponibiliteProduit(cip: any, pharmacy: any) {
-    return this.http.post(`${environment.apiURL}/disponibility_product`, {
-      pharmacy,
-      cips: [cip]
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${environment.token}`
     });
+    return this.http.post(`${environment.apiURL}/disponibility_product`, {
+      pharmacy: pharmacy,
+      cips: [cip]
+    }, {headers});
   }
 
   //Route pour add  les produits
