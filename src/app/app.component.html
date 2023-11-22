@@ -189,21 +189,60 @@
                             <img src="../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png" alt="" width="300px" height="500px" class="rounded">
                         </div>
                     </div>
-                    <div class="verify-container" style="margin-left: 20%;" *ngIf="contrat">
+                    <div class="verify-container- mx-auto text-center" *ngIf="contrat">
                         <div class="verify-content">
                             <!-- Formulaire d'inscription -->
-                            <div class="verify-commande">
-                                <p>
-                                    L'utilisation du service fourni par TocTocMedoc est soumise aux conditions suivantes. En acceptant ces termes, l'utilisateur s'engage à ne pas violer les lois applicables et à respecter les droits des autres utilisateurs du service. L'utilisateur est
-                                    seul responsable de toutes les activités associées à son compte. TocTocMedoc se réserve le droit de suspendre ou de résilier le compte d'un utilisateur en cas de violation flagrante de ces conditions. Les informations
-                                    fournies par l'utilisateur lors de l'inscription doivent être exactes et complètes. TocTocMedoc peut mettre à jour les termes du contrat d'utilisation à tout moment, et l'utilisateur sera informé de ces modifications.
-                                    L'utilisation continue du service après de telles modifications constitue l'acceptation des nouveaux termes.
+                            <div class="verify-commande " style="max-height: 400px; overflow-y: auto;">
+                                <p><u>Conditions d'Utilisation de l'Application de Disponibilité des Médicaments TOCTOC MEDOC</u></p> <br> Bienvenue sur l'application de disponibilité des médicaments TOCTOCMEDOC. Cette application est exploitée par la société
+                                E-pharma GA En utilisant cette application, vous acceptez les conditions énoncées ci-dessous. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser l'application. <br>
+
+                                <p class="text-justify">
+                                    <li>1. Objectif de l'Application L'objectif principal</li>
                                 </p>
+                                L'objectif principal de l'Application est de fournir aux utilisateurs des informations en temps réel sur la disponibilité des médicaments dans les pharmacies locales. Ces informations sont fournies à titre indicatif et ne remplacent en aucun cas les conseils
+                                professionnels d'un professionnel de la santé.
+
+                                <p class="text-justify">
+                                    <li>2. Utilisation Responsable</li>
+                                </p>
+                                En utilisant l'Application, vous acceptez de l'utiliser de manière responsable. Vous vous engagez à ne pas utiliser l'Application à des fins illégales, nuisibles, frauduleuses ou qui pourraient causer un préjudice à d'autres utilisateurs ou à l'entreprise.
+
+                                <p class="text-justify">
+                                    <li>3. Exactitude des Informations</li>
+                                </p>
+                                Bien que nous nous efforcions de fournir des informations précises, nous ne garantissons pas l'exactitude, l'exhaustivité ou l'actualité des données fournies par l'Application. Les utilisateurs sont encouragés à vérifier directement auprès des pharmacies
+                                pour confirmer la disponibilité des médicaments.
+
+                                <p class="text-justify">
+                                    <li>4. Protection des Données Personnelles</li>
+                                </p>
+                                Nous prenons la protection de vos données personnelles au sérieux. En utilisant l'Application, vous consentez à la collecte et à l'utilisation de vos données conformément à notre politique de confidentialité. Veuillez consulter notre politique de confidentialité
+                                pour plus d'informations sur la manière dont nous traitons vos données.
+
+                                <p class="text-justify">
+                                    <li>5. Responsabilité</li>
+                                </p>
+                                L'entreprise ne peut être tenue responsable des préjudices résultant de l'utilisation de l'Application. Les utilisateurs comprennent et acceptent que l'utilisation de l'Application est à leurs propres risques.
+
+                                <p class="text-justify">
+                                    <li>6. Modifications des Conditions</li>
+                                </p>
+                                Nous nous réservons le droit de modifier ces conditions d'utilisation à tout moment. Les modifications seront publiées sur l'Application, et il vous incombe de les consulter régulièrement. En continuant à utiliser l'Application après la publication des
+                                modifications, vous acceptez les conditions mises à jour.
+
+                                <p class="text-justify">
+                                    <li>7. Contact</li>
+                                </p>
+                                Pour toute question ou préoccupation concernant ces conditions d'utilisation, veuillez nous contacter. <br><br> Merci d'utiliser notre Application !
+
+                                <!-- Répétez vos éléments autant que nécessaire -->
+
                             </div>
-                            <!-- <button id="username">Annuler</button> <button id="username" class="btn btn-primary">Accepter</button> -->
+                            <button type="button" class="btn btn-secondary btn-block mt-2" (click)="annulerText()">Annuler</button>
+                            <button type="submit" class="btn btn-primary btn-block mt-2" id="reset">Accepter</button>
                         </div>
-                        <button type="button" id="reset" class="btn btn-secondary" (click)="annulerText()">Annuler</button> <button type="submit" id="reset">Accepter</button>
                     </div>
+
                 </form>
 
             </div>
@@ -316,53 +355,44 @@
 <!-- modal des modification user -->
 
 <button class="close-modal" *ngIf="modal_modification" (click)="clear()">&times;</button>
-<div class="inscription d-flex" *ngIf="modal_modification" style="background: white; padding-right: 400px">
-
-    <div class="verify-container" *ngIf="formModification">
-        <div class="verify-content">
+<div class="inscription d-flex justify-content-center align-items-center" *ngIf="modal_modification" style="background: white;">
+    <div class="verify-container container">
+        <div class="row">
             <!-- Formulaire -->
-            <div class="verify-commande" style="float: left; height: 500px; margin-right: 100px">
+            <div class="verify-commande col-md-8">
                 <h4>Profil</h4>
                 <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
                     <div class="form-group">
                         <label for="nom">Nom :</label>
                         <h6 id="nom">{{users.lastname}}</h6>
                     </div>
-
                     <div class="form-group">
                         <label for="prenom">Prénom :</label>
                         <h6 id="prenom">{{users.firstname}}</h6>
                     </div>
-
                     <div class="form-group">
                         <label for="email">Email :</label>
                         <h6 id="email">{{users.email}}</h6>
-
                     </div>
                     <div class="form-group">
                         <label for="phone">Téléphone :</label>
                         <h6 id="phone">{{users.phone}}</h6>
                     </div>
-
-                </form><br>
-                <a href="#" class="btn btn-secondary" (click)="profil()">Modifier le profil</a><br>
-                <a href="#" class="btn btn-primary mt-2" (click)="open_mdp()">Changer de mot de passe</a>
+                    <a href="#" class="btn btn-secondary" (click)="profil()">Modifier le profil</a><br>
+                    <a href="#" class="btn btn-primary mt-2" (click)="open_mdp()">Changer de mot de passe</a>
+                </form>
             </div>
-        </div>
-    </div>
-    <div class="verify-container" style="margin-bottom: 45%; width: 200px; ">
-        <div class="verify-content d-flex">
-            <!-- Formulaire -->
-            <div class="verify-commande">
-                <h4>Crédits</h4><br>
+            <!-- Informations sur les crédits -->
+            <div class="verify-commande col-md-4">
+                <h4>Crédits</h4>
                 <p>{{ users.credit}}</p>
-            </div>
-            <div class="mx-2">
-                <button class="btn btn-primary" (click)="open_info_user_tarif()">Souscrire à un tarif</button>
+                <button class="btn btn-primary mt-2" (click)="open_info_user_tarif()">Souscrire à un tarif</button>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <div class="inscription" *ngIf="modal_modification1">
 
