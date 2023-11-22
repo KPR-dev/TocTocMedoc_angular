@@ -20,6 +20,11 @@ export class EpharmaService {
     return this.http.post(`${environment.api}/user/add`, formData);
   }
 
+  changerPassword(email: string){
+
+    return this.http.put(`${environment.api}/user/recovery_password/${email}`, {});
+  }
+
   getUserId(id: number) {
     return this.http.get(`${environment.api}/account/get_by_user_id/${id}`);
   }
@@ -71,7 +76,7 @@ export class EpharmaService {
   }
 
   getAllPriceCredit(){
-    return this.http.get(`${environment.apiURL}/price_list/all`, {
+    return this.http.get(`${environment.api}/price_list/all`, {
 
     })
   }

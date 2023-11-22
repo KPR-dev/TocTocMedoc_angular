@@ -108,11 +108,14 @@ export class AppComponent implements OnInit {
   showSnackbar2: boolean = false;
   showSnackbar3: boolean = false;
   showSnackbar4: boolean = false;
+  showSnackbar5: boolean = false;
   showSnackbarError: boolean = false;
   showSnackbarError1: boolean = false;
   showSnackbarError2: boolean = false;
   showSnackbarError3: boolean = false;
   showSnackbarError4: boolean = false;
+  showSnackbarError5: boolean = false;
+  changerPass: boolean = false;
   form1: boolean = false;
   contrat: boolean = false;
   modal_modification1: boolean = false;
@@ -136,11 +139,13 @@ export class AppComponent implements OnInit {
     this.showSnackbar2 = false;
     this.showSnackbar3 = false;
     this.showSnackbar4 = false;
+    this.showSnackbar5 = false;
     this.showSnackbarError = false
     this.showSnackbarError1 = false
     this.showSnackbarError2 = false
     this.showSnackbarError3 = false
     this.showSnackbarError4 = false
+    this.showSnackbarError5 = false
   }
 
   allerVersNouvellePage() {
@@ -222,6 +227,7 @@ export class AppComponent implements OnInit {
 
   open_reset_password(){
     this.ResetPassword = true
+    this.changerPass = true
   }
 
   open_tarif(){
@@ -619,6 +625,23 @@ export class AppComponent implements OnInit {
     });
   }
 
+  changePassword(){
+    console.log(this.email.value)
+    this.epharmaService.changerPassword(this.email.value).subscribe({
+      next: (response: any) => {
+        console.log('change mdp =', response);
+        this.changerPass = false
+        this.showSnackbar5 = true;
+          setTimeout(() => {
+            this.showSnackbar5 = false;
+            this.ResetPassword = false
+          }, 2000);
+      },
+      error: (error) => {
+       console.log(error)
+      }
+    });
+  }
 
   verify(cip: any) {
     this.selectedProduit = this.filteredProduit.find(p => p.CIP === cip);

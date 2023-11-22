@@ -251,17 +251,27 @@
 
 <!-- mot de passe oublié, formulaire  -->
 <div class="inscription" *ngIf="ResetPassword">
-    <div class="verify-container" style="max-width: 45%">
+    <div id="popup1" class="overlay" *ngIf="showSnackbar5">
+        <div class="popup">
+            <h4 style="color: green;">Mot de passe rénitialisé !!!</h4>
+        </div>
+    </div>
+    <div id="popup1" class="overlay" *ngIf="showSnackbarError5">
+        <div class="popup">
+            <h4 style="color: red;">{{smserror}}</h4>
+        </div>
+    </div>
+    <div class="verify-container" style="max-width: 45%" *ngIf="changerPass">
         <button (click)="clearModification()" id="change">X</button>
         <div class="verify-content" style="display: flex;">
             <!-- Formulaire de connexion -->
             <div class="verify-commande">
-                <p>Veuillez remplir le formulaire</p><br><br>
-                <form>
+                <p>Changer votre mot de passe</p><br><br>
+                <form [formGroup]="registerForm" (ngSubmit)="changePassword()">
                     <!-- ... Champs de connexion ... -->
                     <div class="form-group">
 
-                        <input type="email" id="email" name="username" required placeholder="Entrez votre mail">
+                        <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre mail">
                     </div>
                     <button type="submit">Rénitialiser</button>
                 </form>
