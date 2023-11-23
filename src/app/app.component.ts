@@ -458,6 +458,7 @@ export class AppComponent implements OnInit {
   annulerText(){
     this.modal_text = false
     this.modal_register = false
+    this.contrat = false
   }
 
   accepterText(){
