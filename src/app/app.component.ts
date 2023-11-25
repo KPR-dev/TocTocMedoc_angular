@@ -556,8 +556,8 @@ export class AppComponent implements OnInit {
           this.showSnackbar2 = true;
             setTimeout(() => {
               this.showSnackbar2 = false;
-              this.formModification = false;
-              this.modal_modification = false
+              this.modal_modification1 = false
+              this.formModification1 = false
             }, 2000);
         },
         error: (error) => {
@@ -765,6 +765,7 @@ export class AppComponent implements OnInit {
     this.modal_modification1 = false
     this.changeMdp = false
     this.ResetPassword = false;
+    this.modal_info_tarif_user = false
   }
 
   addToCart(productCIP: string, productName: string) {

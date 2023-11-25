@@ -69,7 +69,7 @@
     </main>
 </div>
 
-<button class="close-modal" *ngIf="modal_verifier" (click)="clear()">&times;</button>
+
 <div class="inscription" *ngIf="modal_verifier">
     <div id="popup1" class="overlay" *ngIf="showSnackbar4">
         <div class="popup">
@@ -99,7 +99,7 @@
 
 
 
-<button class="close-modal" *ngIf="selectedProduit || loginFormVisible || modal_register" (click)="clear()">&times;</button>
+
 <div class="inscription" *ngIf="modal_register">
     <div id="popup1" class="overlay" *ngIf="showSnackbar1">
         <div class="popup">
@@ -117,29 +117,28 @@
         <div class="loader"></div>
     </div>
 
-    <div class="verify-container" *ngIf="formInscription" style="max-width: 70%;">
+    <div class="verify-container" *ngIf="formInscription" style="max-width: 70%; border-radius: 10px">
         <!-- loader -->
 
         <div class="verify-content" *ngIf="formInscription">
-
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
                 <h3 *ngIf="form1">Veuillez remplir le formulaire d'inscription!</h3>
                 <form [formGroup]="registerForm" (ngSubmit)="submitRegistrationForm()">
-                    <div class="d-flex d-md-flex" *ngIf="form1">
-                        <div class="mx-2 px-4" style="margin-top: 15%;">
+                    <div class="" *ngIf="form1">
+                        <div class="" style="margin-top: 5%; margin-left: 20%">
                             <div class="row">
-                                <div class="col-6 mb-4">
+                                <div class="col-10 mb-4">
 
-                                    <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control" placeholder="Entrez votre nom">
+                                    <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control" placeholder="Entrez votre nom" required>
                                     <div style="color: red;" *ngIf="lastname.errors?.['required'] && lastname.touched">
                                         Veuillez renseigner votre nom!
                                     </div>
                                 </div>
 
-                                <div class="col-6 mb-4">
+                                <div class="col-10 mb-4">
 
-                                    <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname" class="form-control" placeholder="Entrez votre prénom">
+                                    <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname" class="form-control" placeholder="Entrez votre prénom" required>
                                     <div style="color: red;" *ngIf="firstname.errors?.['required'] && firstname.touched">
                                         Veuillez renseigner votre prénom!
                                     </div>
@@ -147,17 +146,17 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-6 mb-4">
+                                <div class="col-10 mb-4">
 
-                                    <input type="email" id="email" formControlName="email" [(ngModel)]="users.email" class="form-control" placeholder="Votre adresse email">
+                                    <input type="email" id="email" formControlName="email" [(ngModel)]="users.email" class="form-control" placeholder="Votre adresse email" required>
                                     <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
                                         Email non valide
                                     </div>
                                 </div>
 
-                                <div class="col-6 mb-4">
+                                <div class="col-10 mb-4">
 
-                                    <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone" class="form-control" placeholder="Votre numéro de téléphone">
+                                    <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone" class="form-control" placeholder="Votre numéro de téléphone" required>
                                     <div style="color: red;" *ngIf="phone.errors?.['required'] && phone.touched">
                                         Veuillez renseigner votre numéro de téléphone!
                                     </div>
@@ -165,15 +164,15 @@
                             </div>
 
                             <div>
-                                <div class="form-group mb-3">
+                                <div class="col-10 mb-4">
 
-                                    <input type="password" id="password" formControlName="password" [(ngModel)]="users.password" class="form-control" placeholder="Mot de passe">
+                                    <input type="password" id="password" formControlName="password" [(ngModel)]="users.password" class="form-control" placeholder="Mot de passe" required>
                                     <div style="color: red;" *ngIf="password.errors?.['required'] && password.touched">
                                         Veuillez renseigner votre mot de passe!
                                     </div>
                                 </div>
 
-                                <div class="form-group mb-3">
+                                <div class="col-10 mb-4">
 
                                     <input type="password" id="confirm_password" formControlName="confirm_password" [(ngModel)]="users.confirm_password" class="form-control" placeholder="Confirmer le mot de passe">
                                     <div style="color: red;" *ngIf="confirm_password.errors?.['required'] && confirm_password.touched">
@@ -182,12 +181,8 @@
                                 </div>
                             </div>
 
-                            <button id="reset" (click)="forminvisible()">S'inscrire</button>
                         </div>
-
-                        <div class="col-6 mb-4 d-none d-md-block">
-                            <img src="../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png" alt="" width="300px" height="500px" class="rounded">
-                        </div>
+                        <button id="reset" (click)="forminvisible()">S'inscrire</button><button id="change" (click)="clear()" style="margin-left: 5px;">Fermer</button>
                     </div>
                     <div class="verify-container- mx-auto text-center" *ngIf="contrat">
                         <div class="verify-content">
@@ -238,7 +233,7 @@
                                 <!-- Répétez vos éléments autant que nécessaire -->
 
                             </div>
-                            <button type="button" class="btn btn-secondary btn-block mt-2" (click)="annulerText()">Annuler</button>
+                            <button type="button" class="btn btn-secondary btn-block mt-2" (click)="annulerText()" style="margin-right: 20px">Annuler</button>
                             <button type="submit" class="btn btn-primary btn-block mt-2" id="reset">Accepter</button>
                         </div>
                     </div>
@@ -277,11 +272,13 @@
                     </div>
                     <a href="#" (click)="open_reset_password()" style="font-size: 10px">Mot de passe oublié ?</a>
                     <button type="submit">Se connecter</button>
+                    <button id="change" (click)="clear()" style="float: right; margin-top: 15px">Quitter</button>
                 </form>
             </div>
             <div style="margin-left: 20px;" class="d-none d-md-block">
                 <!-- Utilisation de classes d'utilité pour masquer sur mobile -->
                 <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="300px" height="300px" style="border-radius: 5px;">
+
             </div>
         </div>
     </div>
@@ -301,7 +298,7 @@
         </div>
     </div>
     <div class="verify-container" style="max-width: 45%" *ngIf="changerPass">
-        <button (click)="clearModification()" id="change">X</button>
+
         <div class="verify-content" style="display: flex;">
             <!-- Formulaire de connexion -->
             <div class="verify-commande">
@@ -313,6 +310,7 @@
                         <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre mail">
                     </div>
                     <button type="submit">Rénitialiser</button>
+                    <button (click)="clearModification()" id="change">Quitter</button>
                 </form>
             </div>
 
@@ -325,9 +323,10 @@
 
 <!-- formulaire d'infomation user  -->
 
-<button class="close-modal" *ngIf="modal_tarif" (click)="clear()">&times;</button>
+
 <div class="inscription" *ngIf="modal_tarif">
     <div class="verify-container">
+        <button id="change" (click)="clear()">Fermer</button>
         <div class="verify-content">
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
@@ -407,7 +406,7 @@
         </div>
     </div>
     <div class="verify-container" *ngIf="formModification1">
-        <button (click)="clearModification()" id="change">X</button>
+        <button (click)="clearModification()" id="change">Fermer</button>
         <div class="verify-content">
             <!-- Formulaire -->
             <div class="verify-commande">
@@ -447,10 +446,9 @@
 </div>
 
 <!-- tarif à l'espace info users -->
-
-<button class="close-modal" *ngIf="modal_info_tarif_user" (click)="clearInfoTarifUser()">&times;</button>
 <div class="inscription" *ngIf="modal_info_tarif_user">
     <div class="verify-container">
+        <button id="change" (click)="clearModification()">Fermer</button>
         <div class="verify-content">
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
@@ -489,7 +487,7 @@
         </div>
     </div>
     <div class="verify-container" *ngIf="showMdpForm">
-        <button (click)="clearModification()" id="change">X</button>
+        <button (click)="clearModification()" id="change">Fermer</button>
         <div class="verify-content">
             <!-- Formulaire -->
             <div class="verify-commande">
@@ -519,7 +517,7 @@
     <!-- fin Bouton inscription -->
 
     <div>
-        <button class="connexion" *ngIf="loggedInUser" (click)="deconnexion()"> <i class="fa fa-sign-out" aria-hidden="true" ></i> Déconnexion</button>
+        <button class="connexion bg-black text-white" *ngIf="loggedInUser" (click)="deconnexion()"> <i class="fa fa-sign-out " aria-hidden="true" ></i> Déconnexion</button>
 
     </div>
 </div>
@@ -529,8 +527,8 @@
     <div class="" style="margin-right: 100px;">
         <button *ngIf="!loggedInUser" class="inscriptions" (click)="open_register()"> Inscription</button>
     </div>
-    <div>
-        <button *ngIf="!loggedInUser" (click)="open_inscription()" class="connexion"> Connexion</button>
+    <div class="mx-2 px-2">
+        <button *ngIf="!loggedInUser" (click)="open_inscription()" class="connexion bg-black text-white"> Connexion</button>
     </div>
 
 </div>
