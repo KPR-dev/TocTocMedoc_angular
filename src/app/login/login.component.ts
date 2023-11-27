@@ -154,7 +154,7 @@ export class LoginComponent implements OnInit {
 
     this.loggedInUser = this.receivedData.user.id
     environment.user_id = this.receivedData.user.id
-    environment.token = this.receivedData.token
+    // environment.token = this.receivedData.token
     environment.id_compte = this.receivedCompte
   }
 
@@ -495,66 +495,6 @@ export class LoginComponent implements OnInit {
   };
   loggedInUser: any;
 
-  submitLoginForm() {
-    if (this.users.username && this.users.password) {
-      try {
-        const formData = new FormData();
-        formData.append('grant_type', 'password');
-        formData.append('username', this.users.username);
-        formData.append('password', this.users.password);
-
-        console.log('users =', formData);
-
-        this.epharmaService.PostUsers(formData).subscribe({
-          next: (response: any) => {
-            console.log('connexion réussie =', response);
-            this.loggedInUser = response.user;
-            environment.token = response.token.access_token
-            environment.user_id = response.user.id
-            console.log('token = ', environment.token)
-            this.isLoggedIn = response.token.access_token
-            console.log('isLoggedIn =', this.isLoggedIn)
-
-            this.formConnexion = true
-            this.showSnackbar = true;
-            setTimeout(() => {
-              this.showSnackbar = false;
-              this.loginFormVisible = false;
-              this.modal_register = false;
-            }, 2000);
-
-            this.epharmaService.getUserId(response.user.id).subscribe({
-              next: (response: any) => {
-                console.log('compte = ', response)
-                environment.id_compte = response.id
-
-
-              },
-
-            });
-
-            return response.token.access_token
-
-          },
-          error: (error) => {
-
-            this.showSnackbarError = true;
-            this.smserror = error.error.detail;
-            setTimeout(() => {
-
-              this.showSnackbarError = false;
-            }, 2000);
-
-          }
-        });
-      } catch {
-        // ... (votre bloc catch existant)
-      }
-    } else {
-      console.error('Veuillez fournir un nom d\'utilisateur et un mot de passe.');
-      alert('Veuillez fournir un nom d\'utilisateur et un mot de passe')
-    }
-  }
 
 
   updateForm(){
