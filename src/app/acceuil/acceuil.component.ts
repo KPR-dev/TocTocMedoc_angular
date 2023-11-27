@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EpharmaService } from '../epharma.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
-
 
 class ProductQuantity {
   produitCIP!: string;
@@ -18,14 +17,13 @@ class Cart {
   products!: ProductQuantity[];
 }
 
-
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['../app.component.scss']
+  selector: 'app-acceuil',
+  templateUrl: './acceuil.component.html',
+  styleUrls: ['./acceuil.component.scss']
 })
-export class LoginComponent implements OnInit {
-
+export class AcceuilComponent implements OnInit {
+  receivedData: any;
   registerForm = new FormGroup({
     firstname: new FormControl("", [Validators.required]),
     lastname: new FormControl("", [Validators.required]),
@@ -123,13 +121,24 @@ export class LoginComponent implements OnInit {
   modal_info_tarif_user: boolean = false;
 
 
-  receivedData: any;
-  receivedCompte: any;
   constructor(private epharmaService: EpharmaService, private router: Router, private dataService: DataService) { }
 
+  // @HostListener('window:popstate', ['$event'])
+  // onPopState(event: Event): void {
+  //   // Vérifier l'état de connexion
+  //   if (environment.token === null) {
+  //     // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+  //     this.router.navigate(['/login']);
+  //   }
+  //   else{
+  //     this.router.navigate(['/acceuil']);
+  //   }
+  // }
 
 
   ngOnInit(): void {
+
+    console.log('tok', environment.token)
     this.loadAllProduit();
     this.loadAllTarif()
     this.checkAuthenticationStatus();
@@ -147,15 +156,6 @@ export class LoginComponent implements OnInit {
     this.showSnackbarError4 = false
     this.showSnackbarError5 = false
     this.receivedData = this.dataService.getSharedData();
-    this.receivedCompte = this.dataService.getSharedCompte();
-    console.log('user = ', this.receivedData)
-    console.log('compte = ', this.receivedCompte)
-    console.log('token = ', this.receivedData.token)
-
-    this.loggedInUser = this.receivedData.user.id
-    environment.user_id = this.receivedData.user.id
-    environment.token = this.receivedData.token
-    environment.id_compte = this.receivedCompte
   }
 
   allerVersNouvellePage() {
@@ -201,7 +201,7 @@ export class LoginComponent implements OnInit {
   }
   checkAuthenticationStatus() {
     const authToken = environment.token
-    console.log('authToken =', environment.token)
+    console.log('authToken =', authToken)
     this.isLoggedIn = !!authToken;
   }
 
@@ -248,16 +248,9 @@ export class LoginComponent implements OnInit {
     this.loginFormVisible = true
   }
 
-  logout() {
-    this.dataService.clearSharedData();
-    this.router.navigate(['/acceuil']);
-    console.log('Utilisateur déconnecté');
-  }
-
   open_modal_modification(){
     this.modal_modification = true
     this.formModification = true
-
     this.epharmaService.getUserId(environment.user_id).subscribe({
       next: (response: any) => {
         console.log('information user =', response);
@@ -266,7 +259,6 @@ export class LoginComponent implements OnInit {
         this.users.email = response.user.email
         this.users.phone = response.user.phone
         this.users.credit = response.credit
-
         return true
 
       },
@@ -348,7 +340,6 @@ export class LoginComponent implements OnInit {
         console.log('compte subscribe =', response);
         this.loader = false
         this.modal_register = false
-
       },
       error: (error) => {
         console.error('Erreur lors d enregistrement :', error);
@@ -367,11 +358,6 @@ export class LoginComponent implements OnInit {
       next: (response: any) => {
         console.log('compte subscribe =', response);
         this.modal_info_tarif_user = false
-        setTimeout(() => {
-          this.open_modal_modification();
-        }, 900);
-
-
       },
       error: (error) => {
         console.error('Erreur lors d enregistrement :', error);
@@ -440,7 +426,6 @@ export class LoginComponent implements OnInit {
               }, 2000);
 
               this.modal_text = true
-              console.log('user', environment.user_id)
               this.epharmaService.getUserId(response.id).subscribe({
                 next: (response: any) => {
                   console.log('idcompte =', response.id)
@@ -508,26 +493,25 @@ export class LoginComponent implements OnInit {
         this.epharmaService.PostUsers(formData).subscribe({
           next: (response: any) => {
             console.log('connexion réussie =', response);
-            this.loggedInUser = response.user;
             environment.token = response.token.access_token
             environment.user_id = response.user.id
+            environment.user = response
+            this.dataService.setSharedData(response);
             console.log('token = ', environment.token)
-            this.isLoggedIn = response.token.access_token
-            console.log('isLoggedIn =', this.isLoggedIn)
-
             this.formConnexion = true
             this.showSnackbar = true;
             setTimeout(() => {
               this.showSnackbar = false;
               this.loginFormVisible = false;
               this.modal_register = false;
+              this.router.navigate(['/login']);
             }, 2000);
 
             this.epharmaService.getUserId(response.user.id).subscribe({
               next: (response: any) => {
                 console.log('compte = ', response)
                 environment.id_compte = response.id
-
+                this.dataService.setSharedCompte(response.id);
 
               },
 
