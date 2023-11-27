@@ -80,7 +80,7 @@
                     <p>Cette action vaut {{creditUser}} crédit(s)</p>
                 </div>
             </div>
-            <button class="btn btn-secondary" (click)="clear()">Annuler</button><button (click)="validerCredit(creditUser)" class="btn btn-primary">Confirmer</button>
+            <button class="btn btn-secondary" (click)="clear()">Annuler</button><button (click)="validerCredit(creditUser)" class="btn btn-primary mx-2">Confirmer</button>
         </div>
     </div>
 </div>
@@ -210,7 +210,7 @@
 <!-- tarif à l'espace info users -->
 <div class="inscription" *ngIf="modal_info_tarif_user">
     <div class="verify-container">
-        <button id="change" (click)="clearModification()">Fermer</button>
+
         <div class="verify-content">
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
@@ -228,6 +228,7 @@
                 </div>
             </div>
         </div>
+        <button id="change" (click)="clearModification()">Fermer</button>
     </div>
 </div>
 
