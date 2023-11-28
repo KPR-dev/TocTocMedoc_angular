@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
   produits: any;
   filteredProduit: any[] = [];
   grille: any;
+  addressProduit:any;
 
   listTarif: any[] = [];
   selectedProduit: any;
@@ -125,6 +126,7 @@ export class LoginComponent implements OnInit {
 
   receivedData: any;
   receivedCompte: any;
+  receiveToken: any;
   constructor(private epharmaService: EpharmaService, private router: Router, private dataService: DataService) { }
 
 
@@ -148,13 +150,14 @@ export class LoginComponent implements OnInit {
     this.showSnackbarError5 = false
     this.receivedData = this.dataService.getSharedData();
     this.receivedCompte = this.dataService.getSharedCompte();
+    this.receiveToken = this.dataService.getSharedToken();
     console.log('user = ', this.receivedData)
     console.log('compte = ', this.receivedCompte)
-    console.log('token = ', this.receivedData.token)
+    console.log('token store= ', this.receiveToken)
 
     this.loggedInUser = this.receivedData.user.id
     environment.user_id = this.receivedData.user.id
-    // environment.token = this.receivedData.token
+    environment.token = this.receiveToken
     environment.id_compte = this.receivedCompte
   }
 
@@ -552,6 +555,16 @@ export class LoginComponent implements OnInit {
     try {
       this.epharmaService.getLibelleTarif(libelle).subscribe({
         next: (response: any) => {
+          for (let i = 0; i < environment.pharmacies.length; i++) {
+            this.epharmaService.getDisponibiliteProduit(cp, environment.pharmacies[i]).subscribe({
+              next: (response: any) => {
+                this.addressProduit = response.pharmacy.adresse
+              },
+              error: (err) => {
+                console.log(err);
+              }
+            });
+          }
           this.creditUser = response.credit
           console.log('credit reçu =', response.credit);
           this.modal_verifier = true
@@ -608,12 +621,26 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  addresseProduit(cip: any){
+    for (let i = 0; i < environment.pharmacies.length; i++) {
+      this.epharmaService.getDisponibiliteProduit(cip, environment.pharmacies[i]).subscribe({
+        next: (response: any) => {
+          this.addressProduit = response.pharmacy.adresse
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+    }
+  }
+
   verify(cip: any) {
     this.selectedProduit = this.filteredProduit.find(p => p.CIP === cip);
     this.verifiedPharmacies = [];
     for (let i = 0; i < environment.pharmacies.length; i++) {
       this.epharmaService.getDisponibiliteProduit(cip, environment.pharmacies[i]).subscribe({
         next: (response: any) => {
+          console.log('medoc = ',response)
           if (response.disponibilites && response.disponibilites.length > 0) {
             this.disponibilites.push(response.disponibilites[0]);
             for (let j = 0; j < response.disponibilites.length; j++) {

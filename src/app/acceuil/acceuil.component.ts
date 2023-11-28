@@ -494,6 +494,7 @@ export class AcceuilComponent implements OnInit {
           next: (response: any) => {
             console.log('connexion réussie =', response);
             environment.token = response.token.access_token
+            this.dataService.setSharedToken(environment.token);
             environment.user_id = response.user.id
             environment.user = response
             this.dataService.setSharedData(response);

@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 export class DataService {
   private storageKey = 'sharedData';
   private storageCompte = 'sharedCompte';
+  private storageToken = 'sharedToken';
+
 
   setSharedData(data: any) {
     localStorage.setItem(this.storageKey, JSON.stringify(data));
@@ -15,6 +17,9 @@ export class DataService {
 
   setSharedCompte(data: any) {
     localStorage.setItem(this.storageCompte, JSON.stringify(data));
+  }
+  setSharedToken(data: any) {
+    localStorage.setItem(this.storageToken, JSON.stringify(data));
   }
 
   getSharedData() {
@@ -24,6 +29,10 @@ export class DataService {
 
   getSharedCompte() {
     const storedData = localStorage.getItem(this.storageCompte);
+    return storedData ? JSON.parse(storedData) : null;
+  }
+  getSharedToken() {
+    const storedData = localStorage.getItem(this.storageToken);
     return storedData ? JSON.parse(storedData) : null;
   }
 

@@ -59,12 +59,6 @@
 
 
 <div class="inscription" *ngIf="modal_verifier">
-    <div id="popup1" class="overlay" *ngIf="showSnackbar4">
-        <div class="popup">
-            <h4 style="color: green;">Crédit débiter !!!</h4>
-        </div>
-    </div>
-
     <div id="popup1" class="overlay" *ngIf="showSnackbarError4">
         <div class="popup">
             <h4 style="color: red;">{{smserror}}</h4>
@@ -75,7 +69,9 @@
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
                 <p>Voulez-vous continuer ?</p>
-
+                <div>
+                    <p>Disponible à {{addressProduit}}</p>
+                </div>
                 <div class="tarif">
                     <p>Cette action vaut {{creditUser}} crédit(s)</p>
                 </div>
@@ -285,7 +281,7 @@
 
     </div>
 </div>
-<button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
+<button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()" style="font-size: 10px;">Fermer</button>
 
 
 <button class="shopping-cart-btn" (click)="openCartView()"><span class="count"
@@ -298,6 +294,11 @@
 
 
 <div class="modal" *ngIf="selectedProduit">
+    <div id="popup1" class="overlay" *ngIf="showSnackbar4">
+        <div class="popup">
+            <h4 style="color: green;">Crédit débiter !!!</h4>
+        </div>
+    </div>
     <div class="verify-container">
         <div class="verify-content">
             <div class="verify-produit">
