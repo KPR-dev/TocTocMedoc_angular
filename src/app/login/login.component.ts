@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EpharmaService } from '../epharma.service';
+import { SingPayService } from '../services/singpay.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
@@ -127,7 +128,7 @@ export class LoginComponent implements OnInit {
   receivedData: any;
   receivedCompte: any;
   receiveToken: any;
-  constructor(private epharmaService: EpharmaService, private router: Router, private dataService: DataService) { }
+  constructor(private epharmaService: EpharmaService, private singPayService: SingPayService , private router: Router, private dataService: DataService) { }
 
 
 
@@ -361,6 +362,18 @@ export class LoginComponent implements OnInit {
 
   open_info_user_tarif(){
     this.modal_info_tarif_user = true
+  }
+
+  PayToSingPay(amount: any) {
+    this.singPayService.externalisation(amount).subscribe({
+      next: (response: any) => {
+        console.log('Singpay =', response);
+        window.open(response.link, '_blank');
+      },
+      error: (error) => {
+        console.error('Erreur lors d enregistrement :', error);
+      }
+    })
   }
 
   clickTarifInfoUser(idTarif: any){

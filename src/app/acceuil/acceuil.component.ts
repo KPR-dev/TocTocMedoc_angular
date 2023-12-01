@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EpharmaService } from '../epharma.service';
+import { SingPayService } from '../services/singpay.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
@@ -121,7 +122,7 @@ export class AcceuilComponent implements OnInit {
   modal_info_tarif_user: boolean = false;
 
 
-  constructor(private epharmaService: EpharmaService, private router: Router, private dataService: DataService) { }
+  constructor(private epharmaService: EpharmaService, private singPayService: SingPayService , private router: Router, private dataService: DataService) { }
 
   // @HostListener('window:popstate', ['$event'])
   // onPopState(event: Event): void {
@@ -328,6 +329,18 @@ export class AcceuilComponent implements OnInit {
     this.formModification1 = true
   }
 
+  PayToSingPay(amount: any) {
+    this.singPayService.externalisation(amount).subscribe({
+      next: (response: any) => {
+        console.log('Singpay =', response);
+        window.open(response.link, '_blank');
+      },
+      error: (error) => {
+        console.error('Erreur lors d enregistrement :', error);
+      }
+    })
+  }
+
   clickTarif(idTarif: any){
     console.log('tarif = ',idTarif)
     environment.tarif_id = idTarif
@@ -335,6 +348,7 @@ export class AcceuilComponent implements OnInit {
     this.formInscription = true
     this.contrat = false
     this.modal_register = false
+    // this.PayToSingPay(200)
     this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
       next: (response: any) => {
         console.log('compte subscribe =', response);

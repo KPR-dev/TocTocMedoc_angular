@@ -6,8 +6,10 @@
 export const environment = {
   production: false,
   //  apiURL: "https://epg-supervisor-api.pivot40.tech",
-    apiURL: "http://31.207.35.25:8000/api_epg",
-    api: "http://31.207.35.25:8000",
+    // apiURL: "http://31.207.35.25:8000/api_epg",
+    // api: "http://31.207.35.25:8000",
+    apiURL: "http://localhost:8000/api_epg",
+    api: "http://localhost:8000",
     token: null,
     user_id: 0,
     id_compte: 0,

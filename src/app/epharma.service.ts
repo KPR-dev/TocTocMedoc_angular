@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SingPayService } from './services/singpay.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class EpharmaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private singPayService: SingPayService) { }
 
   //Route pour authentification
 
@@ -55,9 +56,23 @@ export class EpharmaService {
     })
   }
 
+  PayToSingPay(amount: any) {
+    this.singPayService.externalisation(amount).subscribe({
+      next: (response: any) => {
+        console.log('Singpay =', response);
+        window.open(response.link, '_blank'); // TODO: J'ai fais une redirection pour l'interface de singpay
+      },
+      error: (error) => {
+        console.error('Erreur lors d enregistrement :', error);
+      }
+    })
+  }
+
   getSubscribeCompte(idcompte: number, rateId: string) {
     const params = { rate_id: rateId };  // je cree un objet avec le paramètre de requête
     const options = { params };  // j'ajoute les paramètres à la configuration de la requête
+
+    this.PayToSingPay(200)// TODO: Appelle de la consommationo du service Singpay
 
     return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, null, options);
   }
