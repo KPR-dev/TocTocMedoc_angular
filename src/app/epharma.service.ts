@@ -66,7 +66,6 @@ export class EpharmaService {
         console.error('Erreur lors d enregistrement :', error);
       }
     })
-    return true
   }
 
   getSubscribeCompte(idcompte: number, rateId: string, price: any) {
@@ -77,6 +76,8 @@ export class EpharmaService {
 
     return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, null, options);
   }
+
+
 
   souscrireCredit(idcompte: number, credit: number){
     const headers = new HttpHeaders({

@@ -595,6 +595,20 @@ export class AcceuilComponent implements OnInit {
     this.registerFormVisible = !this.registerFormVisible;
 
   }
+  PayToSingPay(price: any) {
+    this.singPayService.externalisation(price, 'url_success', 'url_error').subscribe({
+      next: (response: any) => {
+        console.log('Singpay =', response);
+        this.modal_tarif = false
+        this.modal_register = false
+        this.loader = false
+        window.open(response.link, '_blank'); // TODO: J'ai fais une redirection pour l'interface de singpay
+      },
+      error: (error) => {
+        console.error('Erreur lors d enregistrement :', error);
+      }
+    })
+  }
   //Ma fonction
   clickVerify(libelle: string, cp: any){
     console.log('ID =', environment.user_id)

@@ -280,6 +280,29 @@
 <!-- formulaire d'infomation user  -->
 
 
+<div class="inscription" *ngIf="modal_tarif">
+    <div class="verify-container">
+
+        <div class="verify-content">
+            <!-- Formulaire d'inscription -->
+            <div class="verify-commande">
+                <p>Choisir un tarif</p>
+
+                <div class="tarif">
+                    <div class="produit" *ngFor="let produit of listTarif" (click)="PayToSingPay(produit.price)">
+                        <div class="card">
+                            <!-- Vous pouvez ajouter ici une image du produit -->
+                            <h6> Titre : {{produit.libelle}}</h6>
+                            <h6>Prix : {{produit.price}}</h6>
+                            <h6>Nombre de crédit : {{produit.credit}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="change" (click)="clear()">Fermer</button>
+        </div>
+    </div>
+</div>
 
 
 <!-- fin -->
