@@ -56,8 +56,8 @@ export class EpharmaService {
     })
   }
 
-  PayToSingPay(amount: any) {
-    this.singPayService.externalisation(amount).subscribe({
+  PayToSingPay(amount: any, url_success: any, url_error: any) {
+    this.singPayService.externalisation(amount, url_success, url_error).subscribe({
       next: (response: any) => {
         console.log('Singpay =', response);
         window.open(response.link, '_blank'); // TODO: J'ai fais une redirection pour l'interface de singpay
@@ -72,7 +72,7 @@ export class EpharmaService {
     const params = { rate_id: rateId };  // je cree un objet avec le paramètre de requête
     const options = { params };  // j'ajoute les paramètres à la configuration de la requête
 
-    this.PayToSingPay(200)// TODO: Appelle de la consommationo du service Singpay
+    this.PayToSingPay(200, "url_succes", "url_error")// TODO: Appelle de la consommationo du service Singpay
 
     return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, null, options);
   }
