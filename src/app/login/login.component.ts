@@ -340,14 +340,14 @@ export class LoginComponent implements OnInit {
     this.formModification1 = true
   }
 
-  clickTarif(idTarif: any){
+  clickTarif(idTarif: any, price: any){
     console.log('tarif = ',idTarif)
     environment.tarif_id = idTarif
     this.modal_tarif = false
     this.formInscription = true
     this.contrat = false
     this.modal_register = false
-    this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
+    this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString(), price).subscribe({
       next: (response: any) => {
         console.log('compte subscribe =', response);
         this.loader = false
@@ -364,22 +364,12 @@ export class LoginComponent implements OnInit {
     this.modal_info_tarif_user = true
   }
 
-  PayToSingPay(amount: any) {
-    this.singPayService.externalisation(amount).subscribe({
-      next: (response: any) => {
-        console.log('Singpay =', response);
-        window.open(response.link, '_blank');
-      },
-      error: (error) => {
-        console.error('Erreur lors d enregistrement :', error);
-      }
-    })
-  }
 
-  clickTarifInfoUser(idTarif: any){
+
+  clickTarifInfoUser(idTarif: any, price: any){
     console.log('tarif = ',idTarif)
 
-    this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
+    this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString(), price).subscribe({
       next: (response: any) => {
         console.log('compte subscribe =', response);
         this.modal_info_tarif_user = false
@@ -393,6 +383,18 @@ export class LoginComponent implements OnInit {
         console.error('Erreur lors d enregistrement :', error);
       }
     });
+  }
+
+  PayToSingPay(price: any) {
+    this.singPayService.externalisation(price, 'url_success', 'url_error').subscribe({
+      next: (response: any) => {
+        console.log('Singpay =', response);
+        window.open(response.link, '_blank'); // TODO: J'ai fais une redirection pour l'interface de singpay
+      },
+      error: (error) => {
+        console.error('Erreur lors d enregistrement :', error);
+      }
+    })
   }
 
   // submitCompteUser(){

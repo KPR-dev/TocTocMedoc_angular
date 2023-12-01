@@ -318,42 +318,42 @@ export class AppComponent implements OnInit {
     this.formModification1 = true
   }
 
-  clickTarif(idTarif: any){
-    console.log('tarif = ',idTarif)
-    environment.tarif_id = idTarif
-    this.modal_tarif = false
-    this.formInscription = true
-    this.contrat = false
-    this.modal_register = false
-    this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
-      next: (response: any) => {
-        console.log('compte subscribe =', response);
-        this.loader = false
-        this.modal_register = false
-      },
-      error: (error) => {
-        console.error('Erreur lors d enregistrement :', error);
-      }
-    });
-  }
+  // clickTarif(idTarif: any){
+  //   console.log('tarif = ',idTarif)
+  //   environment.tarif_id = idTarif
+  //   this.modal_tarif = false
+  //   this.formInscription = true
+  //   this.contrat = false
+  //   this.modal_register = false
+  //   this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
+  //     next: (response: any) => {
+  //       console.log('compte subscribe =', response);
+  //       this.loader = false
+  //       this.modal_register = false
+  //     },
+  //     error: (error) => {
+  //       console.error('Erreur lors d enregistrement :', error);
+  //     }
+  //   });
+  // }
 
   open_info_user_tarif(){
     this.modal_info_tarif_user = true
   }
 
-  clickTarifInfoUser(idTarif: any){
-    console.log('tarif = ',idTarif)
+  // clickTarifInfoUser(idTarif: any){
+  //   console.log('tarif = ',idTarif)
 
-    this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
-      next: (response: any) => {
-        console.log('compte subscribe =', response);
-        this.modal_info_tarif_user = false
-      },
-      error: (error) => {
-        console.error('Erreur lors d enregistrement :', error);
-      }
-    });
-  }
+  //   this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
+  //     next: (response: any) => {
+  //       console.log('compte subscribe =', response);
+  //       this.modal_info_tarif_user = false
+  //     },
+  //     error: (error) => {
+  //       console.error('Erreur lors d enregistrement :', error);
+  //     }
+  //   });
+  // }
 
   // submitCompteUser(){
   //   const formData = {

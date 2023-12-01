@@ -66,13 +66,14 @@ export class EpharmaService {
         console.error('Erreur lors d enregistrement :', error);
       }
     })
+    return true
   }
 
-  getSubscribeCompte(idcompte: number, rateId: string) {
+  getSubscribeCompte(idcompte: number, rateId: string, price: any) {
     const params = { rate_id: rateId };  // je cree un objet avec le paramètre de requête
     const options = { params };  // j'ajoute les paramètres à la configuration de la requête
 
-    this.PayToSingPay(200, "url_succes", "url_error")// TODO: Appelle de la consommationo du service Singpay
+    this.PayToSingPay(price, "url_succes", "url_error")// TODO: Appelle de la consommationo du service Singpay
 
     return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, null, options);
   }
