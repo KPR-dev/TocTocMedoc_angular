@@ -331,25 +331,25 @@ export class AcceuilComponent implements OnInit {
 
 
 
-  // clickTarif(idTarif: any){
-  //   console.log('tarif = ',idTarif)
-  //   environment.tarif_id = idTarif
-  //   this.modal_tarif = false
-  //   this.formInscription = true
-  //   this.contrat = false
-  //   this.modal_register = false
-  //   // this.PayToSingPay(200)
-  //   this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
-  //     next: (response: any) => {
-  //       console.log('compte subscribe =', response);
-  //       this.loader = false
-  //       this.modal_register = false
-  //     },
-  //     error: (error) => {
-  //       console.error('Erreur lors d enregistrement :', error);
-  //     }
-  //   });
-  // }
+  clickTarif(idTarif: any, price: any){
+    console.log('tarif = ',idTarif)
+    environment.tarif_id = idTarif
+    this.modal_tarif = false
+    this.formInscription = true
+    this.contrat = false
+    this.modal_register = false
+    // this.PayToSingPay(200)
+    this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString(), price).subscribe({
+      next: (response: any) => {
+        console.log('compte subscribe =', response);
+        this.loader = false
+        this.modal_register = false
+      },
+      error: (error) => {
+        console.error('Erreur lors d enregistrement :', error);
+      }
+    });
+  }
 
   open_info_user_tarif(){
     this.modal_info_tarif_user = true

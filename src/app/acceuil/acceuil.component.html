@@ -289,7 +289,7 @@
                 <p>Choisir un tarif</p>
 
                 <div class="tarif">
-                    <div class="produit" *ngFor="let produit of listTarif" (click)="PayToSingPay(produit.price)">
+                    <div class="produit" *ngFor="let produit of listTarif" (click)="clickTarif(produit.id, produit.price)">
                         <div class="card">
                             <!-- Vous pouvez ajouter ici une image du produit -->
                             <h6> Titre : {{produit.libelle}}</h6>
