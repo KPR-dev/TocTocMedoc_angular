@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { SingPayService } from './services/singpay.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { tokenize } from '@angular/compiler/src/ml_parser/lexer';
 
 @Injectable({
   providedIn: 'root'
@@ -56,23 +57,47 @@ export class EpharmaService {
     })
   }
 
-  PayToSingPay(amount: any, url_success: any, url_error: any) {
-    this.singPayService.externalisation(amount, url_success, url_error).subscribe({
+
+  PayToSingPay(amount: any, rateId: string) {
+    // Construire l'URL avec les paramètres token et tarif_id
+    const token = environment.token;
+    const url_success = `/sing_pay_api/url_success/${token}/${rateId}/`;
+
+    // Appeler la fonction externalisation avec la nouvelle URL
+    this.singPayService.externalisation(amount, url_success, null).subscribe({
       next: (response: any) => {
         console.log('Singpay =', response);
-        window.open(response.link, '_blank'); // TODO: J'ai fais une redirection pour l'interface de singpay
+        console.log('token =', token);
+        console.log('rateId =', rateId);
+        window.open(response.link, '_blank'); // Redirection vers l'interface de Singpay
       },
       error: (error) => {
-        console.error('Erreur lors d enregistrement :', error);
+        console.error('Erreur lors de l\'enregistrement :', error);
+        // Redirection vers la page actuelle en cas d'erreur
+        window.location.href = window.location.href;
       }
-    })
+    });
   }
+
+
+
+  // PayToSingPay(amount: any, url_success: any, url_error: any) {
+  //   this.singPayService.externalisation(amount, url_success, url_error).subscribe({
+  //     next: (response: any) => {
+  //       console.log('Singpay =', response);
+  //       window.open(response.link, '_blank'); // TODO: J'ai fais une redirection pour l'interface de singpay
+  //     },
+  //     error: (error) => {
+  //       console.error('Erreur lors d enregistrement :', error);
+  //     }
+  //   })
+  // }
 
   getSubscribeCompte(idcompte: number, rateId: string, price: any) {
     const params = { rate_id: rateId };  // je cree un objet avec le paramètre de requête
     const options = { params };  // j'ajoute les paramètres à la configuration de la requête
 
-    this.PayToSingPay(price, "url_succes", "url_error")// TODO: Appelle de la consommationo du service Singpay
+    this.PayToSingPay(price, rateId)// TODO: Appelle de la consommationo du service Singpay
 
     return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, null, options);
   }
