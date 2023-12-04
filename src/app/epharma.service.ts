@@ -73,10 +73,17 @@ export class EpharmaService {
       },
       error: (error) => {
         console.error('Erreur lors de l\'enregistrement :', error);
+
+        // Vérifiez si l'erreur contient un message explicite
+        if (error.error && error.error.message) {
+          console.error('Message d\'erreur de SingPay :', error.error.message);
+        }
+
         // Redirection vers la page actuelle en cas d'erreur
         window.location.href = window.location.href;
       }
     });
+
   }
 
 
