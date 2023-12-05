@@ -22,7 +22,7 @@ export class EpharmaService {
     return this.http.post(`${environment.api}/user/add`, formData);
   }
 
-  changerPassword(email: string){
+  changerPassword(email: string) {
 
     return this.http.put(`${environment.api}/user/recovery_password/${email}`, {});
   }
@@ -35,18 +35,18 @@ export class EpharmaService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${environment.token}`
     });
-    return this.http.put(`${environment.api}/user/update/${id}`, formData, {headers});
+    return this.http.put(`${environment.api}/user/update/${id}`, formData, { headers });
   }
 
-  updateMdp(id: number, password: any){
+  updateMdp(id: number, password: any) {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${environment.token}`
     });
     console.log('mpd user verif', password)
-    return this.http.put(`${environment.api}/user/update_password/${id}?new_password=${password}`,null, {headers});
+    return this.http.put(`${environment.api}/user/update_password/${id}?new_password=${password}`, null, { headers });
   }
 
-  getAllTarif(){
+  getAllTarif() {
     return this.http.get(`${environment.api}/rate/all`);
   }
 
@@ -111,20 +111,20 @@ export class EpharmaService {
 
 
 
-  souscrireCredit(idcompte: number, credit: number){
+  souscrireCredit(idcompte: number, credit: number) {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${environment.token}`
     });
-    return this.http.put(`${environment.api}/account/spent/${idcompte}?credit=${credit}`,null, { headers: headers });
+    return this.http.put(`${environment.api}/account/spent/${idcompte}?credit=${credit}`, null, { headers: headers });
   }
 
-  getLibelleTarif(libelle: string){
+  getLibelleTarif(libelle: string) {
     return this.http.get(`${environment.api}/price_list/get_by_libelle/${libelle}`, {
 
     })
   }
 
-  getAllPriceCredit(){
+  getAllPriceCredit() {
     return this.http.get(`${environment.api}/price_list/all`, {
 
     })
@@ -138,27 +138,36 @@ export class EpharmaService {
     return this.http.post(`${environment.apiURL}/disponibility_product`, {
       pharmacy: pharmacy,
       cip: cip
-    }, {headers});
+    }, { headers });
   }
 
   //Route pour add  les produits
+//   reservationProduit(produits: any[], buyer: any, buyerPhone: any, buyerEmail: any, pharmacy: any) {
+
+//     const requestBody = {
+//         pharmacy: pharmacy,
+//         buyer: buyer,
+//         buyerPhone: buyerPhone,
+//         buyerEmail: buyerEmail,
+//         produits: produits
+//     };
+//     // Utilisez la requête HTTP POST en incluant le corps de la requête
+//     return this.http.post(`${environment.apiURL}/reservation`, requestBody);
+// }
+
+
+
   reservationProduit(produits: any[], buyer: any, buyerPhone: any, buyerEmail: any, pharmacy: any) {
-    const requestData = {
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${environment.token}`
+    // });
+    // console.log('headers=', headers);
+    return this.http.post(`${environment.apiURL}/reservation`, {
       pharmacy,
       buyer,
       buyerPhone,
       buyerEmail,
       produits
-    };
-    return this.http.post(`${environment.apiURL}/reservation`, requestData);
+    })
   }
-  // reservationProduit(produits: any[], buyer: any, buyerPhone: any, buyerEmail: any, pharmacy: any) {
-  //   return this.http.post(`${environment.apiURL}/open-api/reservation`, {
-  //     pharmacy,
-  //     buyer,
-  //     buyerPhone,
-  //     buyerEmail,
-  //     produits
-  //   },)
-  // }
 }

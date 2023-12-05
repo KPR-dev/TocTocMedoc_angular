@@ -23,7 +23,8 @@ export class SingPayService {
 
     const body = {
       portefeuille: "655cb86504e9de35cdfbca9f",
-      reference: "MF1600",
+      // reference: "MF1600",
+      reference: "PHARMACIES241",
       redirect_success: url_success, // TODO: Ici mettre la redirection quand ça réussit
       redirect_error: url_error, // TODO: Ici mettre la redirection quand ça réussit
       amount: amount,
