@@ -158,16 +158,16 @@ export class EpharmaService {
 
 
   reservationProduit(produits: any[], buyer: any, buyerPhone: any, buyerEmail: any, pharmacy: any) {
-    // const headers = new HttpHeaders({
-    //   'Authorization': `Bearer ${environment.token}`
-    // });
-    // console.log('headers=', headers);
+     const headers = new HttpHeaders({
+       'Authorization': `Bearer ${environment.token}`
+     });
+     console.log('headers=', headers);
     return this.http.post(`${environment.apiURL}/reservation`, {
       pharmacy,
       buyer,
       buyerPhone,
       buyerEmail,
       produits
-    })
+    }, {headers: headers })
   }
 }
