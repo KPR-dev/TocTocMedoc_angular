@@ -760,12 +760,15 @@ export class LoginComponent implements OnInit {
     }
     this.epharmaService.reservationProduit(array, this.buyer, this.buyerPhone, this.buyerEmail, cart.pharmacyId).subscribe({
       next: (response: any) => {
+
         this.commandeResult = { start: false, success: true, message: "Votre commande a été envoyée avec succès à la pharmacie [" + cart.pharmacyName + "], Réservation " + response.result.reservation + ", TTC: " + response.result.ttc + " FCFA" };
         this.removeCart(cartIndex);
 
       }
       , error: (err) => {
         console.log(err);
+        this.modal_verifier = true
+        this.form_modal_verifier = true
         this.commandeResult = { start: false, success: false, message: "Votre commande a échouée !" };
       }
     })
