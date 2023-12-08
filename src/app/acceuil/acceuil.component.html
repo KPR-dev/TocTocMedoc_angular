@@ -50,7 +50,7 @@
             <!-- <p class="gray">{{produit.prix_vente}} FCFA</p> -->
             <p class="gray">{{produit.code_table ? 'Sous ordonnance' : ''}}</p>
             <div class="row">
-              <button *ngIf="!isLoggedIn" (click)="open_inscription()">Vérifier</button>
+              <button (click)="open_inscription()">Vérifier</button>
             </div>
           </div>
         </div>
@@ -323,7 +323,7 @@
             <div class="card">
               <!-- Vous pouvez ajouter ici une image du produit -->
               <h6> Titre : {{produit.libelle}}</h6>
-              <h6>Prix : {{produit.price}}</h6>
+              <h6>Prix : {{produit.price}} FCFA</h6>
               <h6>Nombre de crédit : {{produit.credit}}</h6>
             </div>
           </div>

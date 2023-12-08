@@ -719,11 +719,37 @@ export class LoginComponent implements OnInit {
     this.selectedPharmacy = pharmacy;
   }
 
+  // commander(cart: Cart, cartIndex: number) {
+  //   if (cart.products.length == 0) {
+  //     alert("Vous n'avez aucun produit");
+  //     return;
+  //   }
+  //   this.commandeResult = { start: true };
+  //   const array = [];
+  //   for (let i = 0; i < cart.products.length; i++) {
+  //     array.push({
+  //       cip: cart.products[i].produitCIP,
+  //       quantity: cart.products[i].quantity
+  //     })
+  //   }
+  //   this.epharmaService.reservationProduit(array, this.buyer, this.buyerPhone, this.buyerEmail, cart.pharmacyId).subscribe({
+  //     next: (response: any) => {
+  //       this.commandeResult = { start: false, success: true, message: "Votre commande a été envoyée avec succès à la pharmacie [" + cart.pharmacyName + "], Réservation " + response.result.reservation + ", TTC: " + response.result.ttc + " FCFA" };
+  //       this.removeCart(cartIndex);
+  //     }, error: (err) => {
+  //       console.log(err);
+  //       this.commandeResult = { start: false, success: false, message: "Votre commande a échouée !" };
+  //     }
+  //   })
+  // }
+
+  //Ma fonction
   commander(cart: Cart, cartIndex: number) {
     if (cart.products.length == 0) {
       alert("Vous n'avez aucun produit");
       return;
     }
+
     this.commandeResult = { start: true };
     const array = [];
     for (let i = 0; i < cart.products.length; i++) {
@@ -736,7 +762,9 @@ export class LoginComponent implements OnInit {
       next: (response: any) => {
         this.commandeResult = { start: false, success: true, message: "Votre commande a été envoyée avec succès à la pharmacie [" + cart.pharmacyName + "], Réservation " + response.result.reservation + ", TTC: " + response.result.ttc + " FCFA" };
         this.removeCart(cartIndex);
-      }, error: (err) => {
+
+      }
+      , error: (err) => {
         console.log(err);
         this.commandeResult = { start: false, success: false, message: "Votre commande a échouée !" };
       }

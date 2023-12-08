@@ -4,6 +4,7 @@ import { SingPayService } from './services/singpay.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { tokenize } from '@angular/compiler/src/ml_parser/lexer';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -100,13 +101,24 @@ export class EpharmaService {
   //   })
   // }
 
-  getSubscribeCompte(idcompte: number, rateId: string, price: any) {
-    const params = { rate_id: rateId };  // je cree un objet avec le paramètre de requête
-    const options = { params };  // j'ajoute les paramètres à la configuration de la requête
 
-    this.PayToSingPay(price, rateId)// TODO: Appelle de la consommationo du service Singpay
+  // getSubscribeCompte(idcompte: number, rateId: string, price: any) {
+  //   const params = { rate_id: rateId };  // je cree un objet avec le paramètre de requête
+  //   const options = { params };  // j'ajoute les paramètres à la configuration de la requête
 
-    return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, null, options);
+  //   this.PayToSingPay(price, rateId)// TODO: Appelle de la consommationo du service Singpay
+
+  //    return this.http.put(`${environment.api}/account/subscribe_rate/${idcompte}`, null, options);
+  // }
+
+  getSubscribeCompte(idcompte: number, rateId: string, price: any): Observable<any> {
+    const params = { rate_id: rateId };
+    const options = { params };
+
+    this.PayToSingPay(price, rateId);
+
+    // Utilisez `of` pour créer un observable qui émet une seule valeur puis se termine
+    return of('Subscription completed');
   }
 
 
