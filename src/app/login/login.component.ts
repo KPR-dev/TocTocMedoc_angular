@@ -109,12 +109,14 @@ export class LoginComponent implements OnInit {
   showSnackbar3: boolean = false;
   showSnackbar4: boolean = false;
   showSnackbar5: boolean = false;
+  showSnackbar6: boolean = false;
   showSnackbarError: boolean = false;
   showSnackbarError1: boolean = false;
   showSnackbarError2: boolean = false;
   showSnackbarError3: boolean = false;
   showSnackbarError4: boolean = false;
   showSnackbarError5: boolean = false;
+  showSnackbarError6: boolean = false;
   changerPass: boolean = false;
   form1: boolean = false;
   contrat: boolean = false;
@@ -123,6 +125,8 @@ export class LoginComponent implements OnInit {
   modal_verifier: boolean = false;
   form_modal_verifier: boolean = false;
   modal_info_tarif_user: boolean = false;
+  verifier_commander: boolean = false;
+  modal_commander: boolean = true;
 
 
   receivedData: any;
@@ -143,12 +147,14 @@ export class LoginComponent implements OnInit {
     this.showSnackbar3 = false;
     this.showSnackbar4 = false;
     this.showSnackbar5 = false;
+    this.showSnackbar6 = false;
     this.showSnackbarError = false
     this.showSnackbarError1 = false
     this.showSnackbarError2 = false
     this.showSnackbarError3 = false
     this.showSnackbarError4 = false
     this.showSnackbarError5 = false
+    this.showSnackbarError6 = false
     this.receivedData = this.dataService.getSharedData();
     this.receivedCompte = this.dataService.getSharedCompte();
     this.receiveToken = this.dataService.getSharedToken();
@@ -358,6 +364,31 @@ export class LoginComponent implements OnInit {
         console.error('Erreur lors d enregistrement :', error);
       }
     });
+  }
+
+  clickCommande(commande: string){
+    try {
+      this.epharmaService.getLibelleTarif(commande).subscribe({
+        next: (response: any) => {
+
+          this.creditUser = response.credit
+          console.log('credit reçu =', response.credit);
+
+          this.verifier_commander = true
+          this.modal_commander = false
+        },
+        error: (error) => {
+        }
+      });
+    } catch {
+      // ... (votre bloc catch existant)
+    }
+
+  }
+
+  close_verif_commande(){
+    this.verifier_commander = false
+    this.modal_commander = true
   }
 
   open_info_user_tarif(){
@@ -618,6 +649,28 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  validerCommande(credit: number){
+    this.epharmaService.souscrireCredit(environment.id_compte, credit).subscribe({
+      next: (response: any) => {
+        console.log('credit enlever =', response);
+        this.showSnackbar6 = true;
+        setTimeout(() => {
+          this.showSnackbar6 = false;
+          this.verifier_commander = false
+        }, 2000);
+        this.verify(environment.produit)
+
+      },
+      error: (error) => {
+        this.smserror = error.error.detail
+        this.showSnackbarError6 = true;
+        setTimeout(() => {
+          this.showSnackbarError6 = false;
+        }, 2000);
+      }
+    });
+  }
+
   changePassword(){
     console.log(this.email.value)
     this.epharmaService.changerPassword(this.email.value).subscribe({
@@ -744,7 +797,8 @@ export class LoginComponent implements OnInit {
   // }
 
   //Ma fonction
-  commander(cart: Cart, cartIndex: number) {
+  commander(cart: Cart, cartIndex: number, credit: number) {
+    this.validerCommande(credit)
     if (cart.products.length == 0) {
       alert("Vous n'avez aucun produit");
       return;
