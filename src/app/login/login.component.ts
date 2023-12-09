@@ -11,6 +11,7 @@ class ProductQuantity {
   produitCIP!: string;
   quantity!: number;
   produitName!: string;
+  prix_vente!: number;
 }
 
 class Cart {
@@ -859,7 +860,7 @@ export class LoginComponent implements OnInit {
     this.modal_info_tarif_user = false
   }
 
-  addToCart(productCIP: string, productName: string) {
+  addToCart(productCIP: string, productName: string, prix_vente: number) {
     let index = -1;
     for (let i = 0; i < this.carts.length; i++) {
       if (this.carts[i].pharmacyId == this.selectedPharmacy._id) {
@@ -879,7 +880,7 @@ export class LoginComponent implements OnInit {
         }
       }
       if (addNew) {
-        this.carts[index].products.push({ quantity: this.quantity, produitCIP: productCIP, produitName: productName })
+        this.carts[index].products.push({ quantity: this.quantity, produitCIP: productCIP, produitName: productName, prix_vente: prix_vente })
       }
     }
     this.clear()
