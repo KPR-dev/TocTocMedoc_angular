@@ -73,8 +73,8 @@
                     <p>Disponible à {{addressProduit}}</p>
                 </div>
                 <div class="tarif">
-                    <p>Cette action vaut {{creditUser}} crédit(s)</p><br>
-                    <p>Il vous reste {{ users.credit}} crédit(s)</p>
+                    <p>Vous avez <b>{{ users.credit}}</b> crédit(s), cette action vaut <b>{{creditUser}}</b> crédit(s)</p><br>
+
                 </div>
             </div>
             <button class="btn btn-secondary" (click)="clear()">Annuler</button><button (click)="validerCredit(creditUser)" class="btn btn-primary mx-2">Confirmer</button>
@@ -428,8 +428,8 @@
                         <div class="verify-commande text-center">
                             <p>Voulez-vous continuer ?</p>
                             <div class="tarif">
-                                <p>Cette action vaut {{ creditUser }} crédit(s)</p>
-                                <p>Il vous reste {{ users.credit }} crédit(s)</p>
+                                <p>Vous avez <b>{{ users.credit }}</b> crédit(s), cette action vaut <b>{{ creditUser }}</b> crédit(s)</p>
+
                             </div>
                         </div>
                         <div class="button-container">
