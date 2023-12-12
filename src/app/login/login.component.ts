@@ -82,6 +82,7 @@ export class LoginComponent implements OnInit {
   pageCount: number = 0;
   totalCount: number = 0;
   creditUser: number = 0;
+  nombreProduit: number = 0;
 
   hasResult = false;
 
@@ -599,6 +600,20 @@ export class LoginComponent implements OnInit {
   //Ma fonction
   clickVerify(libelle: string, cp: any){
     console.log('ID =', environment.user_id)
+    this.epharmaService.getUserId(environment.user_id).subscribe({
+      next: (response: any) => {
+        console.log('information user =', response);
+
+        this.users.credit = response.credit
+
+        return true
+
+      },
+      error: (error) => {
+        console.error('Erreur lors de la connexion :', error);
+      }
+    });
+
     try {
       this.epharmaService.getLibelleTarif(libelle).subscribe({
         next: (response: any) => {
@@ -631,6 +646,7 @@ export class LoginComponent implements OnInit {
     this.epharmaService.souscrireCredit(environment.id_compte, credit).subscribe({
       next: (response: any) => {
         console.log('credit enlever =', response);
+        this.users.credit = response.credit
         this.form_modal_verifier = false
         this.showSnackbar4 = true;
         setTimeout(() => {
@@ -651,6 +667,19 @@ export class LoginComponent implements OnInit {
   }
 
   validerCommande(credit: number){
+    this.epharmaService.getUserId(environment.user_id).subscribe({
+      next: (response: any) => {
+        console.log('information user =', response);
+
+        this.users.credit = response.credit
+
+        return true
+
+      },
+      error: (error) => {
+        console.error('Erreur lors de la connexion :', error);
+      }
+    });
     this.epharmaService.souscrireCredit(environment.id_compte, credit).subscribe({
       next: (response: any) => {
         console.log('credit enlever =', response);
@@ -799,34 +828,55 @@ export class LoginComponent implements OnInit {
 
   //Ma fonction
   commander(cart: Cart, cartIndex: number, credit: number) {
-    this.validerCommande(credit)
-    if (cart.products.length == 0) {
-      alert("Vous n'avez aucun produit");
-      return;
-    }
-
-    this.commandeResult = { start: true };
-    const array = [];
-    for (let i = 0; i < cart.products.length; i++) {
-      array.push({
-        cip: cart.products[i].produitCIP,
-        quantity: cart.products[i].quantity
-      })
-    }
-    this.epharmaService.reservationProduit(array, this.buyer, this.buyerPhone, this.buyerEmail, cart.pharmacyId).subscribe({
+    this.epharmaService.souscrireCredit(environment.id_compte, credit).subscribe({
       next: (response: any) => {
+        console.log('credit enlever =', response);
+        this.showSnackbar6 = true;
+        setTimeout(() => {
+          this.showSnackbar6 = false;
+          this.verifier_commander = false
+        }, 2000);
 
-        this.commandeResult = { start: false, success: true, message: "Votre commande a été envoyée avec succès à la pharmacie [" + cart.pharmacyName + "], Réservation " + response.result.reservation + ", TTC: " + response.result.ttc + " FCFA" };
-        this.removeCart(cartIndex);
+        if (cart.products.length == 0) {
+          alert("Vous n'avez aucun produit");
+          return;
+        }
 
+        this.commandeResult = { start: true };
+        const array = [];
+        for (let i = 0; i < cart.products.length; i++) {
+          array.push({
+            cip: cart.products[i].produitCIP,
+            quantity: cart.products[i].quantity
+          })
+        }
+        this.epharmaService.reservationProduit(array, this.buyer, this.buyerPhone, this.buyerEmail, cart.pharmacyId).subscribe({
+          next: (response: any) => {
+
+            this.commandeResult = { start: false, success: true, message: "Votre commande a été envoyée avec succès à la pharmacie [" + cart.pharmacyName + "], Réservation " + response.result.reservation + ", TTC: " + response.result.ttc + " FCFA" };
+            this.removeCart(cartIndex);
+
+          }
+          , error: (err) => {
+            console.log(err);
+            this.modal_verifier = true
+            this.form_modal_verifier = true
+            this.commandeResult = { start: false, success: false, message: "Votre commande a échouée !" };
+          }
+        })
+
+        this.verify(environment.produit)
+
+      },
+      error: (error) => {
+        this.smserror = error.error.detail
+        this.showSnackbarError6 = true;
+        setTimeout(() => {
+          this.showSnackbarError6 = false;
+        }, 4000);
       }
-      , error: (err) => {
-        console.log(err);
-        this.modal_verifier = true
-        this.form_modal_verifier = true
-        this.commandeResult = { start: false, success: false, message: "Votre commande a échouée !" };
-      }
-    })
+    });
+
   }
 
   open_mdp(){
@@ -861,6 +911,7 @@ export class LoginComponent implements OnInit {
   }
 
   addToCart(productCIP: string, productName: string, prix_vente: number) {
+
     let index = -1;
     for (let i = 0; i < this.carts.length; i++) {
       if (this.carts[i].pharmacyId == this.selectedPharmacy._id) {
@@ -878,11 +929,15 @@ export class LoginComponent implements OnInit {
           this.carts[index].products[i].quantity += this.quantity;
           addNew = false;
         }
+
       }
       if (addNew) {
         this.carts[index].products.push({ quantity: this.quantity, produitCIP: productCIP, produitName: productName, prix_vente: prix_vente })
       }
+
     }
+    this.nombreProduit = this.carts[index].products.length
+    console.log('cart = ',this.carts[index].products.length)
     this.clear()
   }
 

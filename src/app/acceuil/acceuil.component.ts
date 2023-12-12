@@ -663,7 +663,7 @@ export class AcceuilComponent implements OnInit {
           setTimeout(() => {
             this.showSnackbar5 = false;
             this.ResetPassword = false
-          }, 2000);
+          }, 4000);
       },
       error: (error) => {
        console.log(error)

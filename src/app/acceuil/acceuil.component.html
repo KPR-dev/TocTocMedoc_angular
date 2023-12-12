@@ -81,6 +81,11 @@
             <div class="verify-commande">
                 <h3 *ngIf="form1">Veuillez remplir le formulaire d'inscription!</h3>
                 <form [formGroup]="registerForm" (ngSubmit)="submitRegistrationForm()">
+                    <div class="d-none d-md-block ">
+
+                        <img src="../assets/logo.png" alt="" width="100px" height="100px" style="margin-left: 40%;">
+
+                    </div>
                     <div class="" *ngIf="form1">
                         <div class="" style="margin-top: 5%; margin-left: 20%">
                             <div class="row">
@@ -228,14 +233,14 @@
                     <div class="form-group">
                         <input type="password" [(ngModel)]="users.password" id="password" name="password" required placeholder="Mot de passe">
                     </div>
-                    <a (click)="open_reset_password()" style="font-size: 10px">Mot de passe oublié ?</a>
+                    <a (click)="open_reset_password()" style="font-size: 10px; cursor: pointer">Mot de passe oublié ?</a>
                     <button type="submit">Se connecter</button>
                     <button id="change" (click)="clear()" style="float: right; margin-top: 15px">Quitter</button>
                 </form>
             </div>
             <div style="margin-left: 20px;" class="d-none d-md-block">
                 <!-- Utilisation de classes d'utilité pour masquer sur mobile -->
-                <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="300px" height="300px" style="border-radius: 5px;">
+                <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="350px" height="500px" style="border-radius: 5px;">
 
             </div>
         </div>
@@ -265,7 +270,7 @@
                     <!-- ... Champs de connexion ... -->
                     <div class="form-group">
 
-                        <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre mail">
+                        <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre mail" required>
                     </div>
                     <button type="submit">Rénitialiser</button>
                     <button (click)="clearModification()" id="change">Quitter</button>
