@@ -271,6 +271,9 @@
                     <div class="form-group">
 
                         <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre mail" required>
+                        <!-- <div *ngIf="registerForm.get('email')?.hasError('required')">
+                            Le champ email ne peut pas être vide.
+                        </div> -->
                     </div>
                     <button type="submit">Rénitialiser</button>
                     <button (click)="clearModification()" id="change">Quitter</button>

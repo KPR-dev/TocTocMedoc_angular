@@ -666,6 +666,21 @@ export class AcceuilComponent implements OnInit {
           }, 4000);
       },
       error: (error) => {
+        if (this.email.value === '') {
+          this.smserror = 'Entrez une adresse mail'
+          this.showSnackbarError5 = true;
+            setTimeout(() => {
+              this.showSnackbarError5 = false;
+            }, 4000);
+        }
+        else{
+          this.smserror = error.error.detail
+          this.showSnackbarError5 = true;
+            setTimeout(() => {
+              this.showSnackbarError5 = false;
+            }, 4000);
+        }
+
        console.log(error)
       }
     });
