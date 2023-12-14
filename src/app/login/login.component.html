@@ -1,108 +1,112 @@
 <div class="navbar">
-    <button (click)="previousPage()"><i class="fa-solid fa-chevron-left"></i></button>
-    <p>Page {{currentPageIndex+1}} / {{pageCount}}</p>
-    <button (click)="nextPage()"><i class="fa-solid fa-chevron-right"></i></button>
+  <button (click)="previousPage()"><i class="fa-solid fa-chevron-left"></i></button>
+  <p>Page {{currentPageIndex+1}} / {{pageCount}}</p>
+  <button (click)="nextPage()"><i class="fa-solid fa-chevron-right"></i></button>
 </div>
 
 
 
 <div class="wrapper">
-    <main>
-        <header>
-            <h1>TocTocMedoc</h1>
-            <h2>By E-Pharma GA</h2>
-            <p>Cette solution vous permet d'avoir la disponibilité des produits et faire des réservations dans toutes les pharmacies possédant le logiciel ePharma</p>
+  <main>
+    <header>
+      <h1>TocTocMedoc</h1>
+      <h2>By E-Pharma GA</h2>
+      <p>Cette solution vous permet d'avoir la disponibilité des produits et faire des réservations dans toutes les
+        pharmacies possédant le logiciel ePharma</p>
 
-            <p>
-                <a href="https://epharma.ga">En savoir plus</a>
+      <p>
+        <a href="https://epharma.ga">En savoir plus</a>
 
-            </p>
-        </header>
+      </p>
+    </header>
 
-        <div class="produit-container">
-            <p class="search-title">Recherchez des produits sur la page actuelle, utilisez les flèches pour changer de page
-            </p>
+    <div class="produit-container">
+      <p class="search-title">Recherchez des produits sur la page actuelle, utilisez les flèches pour changer de page
+      </p>
 
-            <div class="form-group-search">
-                <input type="search" name="search" id="search" (keyup)="applyFilter($event)" placeholder="Trouver un produit...">
+      <div class="form-group-search">
+        <input type="search" name="search" id="search" (keyup)="applyFilter($event)"
+          placeholder="Trouver un produit...">
+      </div>
+
+      <div class="loader-container" *ngIf="filteredProduit.length == 0 && hasResult == false">
+        <div class="loader"></div>
+      </div>
+
+      <div class="no-result" *ngIf="filteredProduit.length == 0 && hasResult == true">
+
+        <p><i class="fa-solid fa-magnifying-glass"></i> Aucun résultat sur cette page, veuillez vérifier sur les autres
+          pages !</p>
+      </div>
+
+      <div class="produits">
+        <div class="produit" *ngFor="let produit of filteredProduit">
+          <div class="img-container">
+            <img [src]="produit.photoURL" *ngIf="produit.photoURL" alt="">
+            <img src="../assets/placeholder.png" *ngIf="!produit.photoURL" alt="">
+          </div>
+          <div class="row-between">
+            <h4>{{produit.libelle}}</h4>
+            <!-- <p class="gray">{{produit.prix_vente}} FCFA</p> -->
+            <p class="gray">{{produit.code_table ? 'Sous ordonnance' : ''}}</p>
+            <div class="row">
+              <button (click)="clickVerify('Vérifier', produit.CIP)" value="Vérifier">Vérifier</button>
             </div>
 
-            <div class="loader-container" *ngIf="filteredProduit.length == 0 && hasResult == false">
-                <div class="loader"></div>
-            </div>
-
-            <div class="no-result" *ngIf="filteredProduit.length == 0 && hasResult == true">
-
-                <p><i class="fa-solid fa-magnifying-glass"></i> Aucun résultat sur cette page, veuillez vérifier sur les autres pages !</p>
-            </div>
-
-            <div class="produits">
-                <div class="produit" *ngFor="let produit of filteredProduit">
-                    <div class="img-container">
-                        <img [src]="produit.photoURL" *ngIf="produit.photoURL" alt="">
-                        <img src="../assets/placeholder.png" *ngIf="!produit.photoURL" alt="">
-                    </div>
-                    <div class="row-between">
-                        <h4>{{produit.libelle}}</h4>
-                        <!-- <p class="gray">{{produit.prix_vente}} FCFA</p> -->
-                        <p class="gray">{{produit.code_table ? 'Sous ordonnance' : ''}}</p>
-                        <div class="row">
-                            <button (click)="clickVerify('Vérifier', produit.CIP)" value="Vérifier">Vérifier</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </main>
+      </div>
+    </div>
+  </main>
 </div>
 
 
 <div class="inscription" *ngIf="modal_verifier">
-    <div id="popup1" class="overlay" *ngIf="showSnackbarError4">
-        <div class="popup">
-            <h4 style="color: red;">{{smserror}}</h4>
-        </div>
+  <div id="popup1" class="overlay" *ngIf="showSnackbarError4">
+    <div class="popup">
+      <h4 style="color: red;">{{smserror}}</h4>
     </div>
-    <div class="verify-container" *ngIf="form_modal_verifier">
-        <div class="verify-content">
-            <!-- Formulaire d'inscription -->
-            <div class="verify-commande">
-                <p>Voulez-vous continuer ?</p>
-                <div>
-                    <p>Disponible à {{addressProduit}}</p>
-                </div>
-                <div class="tarif">
-                    <p>Vous avez <b>{{ users.credit}}</b> crédit(s), cette action vaut <b>{{creditUser}}</b> crédit(s)</p><br>
+  </div>
+  <div class="verify-container" *ngIf="form_modal_verifier">
+    <div class="verify-content">
+      <!-- Formulaire d'inscription -->
+      <div class="verify-commande">
+        <p>Voulez-vous continuer ?</p>
+        <div>
+          <p>Disponible à {{addressProduit}}</p>
+        </div>
+        <div class="tarif">
+          <p>Vous avez <b>{{ users.credit}}</b> crédit(s), cette action vaut <b>{{creditUser}}</b> crédit(s)</p><br>
 
-                </div>
-            </div>
-            <button class="btn btn-secondary" (click)="clear()">Annuler</button><button (click)="validerCredit(creditUser)" class="btn btn-primary mx-2">Confirmer</button>
         </div>
+      </div>
+      <button class="btn btn-secondary" (click)="clear()">Annuler</button><button (click)="validerCredit(creditUser)"
+        class="btn btn-primary mx-2">Confirmer</button>
     </div>
+  </div>
 </div>
 
 <div class="inscription" *ngIf="modal_tarif">
-    <div class="verify-container">
-        <button id="change" (click)="clear()">Fermer</button>
-        <div class="verify-content">
-            <!-- Formulaire d'inscription -->
-            <div class="verify-commande">
-                <p>Choisir un tarif</p>
+  <div class="verify-container">
+    <button id="change" (click)="clear()">Fermer</button>
+    <div class="verify-content">
+      <!-- Formulaire d'inscription -->
+      <div class="verify-commande">
+        <p>Choisir un tarif</p>
 
-                <div class="tarif">
-                    <div class="produit" *ngFor="let produit of listTarif" (click)="clickTarif(produit.id, produit.price)">
-                        <div class="card">
-                            <!-- Vous pouvez ajouter ici une image du produit -->
-                            <h6> Titre : {{produit.libelle}}</h6>
-                            <h6>Prix : {{produit.price}} FCFA</h6>
-                            <h6>Nombre de crédit : {{produit.credit}}</h6>
-                        </div>
-                    </div>
-                </div>
+        <div class="tarif">
+          <div class="produit" *ngFor="let produit of listTarif" (click)="clickTarif(produit.id, produit.price)">
+            <div class="card">
+              <!-- Vous pouvez ajouter ici une image du produit -->
+              <h6> Titre : {{produit.libelle}}</h6>
+              <h6>Prix : {{produit.price}} FCFA</h6>
+              <h6>Nombre de crédit : {{produit.credit}}</h6>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 
@@ -111,59 +115,60 @@
 
 <!-- modal des modification user -->
 
-<div class="inscription d-flex justify-content-center align-items-center" *ngIf="modal_modification" style="background: #f8f9fa; height: 100vh;">
+<div class="inscription d-flex justify-content-center align-items-center" *ngIf="modal_modification"
+  style="background: #f8f9fa; height: 100vh;">
 
-    <div class="verify-container container" style=" max-width: 90%;">
+  <div class="verify-container container" style=" max-width: 90%;">
 
-        <div class="row">
+    <div class="row">
 
-            <!-- Formulaire -->
-            <div class="verify-commande col-md-8">
-                <p class="text-center"><b>Profil utilisateur</b></p>
+      <!-- Formulaire -->
+      <div class="verify-commande col-md-8">
+        <p class="text-center"><b>Profil utilisateur</b></p>
 
-                <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
+        <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
 
-                    <div class="input-group">
-                        <div class="form-control">
-                            <label for="nom"><b>Nom :</b></label>
-                            <h5 id="nom">{{users.lastname}}</h5>
-                        </div>
-
-                        <div class="form-control">
-                            <label for="prenom"><b>Prénom :</b></label>
-                            <h5 id="prenom">{{users.firstname}}</h5>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <div class="form-control">
-                            <label for="email"><b>Email :</b></label>
-                            <h5 id="email">{{users.email}}</h5>
-                        </div>
-
-                        <div class="form-control">
-                            <label for="phone"><b>Téléphone :</b></label>
-                            <h5 id="phone">{{users.phone}}</h5>
-                        </div>
-                    </div>
-
-                    <a class="btn btn-secondary mt-3" (click)="profil()">Modifier le profil</a><br>
-                    <a class="btn btn-primary mt-2" (click)="open_mdp()">Changer de mot de passe</a>
-                    <button class="btn btn-danger mt-2" (click)="clear()">Quitter</button>
-
-                </form>
+          <div class="input-group">
+            <div class="form-control">
+              <label for="nom"><b>Nom :</b></label>
+              <h5 id="nom">{{users.lastname}}</h5>
             </div>
 
-            <!-- Informations sur les crédits -->
-            <div class="verify-commande col-md-4">
-                <p><b>Crédits</b></p>
-                <p>{{ users.credit}}</p>
-                <button class="btn btn-success mt-2" (click)="open_info_user_tarif()">Souscrire à un tarif</button>
+            <div class="form-control">
+              <label for="prenom"><b>Prénom :</b></label>
+              <h5 id="prenom">{{users.firstname}}</h5>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="form-control">
+              <label for="email"><b>Email :</b></label>
+              <h5 id="email">{{users.email}}</h5>
             </div>
 
-        </div>
+            <div class="form-control">
+              <label for="phone"><b>Téléphone :</b></label>
+              <h5 id="phone">{{users.phone}}</h5>
+            </div>
+          </div>
+
+          <a class="btn btn-secondary mt-3" (click)="profil()">Modifier le profil</a><br>
+          <a class="btn btn-primary mt-2" (click)="open_mdp()">Changer de mot de passe</a>
+          <button class="btn btn-danger mt-2" (click)="clear()">Quitter</button>
+
+        </form>
+      </div>
+
+      <!-- Informations sur les crédits -->
+      <div class="verify-commande col-md-4">
+        <p><b>Crédits</b></p>
+        <p>{{ users.credit}}</p>
+          <button class="btn btn-success col-12 mt-2" (click)="open_info_user_tarif()">Souscrire à un tarif</button>
+      </div>
 
     </div>
+
+  </div>
 
 </div>
 
@@ -172,80 +177,81 @@
 
 <div class="inscription" *ngIf="modal_modification1">
 
-    <div id="popup1" class="overlay" *ngIf="showSnackbar2">
-        <div class="popup">
-            <h4 style="color: green;">Mise à jour success !!!</h4>
-        </div>
+  <div id="popup1" class="overlay" *ngIf="showSnackbar2">
+    <div class="popup">
+      <h4 style="color: green;">Mise à jour success !!!</h4>
     </div>
-    <div id="popup1" class="overlay" *ngIf="showSnackbarError2">
-        <div class="popup">
-            <h4 style="color: red;">{{smserror}}</h4>
-        </div>
+  </div>
+  <div id="popup1" class="overlay" *ngIf="showSnackbarError2">
+    <div class="popup">
+      <h4 style="color: red;">{{smserror}}</h4>
     </div>
-    <div class="verify-container" *ngIf="formModification1">
+  </div>
+  <div class="verify-container" *ngIf="formModification1">
 
-        <div class="verify-content">
-            <!-- Formulaire -->
-            <div class="verify-commande">
-                <p>Information utilisateur</p>
-                <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
-                    <div class="form-group">
-                        <label for="nom">Nom *:</label>
-                        <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname">
-                    </div>
+    <div class="verify-content">
+      <!-- Formulaire -->
+      <div class="verify-commande">
+        <p>Information utilisateur</p>
+        <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
+          <div class="form-group">
+            <label for="nom">Nom *:</label>
+            <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname">
+          </div>
 
-                    <div class="form-group">
-                        <label for="prenom">Prénom *:</label>
-                        <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname">
-                    </div>
+          <div class="form-group">
+            <label for="prenom">Prénom *:</label>
+            <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname">
+          </div>
 
-                    <div class="form-group">
-                        <label for="email">Email *:</label>
-                        <input type="email" id="email" formControlName="email" [(ngModel)]="users.email">
-                        <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
-                            Email non valide
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Téléphone *:</label>
-                        <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone">
-                        <div style="color: red;" *ngIf="phone.errors?.['required']&& phone.touched">
-                            Veuillez renseigner votre numero télephone!
-                        </div>
-                    </div>
-                    <!-- ... Vos champs d'inscription existants ... -->
-                    <button type="submit">Mise à jour</button>
-                    <button (click)="clearModification()" id="change">Fermer</button>
-                </form><br>
-
+          <div class="form-group">
+            <label for="email">Email *:</label>
+            <input type="email" id="email" formControlName="email" [(ngModel)]="users.email">
+            <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
+              Email non valide
             </div>
-        </div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Téléphone *:</label>
+            <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone">
+            <div style="color: red;" *ngIf="phone.errors?.['required']&& phone.touched">
+              Veuillez renseigner votre numero télephone!
+            </div>
+          </div>
+          <!-- ... Vos champs d'inscription existants ... -->
+          <button type="submit">Mise à jour</button>
+          <button (click)="clearModification()" id="change">Fermer</button>
+        </form><br>
+
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- tarif à l'espace info users -->
 <div class="inscription" *ngIf="modal_info_tarif_user">
-    <div class="verify-container">
+  <div class="verify-container">
 
-        <div class="verify-content">
-            <!-- Formulaire d'inscription -->
-            <div class="verify-commande">
-                <p>Choisir un tarif</p>
+    <div class="verify-content">
+      <!-- Formulaire d'inscription -->
+      <div class="verify-commande">
+        <p>Choisir un tarif</p>
 
-                <div class="tarif">
-                    <div class="produit" *ngFor="let produit of listTarif" (click)="clickTarifInfoUser(produit.id, produit.price)">
-                        <div class="card">
-                            <!-- Vous pouvez ajouter ici une image du produit -->
-                            <h6> Titre : {{produit.libelle}}</h6>
-                            <h6>Prix : {{produit.price}} FCFA</h6>
-                            <h6>Nombre de crédit : {{produit.credit}}</h6>
-                        </div>
-                    </div>
-                </div>
+        <div class="tarif">
+          <div class="produit" *ngFor="let produit of listTarif"
+            (click)="clickTarifInfoUser(produit.id, produit.price)">
+            <div class="card">
+              <!-- Vous pouvez ajouter ici une image du produit -->
+              <h6> Titre : {{produit.libelle}}</h6>
+              <h6>Prix : {{produit.price}} FCFA</h6>
+              <h6>Nombre de crédit : {{produit.credit}}</h6>
             </div>
+          </div>
         </div>
-        <button id="change" (click)="clearModification()">Fermer</button>
+      </div>
     </div>
+    <button id="change" (click)="clearModification()">Fermer</button>
+  </div>
 </div>
 
 <!-- fin -->
@@ -255,54 +261,57 @@
 
 <div class="inscription" *ngIf="changeMdp">
 
-    <div id="popup1" class="overlay" *ngIf="showSnackbar3">
-        <div class="popup">
-            <h4 style="color: green;">Mise à jour success !!!</h4>
-        </div>
+  <div id="popup1" class="overlay" *ngIf="showSnackbar3">
+    <div class="popup">
+      <h4 style="color: green;">Mise à jour success !!!</h4>
     </div>
-    <div id="popup1" class="overlay" *ngIf="showSnackbarError3">
-        <div class="popup">
-            <h4 style="color: red;">{{smserror}}</h4>
-        </div>
+  </div>
+  <div id="popup1" class="overlay" *ngIf="showSnackbarError3">
+    <div class="popup">
+      <h4 style="color: red;">{{smserror}}</h4>
     </div>
-    <div class="verify-container" *ngIf="showMdpForm">
+  </div>
+  <div class="verify-container" *ngIf="showMdpForm">
 
-        <div class="verify-content">
-            <!-- Formulaire -->
-            <div class="verify-commande">
-                <p>Information utilisateur</p>
-                <form [formGroup]="registerForm" (ngSubmit)="updatePassword()">
-                    <div class="form-group">
-                        <input type="password" id="password" formControlName="password" class="form-control" placeholder="Nouveau mot de passe">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" formControlName="confirm_password" id="confirm_password" required placeholder="Confirmez le mot de passe">
-                    </div>
-                    <button type="submit">Changer</button>
-                    <button (click)="clearModification()" id="change">Fermer</button>
-                </form><br>
+    <div class="verify-content">
+      <!-- Formulaire -->
+      <div class="verify-commande">
+        <p>Information utilisateur</p>
+        <form [formGroup]="registerForm" (ngSubmit)="updatePassword()">
+          <div class="form-group">
+            <input type="password" id="password" formControlName="password" class="form-control"
+              placeholder="Nouveau mot de passe">
+          </div>
+          <div class="form-group">
+            <input type="password" formControlName="confirm_password" id="confirm_password" required
+              placeholder="Confirmez le mot de passe">
+          </div>
+          <button type="submit">Changer</button>
+          <button (click)="clearModification()" id="change">Fermer</button>
+        </form><br>
 
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- fin grille tarifaires -->
 <div class="boutton d-flex">
-    <div style="margin-right: 100%;">
-        <button class="inscriptions" (click)="open_modal_modification()">
+  <div style="margin-right: 100%;">
+    <button class="inscriptions" (click)="open_modal_modification()">
       N°00241{{ loggedInUser }}
     </button>
-    </div>
-    <!-- fin Bouton inscription -->
+  </div>
+  <!-- fin Bouton inscription -->
 
-    <div>
-        <button class="connexion bg-black text-white" (click)="logout()"> <i class="fa fa-sign-out " aria-hidden="true"></i>
+  <div>
+    <button class="connexion bg-black text-white" (click)="logout()"> <i class="fa fa-sign-out " aria-hidden="true"></i>
       Déconnexion</button>
 
-    </div>
+  </div>
 </div>
-<button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()" style="font-size: 10px;">Fermer</button>
+<button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()"
+  style="font-size: 10px;">Fermer</button>
 
 
 <button class="shopping-cart-btn" (click)="openCartView()"><span class="count"
@@ -315,60 +324,60 @@
 
 
 <div class="modal" *ngIf="selectedProduit">
-    <div id="popup1" class="overlay" *ngIf="showSnackbar4">
-        <div class="popup">
-            <h4 style="color: green;">Crédit débiter !!!</h4>
-        </div>
+  <div id="popup1" class="overlay" *ngIf="showSnackbar4">
+    <div class="popup">
+      <h4 style="color: green;">Crédit débiter !!!</h4>
     </div>
-    <div class="verify-container">
-        <div class="verify-content">
-            <div class="verify-produit">
-                <div class="img-container">
-                    <img [src]="selectedProduit.photoURL" *ngIf="selectedProduit.photoURL" alt="Image produit">
-                    <img src="../assets/placeholder.png" *ngIf="!selectedProduit.photoURL" alt="">
-                </div>
-                <div>
-                    <h3>{{selectedProduit.libelle}}</h3>
-                </div>
-                <button (click)="clear()">Rechercher d'autres produits</button>
-            </div>
-            <div class="verify-result" *ngIf="!selectedPharmacy">
-                <h3>
-                    <div class="loader-container" *ngIf="verifiedPharmacies.length == 0">
-                        <div class="loader"></div>
-                    </div>
-                    <span>
+  </div>
+  <div class="verify-container">
+    <div class="verify-content">
+      <div class="verify-produit">
+        <div class="img-container">
+          <img [src]="selectedProduit.photoURL" *ngIf="selectedProduit.photoURL" alt="Image produit">
+          <img src="../assets/placeholder.png" *ngIf="!selectedProduit.photoURL" alt="">
+        </div>
+        <div>
+          <h3>{{selectedProduit.libelle}}</h3>
+        </div>
+        <button (click)="clear()">Rechercher d'autres produits</button>
+      </div>
+      <div class="verify-result" *ngIf="!selectedPharmacy">
+        <h3>
+          <div class="loader-container" *ngIf="verifiedPharmacies.length == 0">
+            <div class="loader"></div>
+          </div>
+          <span>
             Recherche de la disponibilité en pharmacie...
           </span>
-                </h3>
+        </h3>
 
-                <div class="pharmacies">
-                    <div class="pharmacy" *ngFor="let pharmacy of verifiedPharmacies">
-                        <div>
-                            <p class="name">{{pharmacy.nom}}</p>
-                            <p>{{pharmacy.adresse}}, Tel: {{pharmacy.telephone}}</p>
-                        </div>
-
-                        <button (click)="select(pharmacy)">Ajouter au panier</button>
-
-                    </div>
-                </div>
+        <div class="pharmacies">
+          <div class="pharmacy" *ngFor="let pharmacy of verifiedPharmacies">
+            <div>
+              <p class="name">{{pharmacy.nom}}</p>
+              <p>{{pharmacy.adresse}}, Tel: {{pharmacy.telephone}}</p>
             </div>
 
-            <div class="verify-commande" *ngIf="selectedPharmacy">
-                <h3>
-                    Confirmation de la reservation
-                </h3>
-                <h4>{{selectedPharmacy.nom}}</h4>
-                <h5>{{selectedPharmacy.adresse}}, Tel: {{selectedPharmacy.telephone}}</h5>
+            <button (click)="select(pharmacy)">Ajouter au panier</button>
 
-                <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
-                    <div class="loader"></div>
-                </div>
+          </div>
+        </div>
+      </div>
 
-                <div class="form-container" *ngIf="commandeResult.start == false && commandeResult.success == null">
+      <div class="verify-commande" *ngIf="selectedPharmacy">
+        <h3>
+          Confirmation de la reservation
+        </h3>
+        <h4>{{selectedPharmacy.nom}}</h4>
+        <h5>{{selectedPharmacy.adresse}}, Tel: {{selectedPharmacy.telephone}}</h5>
 
-                    <!-- <div class="form-group">
+        <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
+          <div class="loader"></div>
+        </div>
+
+        <div class="form-container" *ngIf="commandeResult.start == false && commandeResult.success == null">
+
+          <!-- <div class="form-group">
         <label for="nom">Nom</label>
         <input type="text" [(ngModel)]="buyer" name="nom">
       </div>
@@ -381,82 +390,85 @@
         <input type="text" [(ngModel)]="buyerPhone" name="telephone">
       </div> -->
 
-                    <div class="form-group">
-                        <label for="quantite">Quantité</label>
-                        <input type="number" [(ngModel)]="quantity" name="quantite">
-                    </div>
-                    <button *ngIf="quantity > 0" (click)="addToCart(selectedProduit.CIP, selectedProduit.libelle, selectedProduit.prix_vente)">Valider</button>
-
-                </div>
-
-                <div *ngIf="commandeResult.start == false && commandeResult.success != null">
-                    <div class="result-message">{{commandeResult.message}}</div>
-
-                    <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
-              récuperation</strong></p>
-                </div>
-
-            </div>
+          <div class="form-group">
+            <label for="quantite">Quantité</label>
+            <input type="number" [(ngModel)]="quantity" name="quantite">
+          </div>
+          <button *ngIf="quantity > 0"
+            (click)="addToCart(selectedProduit.CIP, selectedProduit.libelle, selectedProduit.prix_vente)">Valider</button>
 
         </div>
+
+        <div *ngIf="commandeResult.start == false && commandeResult.success != null">
+          <div class="result-message">{{commandeResult.message}}</div>
+
+          <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
+              récuperation</strong></p>
+        </div>
+
+      </div>
+
     </div>
+  </div>
 </div>
 
 <div class="modal shopping-modal" *ngIf="showCart">
-    <div id="popup1" class="overlay" *ngIf="showSnackbar6">
-        <div class="popup">
-            <h4 style="color: green;">Crédit débité !!!</h4>
-        </div>
+  <div id="popup1" class="overlay" *ngIf="showSnackbar6">
+    <div class="popup">
+      <h4 style="color: green;">Crédit débité !!!</h4>
     </div>
-    <div id="popup1" class="overlay" *ngIf="showSnackbarError6">
-        <div class="popup">
-            <h4 style="color: red;">{{smserror}}</h4>
-        </div>
+  </div>
+  <div id="popup1" class="overlay" *ngIf="showSnackbarError6">
+    <div class="popup">
+      <h4 style="color: red;">{{smserror}}</h4>
     </div>
-    <div class="verify-container">
-        <div class="verify-content">
-            <div *ngIf="commandeResult.start == false && commandeResult.success != null">
-                <div class="result-message">{{commandeResult.message}}</div>
+  </div>
+  <div class="verify-container">
+    <div class="verify-content">
+      <div *ngIf="commandeResult.start == false && commandeResult.success != null">
+        <div class="result-message">{{commandeResult.message}}</div>
 
-                <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
+        <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
             récuperation. Les réservations expirent après 24h.</strong></p>
+      </div>
+      <div class="cart" *ngFor="let cart of carts; let i = index">
+        <div class="verify-container" *ngIf="verifier_commander" style="width: 300px">
+          <div class="verify-content d-flex flex-column align-items-center">
+            <!-- Formulaire d'inscription -->
+            <div class="verify-commande text-center">
+              <p>Voulez-vous continuer ?</p>
+              <div class="tarif">
+                <p>Vous avez <b>{{ users.credit }}</b> crédit(s), cette action vaut <b>{{ creditUser }}</b> crédit(s)
+                </p>
+
+              </div>
             </div>
-            <div class="cart" *ngFor="let cart of carts; let i = index">
-                <div class="verify-container" *ngIf="verifier_commander" style="width: 300px">
-                    <div class="verify-content d-flex flex-column align-items-center">
-                        <!-- Formulaire d'inscription -->
-                        <div class="verify-commande text-center">
-                            <p>Voulez-vous continuer ?</p>
-                            <div class="tarif">
-                                <p>Vous avez <b>{{ users.credit }}</b> crédit(s), cette action vaut <b>{{ creditUser }}</b> crédit(s)</p>
-
-                            </div>
-                        </div>
-                        <div class="button-container">
-                            <button class="btn btn-secondary btn-block" (click)="close_verif_commande()">Annuler</button>
-                            <button class="btn btn-primary btn-block" (click)="commander(cart, i, creditUser)">Commander</button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div *ngIf="modal_commander">
-                    <h3><img src="../assets/add-to-cart.png" alt=""> {{cart.pharmacyName}}</h3>
-                    <div class="products-cart">
-                        <div class="product" *ngFor="let produit of cart.products">
-                            <span>{{produit.produitName}}</span>
-                            <span>{{produit.quantity}}</span>
-                            <span>{{produit.prix_vente}} FCFA</span>
-                            <button (click)="removeFromCart(produit.produitCIP, i)">Retirer</button>
-                        </div>
-                    </div>
-                    <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
-                        <div class="loader"></div>
-                    </div>
-
-                    <button (click)="clickCommande('Commander les produits')" *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander</button>
-                </div>
+            <div class="button-container">
+              <button class="btn btn-secondary btn-block" (click)="close_verif_commande()">Annuler</button>
+              <button class="btn btn-primary btn-block" (click)="commander(cart, i, creditUser)">Commander</button>
             </div>
+          </div>
         </div>
+
+
+        <div *ngIf="modal_commander">
+          <h3><img src="../assets/add-to-cart.png" alt=""> {{cart.pharmacyName}}</h3>
+          <div class="products-cart">
+            <div class="product" *ngFor="let produit of cart.products">
+              <span>{{produit.produitName}}</span>
+              <span>{{produit.quantity}}</span>
+              <span>{{produit.prix_vente}} FCFA</span>
+              <button (click)="removeFromCart(produit.produitCIP, i)">Retirer</button>
+            </div>
+          </div>
+          <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
+            <div class="loader"></div>
+          </div>
+
+          <button (click)="clickCommande('Commander les produits')"
+            *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander</button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
