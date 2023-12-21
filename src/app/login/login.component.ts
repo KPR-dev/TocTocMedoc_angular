@@ -935,9 +935,17 @@ export class LoginComponent implements OnInit {
         this.carts[index].products.push({ quantity: this.quantity, produitCIP: productCIP, produitName: productName, prix_vente: prix_vente })
       }
 
+      let produits = this.carts[index].products;
+      let totalPrixVente = 0;
+
+      for (let i = 0; i < produits.length; i++) {
+        totalPrixVente += produits[i].prix_vente;
+      }
+
+      console.log("Total des prix de vente :", totalPrixVente);
     }
     this.nombreProduit = this.carts[index].products.length
-    console.log('cart = ',this.carts[index].products.length)
+    console.log('cart = ',this.carts[index].products)
     this.clear()
   }
 
