@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
   totalCount: number = 0;
   creditUser: number = 0;
   nombreProduit: number = 0;
-
+  totalPrixVente: number = 0;
   hasResult = false;
 
   carts: Cart[] = [];
@@ -936,13 +936,13 @@ export class LoginComponent implements OnInit {
       }
 
       let produits = this.carts[index].products;
-      let totalPrixVente = 0;
+
 
       for (let i = 0; i < produits.length; i++) {
-        totalPrixVente += produits[i].prix_vente;
+        this.totalPrixVente += produits[i].prix_vente;
       }
 
-      console.log("Total des prix de vente :", totalPrixVente);
+      console.log("Total des prix de vente :", this.totalPrixVente);
     }
     this.nombreProduit = this.carts[index].products.length
     console.log('cart = ',this.carts[index].products)
