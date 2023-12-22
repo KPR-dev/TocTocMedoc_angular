@@ -925,3 +925,10 @@ button:hover {
         }
     }
 }
+
+@media screen and (max-width: 767px) {
+    .row {
+        width: 270px;
+    }
+    /* Styles spécifiques pour les petits écrans */
+}

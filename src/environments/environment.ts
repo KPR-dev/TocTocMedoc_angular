@@ -22,16 +22,12 @@ export const environment = {
    pharmacies: [
     // notre pharmacie
     "633c5a44fa44def3b5dbbaa4",
-    // "63c288e7d9da78af9d6ccac1",
-    // "633c5a44fa44def3b5dbbaa4",
-    // "6259ac72e657f409c30ace5f",
-      // "633c5a44fa44def3b5dbbaa4",
-      // "623a45be1b6f66b46e99a03d",
-      // "6237594a2fb38ca16715489f",
-      // "6248135de657f409c30acdd4",
-      // "6259ac72e657f409c30ace5f",
-      // "633c5a44fa44def3b5dbbaa4",
-      // "637e392c125548fd0b09ac60"
+    "63c288e7d9da78af9d6ccac1",
+    "623a45be1b6f66b46e99a03d",
+    "6237594a2fb38ca16715489f",
+    "6248135de657f409c30acdd4",
+    "6259ac72e657f409c30ace5f",
+    "637e392c125548fd0b09ac60"
    ]
   // pageItemCount: 1000,
   // pharmacies: [
