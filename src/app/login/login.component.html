@@ -125,14 +125,14 @@
 
                     <div class="input-group">
                         <div class="form-control">
-                            <label for="nom"><b>Nom :</b></label>
+                            <label for="nom"><b>Pseudo :</b></label>
                             <h5 id="nom">{{users.lastname}}</h5>
                         </div>
 
-                        <div class="form-control">
+                        <!-- <div class="form-control">
                             <label for="prenom"><b>Prénom :</b></label>
                             <h5 id="prenom">{{users.firstname}}</h5>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="input-group">
@@ -190,14 +190,14 @@
                 <p>Information utilisateur</p>
                 <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
                     <div class="form-group">
-                        <label for="nom">Nom *:</label>
+                        <label for="nom">Pseudo *:</label>
                         <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname">
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="prenom">Prénom *:</label>
                         <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname">
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label for="email">Email *:</label>
@@ -435,7 +435,7 @@
                         </div>
                         <div class="button-container">
                             <button class="btn btn-secondary btn-block" (click)="close_verif_commande()">Annuler</button>
-                            <button class="btn btn-primary btn-block" (click)="commander(cart, i, creditUser)">Commander</button>
+                            <button class="btn btn-primary btn-block" (click)="commander(cart, i, creditUser)">Confirmer</button>
                         </div>
                     </div>
                 </div>

@@ -91,19 +91,19 @@
                             <div class="row">
                                 <div class="col-10 mb-4 mr-4">
 
-                                    <input id="input" type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control" placeholder="Entrez votre nom" required>
+                                    <input id="input" type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control" placeholder="Entrez votre pseudo" required>
                                     <div style="color: red;" *ngIf="lastname.errors?.['required'] && lastname.touched">
-                                        Veuillez renseigner votre nom!
+                                        Veuillez renseigner votre pseudo!
                                     </div>
                                 </div>
-
+                                <!--
                                 <div class="col-10 mb-4">
 
                                     <input id="input" type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname" class="form-control" placeholder="Entrez votre prénom" required>
                                     <div style="color: red;" *ngIf="firstname.errors?.['required'] && firstname.touched">
                                         Veuillez renseigner votre prénom!
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="row">
