@@ -441,6 +441,7 @@
                 </div>
 
 
+                <span>Prix Total: {{totalPrixVente}}</span>
                 <div *ngIf="modal_commander">
                     <h3><img src="../assets/add-to-cart.png" alt=""> {{cart.pharmacyName}}</h3>
                     <div class="products-cart">
@@ -456,7 +457,6 @@
                     </div>
 
                     <button (click)="clickCommande('Commander les produits')" *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander</button>
-                    <span>Prix Total: {{totalPrixVente}}</span>
                 </div>
             </div>
         </div>

@@ -945,7 +945,7 @@ export class LoginComponent implements OnInit {
       console.log("Total des prix de vente :", this.totalPrixVente);
     }
     this.nombreProduit = this.carts[index].products.length
-    console.log('cart = ',this.carts[index].products)
+    console.log('cart = ',this.carts[index].products.length)
     this.clear()
   }
 
