@@ -421,6 +421,7 @@ export class AppComponent implements OnInit {
                 next: (response: any) => {
                   console.log('idcompte =', response.id)
                   environment.id_compte = response.id
+
                   setTimeout(() => {
                     this.modal_tarif = true
                   }, 1000);

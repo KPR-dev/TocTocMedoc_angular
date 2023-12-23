@@ -12,6 +12,18 @@ import { Observable } from 'rxjs';
 export class SingPayService {
   constructor(private http: HttpClient) { }
 
+  genererChaineAleatoire(longueur: number): string {
+    const caracteres: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let chaineAleatoire: string = '';
+
+    for (let i: number = 0; i < longueur; i++) {
+        const indiceAleatoire: number = Math.floor(Math.random() * caracteres.length);
+        chaineAleatoire += caracteres.charAt(indiceAleatoire);
+    }
+
+    return chaineAleatoire;
+  }
+
   // externalisation singpay
   externalisation(amount: any, url_success: any, url_error: any) {
     const headers = new HttpHeaders({
@@ -24,7 +36,8 @@ export class SingPayService {
     const body = {
       portefeuille: "655cb86504e9de35cdfbca9f",
       // reference: "MF1600",
-      reference: "PHARMACIES241",
+      // reference: "PHARMACIES241",
+      reference: this.genererChaineAleatoire(10),
       redirect_success: url_success, // TODO: Ici mettre la redirection quand ça réussit
       redirect_error: url_error, // TODO: Ici mettre la redirection quand ça réussit
       amount: amount,

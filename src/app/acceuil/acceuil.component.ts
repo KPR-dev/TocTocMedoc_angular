@@ -339,7 +339,7 @@ export class AcceuilComponent implements OnInit {
     this.contrat = false
     this.modal_register = false
     // this.PayToSingPay(200)
-    this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString(), price).subscribe({
+    this.epharmaService.getSubscribeCompte2(environment.id_compte, idTarif.toString(), price).subscribe({
       next: (response: any) => {
         console.log('compte subscribe =', response);
         this.loader = false
@@ -400,11 +400,11 @@ export class AcceuilComponent implements OnInit {
   }
 
   submitRegistrationForm() {
-    if (this.users.lastname && this.users.firstname && this.users.email && this.users.phone && this.users.password) {
+    if (this.users.lastname && this.users.email && this.users.phone && this.users.password) {
       try {
         const formData = {
           lastname: this.users.lastname,
-          firstname: this.users.firstname,
+          // firstname: this.users.firstname,
           email: this.users.email,
           phone: this.users.phone,
           role: 'USER',
@@ -432,8 +432,9 @@ export class AcceuilComponent implements OnInit {
               this.modal_text = true
               this.epharmaService.getUserId(response.id).subscribe({
                 next: (response: any) => {
-                  console.log('idcompte =', response.id)
+                  console.log('idcompte =', response)
                   environment.id_compte = response.id
+                  environment.user_id = response.user.id
                   setTimeout(() => {
                     this.modal_tarif = true
                   }, 1000);

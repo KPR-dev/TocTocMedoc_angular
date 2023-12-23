@@ -62,7 +62,7 @@ export class EpharmaService {
   PayToSingPay(amount: any, rateId: string) {
     // Construire l'URL avec les paramètres token et tarif_id
     const token = environment.token;
-    const url_success = `/sing_pay_api/url_success/${token}/${rateId}/`;
+    const url_success = `http://31.207.35.25:8000/sing_pay_api/url_success/${token}/${rateId}`;
 
     // Appeler la fonction externalisation avec la nouvelle URL
     this.singPayService.externalisation(amount, url_success, null).subscribe({
@@ -121,6 +121,41 @@ export class EpharmaService {
     return of('Subscription completed');
   }
 
+  getSubscribeCompte2(idcompte: number, rateId: string, price: any): Observable<any> {
+    const params = { rate_id: rateId };
+    const options = { params };
+
+    this.singPayInscription(environment.user_id, price, rateId);
+
+    // Utilisez `of` pour créer un observable qui émet une seule valeur puis se termine
+    return of('Subscription completed');
+  }
+
+  singPayInscription(id: number, amount: any, rateId: string){
+    const token = environment.token;
+    const url_success = `http://31.207.35.25:8000/sing_pay_api/url_success_by_user_id/${id}/${rateId}`;
+
+    // Appeler la fonction externalisation avec la nouvelle URL
+    this.singPayService.externalisation(amount, url_success, null).subscribe({
+      next: (response: any) => {
+        console.log('Singpay =', response);
+        console.log('token =', token);
+        console.log('rateId =', rateId);
+        window.open(response.link, '_blank'); // Redirection vers l'interface de Singpay
+      },
+      error: (error) => {
+        console.error('Erreur lors de l\'enregistrement :', error);
+
+        // Vérifiez si l'erreur contient un message explicite
+        if (error.error && error.error.message) {
+          console.error('Message d\'erreur de SingPay :', error.error.message);
+        }
+
+        // Redirection vers la page actuelle en cas d'erreur
+        window.location.href = window.location.href;
+      }
+    });
+  }
 
 
   souscrireCredit(idcompte: number, credit: number) {
