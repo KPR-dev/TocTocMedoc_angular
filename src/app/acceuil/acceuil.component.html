@@ -1,335 +1,302 @@
 <div class="navbar">
-  <button (click)="previousPage()"><i class="fa-solid fa-chevron-left"></i></button>
-  <p>Page {{currentPageIndex+1}} / {{pageCount}}</p>
-  <button (click)="nextPage()"><i class="fa-solid fa-chevron-right"></i></button>
+    <button (click)="previousPage()"><i class="fa-solid fa-chevron-left"></i></button>
+    <p>Page {{currentPageIndex+1}} / {{pageCount}}</p>
+    <button (click)="nextPage()"><i class="fa-solid fa-chevron-right"></i></button>
 </div>
 
 
 
 <div class="wrapper">
-  <main>
-    <header>
-      <h1>TocTocMedoc</h1>
-      <h2>By E-Pharma GA</h2>
-      <p>Cette solution vous permet d'avoir la disponibilité des produits et faire des réservations dans toutes les
-        pharmacies possédant le logiciel ePharma</p>
+    <main>
+        <header>
+            <h1>TocTocMedoc</h1>
+            <h2>By E-Pharma GA</h2>
+            <p>Cette solution vous permet d'avoir la disponibilité des produits et faire des réservations dans toutes les pharmacies possédant le logiciel ePharma</p>
 
-      <p>
-        <a href="https://epharma.ga">En savoir plus</a>
+            <p>
+                <a href="https://epharma.ga">En savoir plus</a>
 
-      </p>
-    </header>
+            </p>
+        </header>
 
-    <div class="produit-container">
-      <p class="search-title">Recherchez des produits sur la page actuelle, utilisez les flèches pour changer de page
-      </p>
+        <div class="produit-container">
+            <p class="search-title">Recherchez des produits sur la page actuelle, utilisez les flèches pour changer de page
+            </p>
 
-      <div class="form-group-search">
-        <input type="search" name="search" id="search" (keyup)="applyFilter($event)"
-          placeholder="Trouver un produit...">
-      </div>
-
-      <div class="loader-container" *ngIf="filteredProduit.length == 0 && hasResult == false">
-        <div class="loader"></div>
-      </div>
-
-      <div class="no-result" *ngIf="filteredProduit.length == 0 && hasResult == true">
-
-        <p><i class="fa-solid fa-magnifying-glass"></i> Aucun résultat sur cette page, veuillez vérifier sur les autres
-          pages !</p>
-      </div>
-
-      <div class="produits">
-        <div class="produit" *ngFor="let produit of filteredProduit">
-          <div class="img-container">
-            <img [src]="produit.photoURL" *ngIf="produit.photoURL" alt="">
-            <img src="../assets/placeholder.png" *ngIf="!produit.photoURL" alt="">
-          </div>
-          <div class="row-between">
-            <h4>{{produit.libelle}}</h4>
-            <!-- <p class="gray">{{produit.prix_vente}} FCFA</p> -->
-            <p class="gray">{{produit.code_table ? 'Sous ordonnance' : ''}}</p>
-            <div class="row">
-              <button (click)="open_inscription()">Vérifier</button>
+            <div class="form-group-search">
+                <input type="search" name="search" id="search" (keyup)="applyFilter($event)" placeholder="Trouver un produit...">
             </div>
-          </div>
+
+            <div class="loader-container" *ngIf="filteredProduit.length == 0 && hasResult == false">
+                <div class="loader"></div>
+            </div>
+
+            <div class="no-result" *ngIf="filteredProduit.length == 0 && hasResult == true">
+
+                <p><i class="fa-solid fa-magnifying-glass"></i> Aucun résultat sur cette page, veuillez vérifier sur les autres pages !</p>
+            </div>
+
+            <div class="produits">
+                <div class="produit" *ngFor="let produit of filteredProduit">
+                    <div class="img-container">
+                        <img [src]="produit.photoURL" *ngIf="produit.photoURL" alt="">
+                        <img src="../assets/placeholder.png" *ngIf="!produit.photoURL" alt="">
+                    </div>
+                    <div class="row-between">
+                        <h4>{{produit.libelle}}</h4>
+                        <!-- <p class="gray">{{produit.prix_vente}} FCFA</p> -->
+                        <p class="gray">{{produit.code_table ? 'Sous ordonnance' : ''}}</p>
+                        <div class="row">
+                            <button (click)="open_inscription()">Vérifier</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </main>
+    </main>
 </div>
 
 <div class="inscription" *ngIf="modal_register">
-  <div id="popup1" class="overlay" *ngIf="showSnackbar1">
-    <div class="popup">
-      <h4 style="color: green;">Inscription success !!!</h4>
+    <div id="popup1" class="overlay" *ngIf="showSnackbar1">
+        <div class="popup">
+            <h4 style="color: green;">Inscription success !!!</h4>
+        </div>
     </div>
-  </div>
 
-  <div id="popup1" class="overlay" *ngIf="showSnackbarError1">
-    <div class="popup">
-      <h4 style="color: red;">{{smserror}}</h4>
+    <div id="popup1" class="overlay" *ngIf="showSnackbarError1">
+        <div class="popup">
+            <h4 style="color: red;">{{smserror}}</h4>
+        </div>
     </div>
-  </div>
 
-  <div class="loader-container" *ngIf="loader">
-    <div class="loader"></div>
-  </div>
+    <div class="loader-container" *ngIf="loader">
+        <div class="loader"></div>
+    </div>
 
-  <div class="" *ngIf="formInscription" style="max-width: 70%; border-radius: 10px">
-    <!-- loader -->
+    <div class="" *ngIf="formInscription" style="max-width: 70%; border-radius: 10px; ">
+        <!-- loader -->
 
-    <div class="verify-content" *ngIf="formInscription">
-      <!-- Formulaire d'inscription -->
-      <div class="verify-commande">
-        <h3 *ngIf="form1">Veuillez remplir le formulaire d'inscription!</h3>
-        <form [formGroup]="registerForm" (ngSubmit)="submitRegistrationForm()">
-          <div class="container d-flex align-items-center justify-content-center">
-            <img src="../assets/logo.png" alt="" width="200px" height="100px" class="img-fluid">
-          </div>
-          <div class="d-flex align-items-center justify-content-center" *ngIf="form1">
-            <div class="row g-3 mt-2">
+        <div class="verify-content" *ngIf="formInscription">
+            <!-- Formulaire d'inscription -->
+            <div class="verify-commande" id="mobile-background">
 
-              <div class="col-md-4">
-                <input id="input" type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname"
-                  class="form-control" placeholder="Entrez votre pseudo" required>
-                <div style="color: red;" *ngIf="lastname.errors?.['required'] && lastname.touched">
-                  Veuillez renseigner votre pseudo!
-                </div>
-              </div>
-              <!-- <div class="col-10 mb-4">
-                    <input id="input" type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname" class="form-control" placeholder="Entrez votre prénom" required>
-                    <div style="color: red;" *ngIf="firstname.errors?.['required'] && firstname.touched">
-                        Veuillez renseigner votre prénom!
+                <h3 *ngIf="form1">Veuillez remplir le formulaire d'inscription!</h3>
+                <form [formGroup]="registerForm" (ngSubmit)="submitRegistrationForm()">
+                    <div class="container d-flex align-items-center justify-content-center">
+                        <img src="../assets/logo.png" alt="" width="200px" height="100px" class="img-fluid">
                     </div>
-                </div> -->
+                    <div class="d-flex align-items-center justify-content-center" *ngIf="form1">
+                        <div class="row g-3 mt-2">
 
-              <div class="col-md-4">
-                <input id="input" type="email" id="email" formControlName="email" [(ngModel)]="users.email"
-                  class="form-control" placeholder="Votre adresse email" required>
-                <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
-                  Email non valide
-                </div>
-              </div>
+                            <div class="col-md-4">
+                                <input id="input" type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control" placeholder="Entrez votre pseudo" required>
+                                <div style="color: red;" *ngIf="lastname.errors?.['required'] && lastname.touched">
+                                    Veuillez renseigner votre pseudo!
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input id="input" type="email" id="email" formControlName="email" [(ngModel)]="users.email" class="form-control" placeholder="Votre adresse email" required>
+                                <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
+                                    Email non valide
+                                </div>
+                            </div>
 
-              <div class="col-md-4">
-                <input id="input" type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone"
-                  class="form-control" placeholder="Votre numéro de téléphone" required>
-                <div style="color: red;" *ngIf="phone.errors?.['required'] && phone.touched">
-                  Veuillez renseigner votre numéro de téléphone!
-                </div>
-              </div>
+                            <div class="col-md-4">
+                                <input id="input" type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone" class="form-control" placeholder="Votre numéro de téléphone" required>
+                                <div style="color: red;" *ngIf="phone.errors?.['required'] && phone.touched">
+                                    Veuillez renseigner votre numéro de téléphone!
+                                </div>
+                            </div>
 
-              <div class="col-md-6 mb-4">
-                <input id="input" type="password" id="password" formControlName="password" [(ngModel)]="users.password"
-                  class="form-control" placeholder="Mot de passe" required>
-                <div style="color: red;" *ngIf="password.errors?.['required'] && password.touched">
-                  Veuillez renseigner votre mot de passe!
-                </div>
-              </div>
+                            <div class="col-md-6 mb-4">
+                                <input id="input" type="password" id="password" formControlName="password" [(ngModel)]="users.password" class="form-control" placeholder="Mot de passe" required>
+                                <div style="color: red;" *ngIf="password.errors?.['required'] && password.touched">
+                                    Veuillez renseigner votre mot de passe!
+                                </div>
+                            </div>
 
-              <div class="col-md-6 mb-4">
-                <input id="input" type="password" id="confirm_password" formControlName="confirm_password"
-                  [(ngModel)]="users.confirm_password" class="form-control" placeholder="Confirmer le mot de passe">
-                <div style="color: red;" *ngIf="confirm_password.errors?.['required'] && confirm_password.touched">
-                  Veuillez renseigner votre mot de passe!
-                </div>
-              </div>
+                            <div class="col-md-6 mb-4">
+                                <input id="input" type="password" id="confirm_password" formControlName="confirm_password" [(ngModel)]="users.confirm_password" class="form-control" placeholder="Confirmer le mot de passe">
+                                <div style="color: red;" *ngIf="confirm_password.errors?.['required'] && confirm_password.touched">
+                                    Veuillez renseigner votre mot de passe!
+                                </div>
+                            </div>
 
-              <div class="container text-center">
-                <button id="reset" (click)="forminvisible()" class="btn btn-primary">S'inscrire</button>
-                <button id="change" (click)="clear()" class="btn btn-secondary" style="margin-left: 5px;">Fermer</button>
-              </div>
+                            <div class="container text-center">
+                                <button id="reset" (click)="forminvisible()" class="btn btn-primary">S'inscrire</button>
+                                <button id="change" (click)="clear()" class="btn btn-secondary" style="margin-left: 5px;">Fermer</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="verify-container- mx-auto text-center" *ngIf="contrat">
+                        <div class="verify-content">
+                            <!-- Formulaire d'inscription -->
+                            <div class="verify-commande " style="max-height: 400px; overflow-y: auto;">
+                                <p><u>Conditions d'Utilisation de l'Application de Disponibilité des Médicaments TOCTOC MEDOC</u></p>
+                                <br> Bienvenue sur l'application de disponibilité des médicaments TOCTOCMEDOC. Cette application est exploitée par la société E-pharma GA En utilisant cette application, vous acceptez les conditions énoncées ci-dessous.
+                                Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser l'application. <br>
+
+                                <p class="text-justify">
+                                    <li>1. Objectif de l'Application L'objectif principal</li>
+                                </p>
+                                L'objectif principal de l'Application est de fournir aux utilisateurs des informations en temps réel sur la disponibilité des médicaments dans les pharmacies locales. Ces informations sont fournies à titre indicatif et ne remplacent en aucun cas les conseils
+                                professionnels d'un professionnel de la santé.
+
+                                <p class="text-justify">
+                                    <li>2. Utilisation Responsable</li>
+                                </p>
+                                En utilisant l'Application, vous acceptez de l'utiliser de manière responsable. Vous vous engagez à ne pas utiliser l'Application à des fins illégales, nuisibles, frauduleuses ou qui pourraient causer un préjudice à d'autres utilisateurs ou à l'entreprise.
+
+                                <p class="text-justify">
+                                    <li>3. Exactitude des Informations</li>
+                                </p>
+                                Bien que nous nous efforcions de fournir des informations précises, nous ne garantissons pas l'exactitude, l'exhaustivité ou l'actualité des données fournies par l'Application. Les utilisateurs sont encouragés à vérifier directement auprès des pharmacies
+                                pour confirmer la disponibilité des médicaments.
+
+                                <p class="text-justify">
+                                    <li>4. Protection des Données Personnelles</li>
+                                </p>
+                                Nous prenons la protection de vos données personnelles au sérieux. En utilisant l'Application, vous consentez à la collecte et à l'utilisation de vos données conformément à notre politique de confidentialité. Veuillez consulter notre politique de confidentialité
+                                pour plus d'informations sur la manière dont nous traitons vos données.
+
+                                <p class="text-justify">
+                                    <li>5. Responsabilité</li>
+                                </p>
+                                L'entreprise ne peut être tenue responsable des préjudices résultant de l'utilisation de l'Application. Les utilisateurs comprennent et acceptent que l'utilisation de l'Application est à leurs propres risques.
+
+                                <p class="text-justify">
+                                    <li>6. Modifications des Conditions</li>
+                                </p>
+                                Nous nous réservons le droit de modifier ces conditions d'utilisation à tout moment. Les modifications seront publiées sur l'Application, et il vous incombe de les consulter régulièrement. En continuant à utiliser l'Application après la publication des
+                                modifications, vous acceptez les conditions mises à jour.
+
+                                <p class="text-justify">
+                                    <li>7. Contact</li>
+                                </p>
+                                Pour toute question ou préoccupation concernant ces conditions d'utilisation, veuillez nous contacter.
+                                <br><br> Merci d'utiliser notre Application !
+
+                                <!-- Répétez vos éléments autant que nécessaire -->
+
+                            </div>
+                            <button type="button" class="btn btn-secondary btn-block mt-2" (click)="annulerText()" style="margin-right: 20px">Annuler</button>
+                            <button type="submit" class="btn btn-primary btn-block mt-2" id="reset">Accepter</button>
+                        </div>
+                    </div>
+
+                </form>
 
             </div>
 
-          </div>
-          <div class="verify-container- mx-auto text-center" *ngIf="contrat">
-            <div class="verify-content">
-              <!-- Formulaire d'inscription -->
-              <div class="verify-commande " style="max-height: 400px; overflow-y: auto;">
-                <p><u>Conditions d'Utilisation de l'Application de Disponibilité des Médicaments TOCTOC MEDOC</u></p>
-                <br> Bienvenue sur l'application de disponibilité des médicaments TOCTOCMEDOC. Cette application est
-                exploitée par la société E-pharma GA En utilisant cette application, vous acceptez les conditions
-                énoncées ci-dessous.
-                Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser l'application. <br>
 
-                <p class="text-justify">
-                  <li>1. Objectif de l'Application L'objectif principal</li>
-                </p>
-                L'objectif principal de l'Application est de fournir aux utilisateurs des informations en temps réel sur
-                la disponibilité des médicaments dans les pharmacies locales. Ces informations sont fournies à titre
-                indicatif et ne remplacent en aucun cas les conseils
-                professionnels d'un professionnel de la santé.
-
-                <p class="text-justify">
-                  <li>2. Utilisation Responsable</li>
-                </p>
-                En utilisant l'Application, vous acceptez de l'utiliser de manière responsable. Vous vous engagez à ne
-                pas utiliser l'Application à des fins illégales, nuisibles, frauduleuses ou qui pourraient causer un
-                préjudice à d'autres utilisateurs ou à l'entreprise.
-
-                <p class="text-justify">
-                  <li>3. Exactitude des Informations</li>
-                </p>
-                Bien que nous nous efforcions de fournir des informations précises, nous ne garantissons pas
-                l'exactitude, l'exhaustivité ou l'actualité des données fournies par l'Application. Les utilisateurs
-                sont encouragés à vérifier directement auprès des pharmacies
-                pour confirmer la disponibilité des médicaments.
-
-                <p class="text-justify">
-                  <li>4. Protection des Données Personnelles</li>
-                </p>
-                Nous prenons la protection de vos données personnelles au sérieux. En utilisant l'Application, vous
-                consentez à la collecte et à l'utilisation de vos données conformément à notre politique de
-                confidentialité. Veuillez consulter notre politique de confidentialité
-                pour plus d'informations sur la manière dont nous traitons vos données.
-
-                <p class="text-justify">
-                  <li>5. Responsabilité</li>
-                </p>
-                L'entreprise ne peut être tenue responsable des préjudices résultant de l'utilisation de l'Application.
-                Les utilisateurs comprennent et acceptent que l'utilisation de l'Application est à leurs propres
-                risques.
-
-                <p class="text-justify">
-                  <li>6. Modifications des Conditions</li>
-                </p>
-                Nous nous réservons le droit de modifier ces conditions d'utilisation à tout moment. Les modifications
-                seront publiées sur l'Application, et il vous incombe de les consulter régulièrement. En continuant à
-                utiliser l'Application après la publication des
-                modifications, vous acceptez les conditions mises à jour.
-
-                <p class="text-justify">
-                  <li>7. Contact</li>
-                </p>
-                Pour toute question ou préoccupation concernant ces conditions d'utilisation, veuillez nous contacter.
-                <br><br> Merci d'utiliser notre Application !
-
-                <!-- Répétez vos éléments autant que nécessaire -->
-
-              </div>
-              <button type="button" class="btn btn-secondary btn-block mt-2" (click)="annulerText()"
-                style="margin-right: 20px">Annuler</button>
-              <button type="submit" class="btn btn-primary btn-block mt-2" id="reset">Accepter</button>
-            </div>
-          </div>
-
-        </form>
-
-      </div>
-
-
+        </div>
     </div>
-  </div>
 </div>
 <div class="inscription" *ngIf="loginFormVisible">
-  <div id="popup1" class="overlay" *ngIf="showSnackbar">
-    <div class="popup">
-      <h4 style="color: green;">Connexion success !!!</h4>
+    <div id="popup1" class="overlay" *ngIf="showSnackbar">
+        <div class="popup">
+            <h4 style="color: green;">Connexion success !!!</h4>
+        </div>
     </div>
-  </div>
-  <div id="popup1" class="overlay" *ngIf="showSnackbarError">
-    <div class="popup">
-      <h4 style="color: red;">{{smserror}}</h4>
+    <div id="popup1" class="overlay" *ngIf="showSnackbarError">
+        <div class="popup">
+            <h4 style="color: red;">{{smserror}}</h4>
+        </div>
     </div>
-  </div>
-  <!-- Formulaire de connexion -->
-  <div class="verify-container" *ngIf="formConnexion === false" style="max-width: 60%">
-    <div class="verify-content" style="display: flex; margin: 0px">
-      <div class="verify-commande">
-        <p>Connectez-vous et commencez à chercher des médicaments</p><br><br>
-        <form (ngSubmit)="submitLoginForm()">
-          <!-- ... Champs de connexion ... -->
-          <div class="form-group">
-            <input type="email" [(ngModel)]="users.username" id="email" name="username" required
-              placeholder="Entrez votre adresse mail">
-          </div>
-          <div class="form-group">
-            <input type="password" [(ngModel)]="users.password" id="password" name="password" required
-              placeholder="Mot de passe">
-          </div>
-          <a (click)="open_reset_password()" style="font-size: 10px; cursor: pointer">Mot de passe oublié ?</a>
-          <button type="submit">Se connecter</button>
-          <button id="change" (click)="clear()" style="float: right; margin-top: 15px">Quitter</button>
-        </form>
-      </div>
-      <div style="margin-left: 20px;" class="d-none d-md-block">
-        <!-- Utilisation de classes d'utilité pour masquer sur mobile -->
-        <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="350px" height="500px"
-          style="border-radius: 5px;">
+    <!-- Formulaire de connexion -->
+    <div class="verify-container" *ngIf="formConnexion === false" style="max-width: 60%">
+        <div class="verify-content" style="display: flex; margin: 0px">
+            <div class="verify-commande">
+                <p>Connectez-vous et commencez à chercher des médicaments</p><br><br>
+                <form (ngSubmit)="submitLoginForm()">
+                    <!-- ... Champs de connexion ... -->
+                    <div class="form-group">
+                        <input type="email" [(ngModel)]="users.username" id="email" name="username" required placeholder="Entrez votre adresse mail">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" [(ngModel)]="users.password" id="password" name="password" required placeholder="Mot de passe">
+                    </div>
+                    <a (click)="open_reset_password()" style="font-size: 10px; cursor: pointer">Mot de passe oublié ?</a>
+                    <button type="submit">Se connecter</button>
+                    <button id="change" (click)="clear()" style="float: right; margin-top: 15px">Quitter</button>
+                </form>
+            </div>
+            <div style="margin-left: 20px;" class="d-none d-md-block">
+                <!-- Utilisation de classes d'utilité pour masquer sur mobile -->
+                <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="350px" height="500px" style="border-radius: 5px;">
 
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <!-- mot de passe oublié, formulaire  -->
 <div class="inscription" *ngIf="ResetPassword">
-  <div id="popup1" class="overlay" *ngIf="showSnackbar5">
-    <div class="popup">
-      <h4 style="color: green;">Mot de passe rénitialisé, vérifier votre boite mail</h4>
+    <div id="popup1" class="overlay" *ngIf="showSnackbar5">
+        <div class="popup">
+            <h4 style="color: green;">Mot de passe rénitialisé, vérifier votre boite mail</h4>
+        </div>
     </div>
-  </div>
-  <div id="popup1" class="overlay" *ngIf="showSnackbarError5">
-    <div class="popup">
-      <h4 style="color: red;">{{smserror}}</h4>
+    <div id="popup1" class="overlay" *ngIf="showSnackbarError5">
+        <div class="popup">
+            <h4 style="color: red;">{{smserror}}</h4>
+        </div>
     </div>
-  </div>
-  <div class="verify-container" style="max-width: 45%" *ngIf="changerPass">
+    <div class="verify-container" style="max-width: 45%" *ngIf="changerPass">
 
-    <div class="verify-content" style="display: flex;">
-      <!-- Formulaire de connexion -->
-      <div class="verify-commande">
-        <p>Changer votre mot de passe</p><br><br>
-        <form [formGroup]="registerForm" (ngSubmit)="changePassword()">
-          <!-- ... Champs de connexion ... -->
-          <div class="form-group">
+        <div class="verify-content" style="display: flex;">
+            <!-- Formulaire de connexion -->
+            <div class="verify-commande">
+                <p>Changer votre mot de passe</p><br><br>
+                <form [formGroup]="registerForm" (ngSubmit)="changePassword()">
+                    <!-- ... Champs de connexion ... -->
+                    <div class="form-group">
 
-            <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre mail"
-              required>
-            <!-- <div *ngIf="registerForm.get('email')?.hasError('required')">
+                        <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre mail" required>
+                        <!-- <div *ngIf="registerForm.get('email')?.hasError('required')">
                             Le champ email ne peut pas être vide.
                         </div> -->
-          </div>
-          <button type="submit">Réinitialiser</button>
-          <button (click)="clearModification()" id="change">Quitter</button>
-        </form>
-      </div>
+                    </div>
+                    <button type="submit">Réinitialiser</button>
+                    <button (click)="clearModification()" id="change">Quitter</button>
+                </form>
+            </div>
 
-      <div class="d-none d-md-block">
-        <img src="../assets/image.png" alt="" width="300px" height="300px" style="border-radius: 5px;">
-      </div>
+            <div class="d-none d-md-block">
+                <img src="../assets/image.png" alt="" width="300px" height="300px" style="border-radius: 5px;">
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- formulaire d'infomation user  -->
 
 
 <div class="inscription" *ngIf="modal_tarif">
-  <div class="verify-container">
+    <div class="verify-container">
 
-    <div class="verify-content">
-      <!-- Formulaire d'inscription -->
-      <div class="verify-commande">
-        <p>Choisir un tarif</p>
+        <div class="verify-content">
+            <!-- Formulaire d'inscription -->
+            <div class="verify-commande">
+                <p>Choisir un tarif</p>
 
-        <div class="tarif">
-          <div class="produit" *ngFor="let produit of listTarif" (click)="clickTarif(produit.id, produit.price)">
-            <div class="card">
-              <!-- Vous pouvez ajouter ici une image du produit -->
-              <h6> Titre : {{produit.libelle}}</h6>
-              <h6>Prix : {{produit.price}} FCFA</h6>
-              <h6>Nombre de crédit : {{produit.credit}}</h6>
+                <div class="tarif">
+                    <div class="produit" *ngFor="let produit of listTarif" (click)="clickTarif(produit.id, produit.price)">
+                        <div class="card">
+                            <!-- Vous pouvez ajouter ici une image du produit -->
+                            <h6> Titre : {{produit.libelle}}</h6>
+                            <h6>Prix : {{produit.price}} FCFA</h6>
+                            <h6>Nombre de crédit : {{produit.credit}}</h6>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <button id="change" (click)="clear()">Fermer</button>
         </div>
-      </div>
-      <button id="change" (click)="clear()">Fermer</button>
     </div>
-  </div>
 </div>
 
 
@@ -342,28 +309,28 @@
 
 <!-- fin grille tarifaires -->
 <div class="boutton d-flex">
-  <div style="margin-right: 100%;">
-    <button *ngIf="loggedInUser" class="inscriptions" (click)="open_modal_modification()">
+    <div style="margin-right: 100%;">
+        <button *ngIf="loggedInUser" class="inscriptions" (click)="open_modal_modification()">
       N°00241{{ loggedInUser.id }}
     </button>
-  </div>
-  <!-- fin Bouton inscription -->
+    </div>
+    <!-- fin Bouton inscription -->
 
-  <div>
-    <button class="connexion bg-black text-white" *ngIf="loggedInUser" (click)="deconnexion()"> <i
+    <div>
+        <button class="connexion bg-black text-white" *ngIf="loggedInUser" (click)="deconnexion()"> <i
         class="fa fa-sign-out " aria-hidden="true"></i> Déconnexion</button>
 
-  </div>
+    </div>
 </div>
 <button class="close-modal" *ngIf="selectedProduit || showCart" (click)="clear()">&times;</button>
 
 <div class="boutton d-flex" *ngIf="!loggedInUser">
-  <div class="" style="margin-right: 100px;">
-    <button *ngIf="!loggedInUser" class="inscriptions" (click)="open_register()"> Inscription</button>
-  </div>
-  <div class="mx-2 px-2">
-    <button *ngIf="!loggedInUser" (click)="open_inscription()" class="connexion bg-black text-white"> Connexion</button>
-  </div>
+    <div class="" style="margin-right: 100px;">
+        <button *ngIf="!loggedInUser" class="inscriptions" (click)="open_register()"> Inscription</button>
+    </div>
+    <div class="mx-2 px-2">
+        <button *ngIf="!loggedInUser" (click)="open_inscription()" class="connexion bg-black text-white"> Connexion</button>
+    </div>
 
 </div>
 <button class="shopping-cart-btn" (click)="openCartView()"><span class="count"
@@ -376,55 +343,55 @@
 
 
 <div class="modal" *ngIf="selectedProduit">
-  <div class="verify-container">
-    <div class="verify-content">
-      <div class="verify-produit">
-        <div class="img-container">
-          <img [src]="selectedProduit.photoURL" *ngIf="selectedProduit.photoURL" alt="Image produit">
-          <img src="../assets/placeholder.png" *ngIf="!selectedProduit.photoURL" alt="">
-        </div>
-        <div>
-          <h3>{{selectedProduit.libelle}}</h3>
-        </div>
-        <button (click)="clear()">Rechercher d'autres produits</button>
-      </div>
-      <div class="verify-result" *ngIf="!selectedPharmacy">
-        <h3>
-          <div class="loader-container" *ngIf="verifiedPharmacies.length == 0">
-            <div class="loader"></div>
-          </div>
-          <span>
+    <div class="verify-container">
+        <div class="verify-content">
+            <div class="verify-produit">
+                <div class="img-container">
+                    <img [src]="selectedProduit.photoURL" *ngIf="selectedProduit.photoURL" alt="Image produit">
+                    <img src="../assets/placeholder.png" *ngIf="!selectedProduit.photoURL" alt="">
+                </div>
+                <div>
+                    <h3>{{selectedProduit.libelle}}</h3>
+                </div>
+                <button (click)="clear()">Rechercher d'autres produits</button>
+            </div>
+            <div class="verify-result" *ngIf="!selectedPharmacy">
+                <h3>
+                    <div class="loader-container" *ngIf="verifiedPharmacies.length == 0">
+                        <div class="loader"></div>
+                    </div>
+                    <span>
             Recherche de la disponibilité en pharmacie...
           </span>
-        </h3>
+                </h3>
 
-        <div class="pharmacies">
-          <div class="pharmacy" *ngFor="let pharmacy of verifiedPharmacies">
-            <div>
-              <p class="name">{{pharmacy.nom}}</p>
-              <p>{{pharmacy.adresse}}, Tel: {{pharmacy.telephone}}</p>
+                <div class="pharmacies">
+                    <div class="pharmacy" *ngFor="let pharmacy of verifiedPharmacies">
+                        <div>
+                            <p class="name">{{pharmacy.nom}}</p>
+                            <p>{{pharmacy.adresse}}, Tel: {{pharmacy.telephone}}</p>
+                        </div>
+
+                        <button (click)="select(pharmacy)">Ajouter au panier</button>
+
+                    </div>
+                </div>
             </div>
 
-            <button (click)="select(pharmacy)">Ajouter au panier</button>
+            <div class="verify-commande" *ngIf="selectedPharmacy">
+                <h3>
+                    Confirmation de la reservation
+                </h3>
+                <h4>{{selectedPharmacy.nom}}</h4>
+                <h5>{{selectedPharmacy.adresse}}, Tel: {{selectedPharmacy.telephone}}</h5>
 
-          </div>
-        </div>
-      </div>
+                <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
+                    <div class="loader"></div>
+                </div>
 
-      <div class="verify-commande" *ngIf="selectedPharmacy">
-        <h3>
-          Confirmation de la reservation
-        </h3>
-        <h4>{{selectedPharmacy.nom}}</h4>
-        <h5>{{selectedPharmacy.adresse}}, Tel: {{selectedPharmacy.telephone}}</h5>
+                <div class="form-container" *ngIf="commandeResult.start == false && commandeResult.success == null">
 
-        <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
-          <div class="loader"></div>
-        </div>
-
-        <div class="form-container" *ngIf="commandeResult.start == false && commandeResult.success == null">
-
-          <!-- <div class="form-group">
+                    <!-- <div class="form-group">
             <label for="nom">Nom</label>
             <input type="text" [(ngModel)]="buyer" name="nom">
           </div>
@@ -437,52 +404,50 @@
             <input type="text" [(ngModel)]="buyerPhone" name="telephone">
           </div> -->
 
-          <div class="form-group">
-            <label for="quantite">Quantité</label>
-            <input type="number" [(ngModel)]="quantity" name="quantite">
-          </div>
-          <button *ngIf="quantity > 0"
-            (click)="addToCart(selectedProduit.CIP, selectedProduit.libelle)">Valider</button>
+                    <div class="form-group">
+                        <label for="quantite">Quantité</label>
+                        <input type="number" [(ngModel)]="quantity" name="quantite">
+                    </div>
+                    <button *ngIf="quantity > 0" (click)="addToCart(selectedProduit.CIP, selectedProduit.libelle)">Valider</button>
 
-        </div>
+                </div>
 
-        <div *ngIf="commandeResult.start == false && commandeResult.success != null">
-          <div class="result-message">{{commandeResult.message}}</div>
+                <div *ngIf="commandeResult.start == false && commandeResult.success != null">
+                    <div class="result-message">{{commandeResult.message}}</div>
 
-          <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
+                    <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
               récuperation</strong></p>
+                </div>
+
+            </div>
+
         </div>
-
-      </div>
-
     </div>
-  </div>
 </div>
 
 <div class="modal shopping-modal" *ngIf="showCart">
-  <div class="verify-container">
-    <div class="verify-content">
-      <div *ngIf="commandeResult.start == false && commandeResult.success != null">
-        <div class="result-message">{{commandeResult.message}}</div>
+    <div class="verify-container">
+        <div class="verify-content">
+            <div *ngIf="commandeResult.start == false && commandeResult.success != null">
+                <div class="result-message">{{commandeResult.message}}</div>
 
-        <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
+                <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
             récuperation. Les réservations expirent après 24h.</strong></p>
-      </div>
-      <div class="cart" *ngFor="let cart of carts; let i = index">
-        <h3><img src="../assets/add-to-cart.png" alt=""> {{cart.pharmacyName}}</h3>
-        <div class="products-cart">
-          <div class="product" *ngFor="let produit of cart.products">
-            <span>{{produit.produitName}}</span>
-            <span>{{produit.quantity}}</span>
-            <button (click)="removeFromCart(produit.produitCIP, i)">Retirer</button>
-          </div>
+            </div>
+            <div class="cart" *ngFor="let cart of carts; let i = index">
+                <h3><img src="../assets/add-to-cart.png" alt=""> {{cart.pharmacyName}}</h3>
+                <div class="products-cart">
+                    <div class="product" *ngFor="let produit of cart.products">
+                        <span>{{produit.produitName}}</span>
+                        <span>{{produit.quantity}}</span>
+                        <button (click)="removeFromCart(produit.produitCIP, i)">Retirer</button>
+                    </div>
+                </div>
+                <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
+                    <div class="loader"></div>
+                </div>
+                <button (click)="commander(cart, i)" *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander</button>
+            </div>
         </div>
-        <div class="loader-container" *ngIf="commandeResult.start == true && commandeResult.success == null">
-          <div class="loader"></div>
-        </div>
-        <button (click)="commander(cart, i)"
-          *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander</button>
-      </div>
     </div>
-  </div>
 </div>

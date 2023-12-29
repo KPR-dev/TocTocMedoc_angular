@@ -23,6 +23,8 @@ class Cart {
   templateUrl: './acceuil.component.html',
   styleUrls: ['./acceuil.component.scss']
 })
+
+
 export class AcceuilComponent implements OnInit {
   receivedData: any;
   registerForm = new FormGroup({

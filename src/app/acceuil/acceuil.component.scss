@@ -932,3 +932,10 @@ button:hover {
     }
     /* Styles spécifiques pour les petits écrans */
 }
+
+@media only screen and (max-width: 600px) {
+    #mobile-background {
+        background-image: url("../../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png");
+        background-size: cover;
+    }
+}
