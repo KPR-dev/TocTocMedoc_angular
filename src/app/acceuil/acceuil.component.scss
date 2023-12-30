@@ -937,5 +937,14 @@ button:hover {
     #mobile-background {
         background-image: url("../../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png");
         background-size: cover;
+        opacity: 0.7;
     }
+}
+
+@media only screen and (max-width: 600px) {
+  #mobile-background-connexion {
+      background-image: url("../../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png");
+      background-size: cover;
+      opacity: 0.7;
+  }
 }

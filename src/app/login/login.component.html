@@ -186,7 +186,7 @@
 
         <div class="verify-content">
             <!-- Formulaire -->
-            <div class="verify-commande">
+            <div class="verify-commande" id="mobile-background-login">
                 <p>Information utilisateur</p>
                 <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
                     <div class="form-group">
@@ -291,7 +291,7 @@
 <div class="boutton d-flex">
     <div style="margin-right: 100%;">
         <button class="inscriptions" (click)="open_modal_modification()">
-      N°00241{{ loggedInUser }}
+      M/Mme/{{ loggedInUser }}
     </button>
     </div>
     <!-- fin Bouton inscription -->

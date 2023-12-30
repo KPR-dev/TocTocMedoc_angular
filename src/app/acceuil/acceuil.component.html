@@ -208,11 +208,12 @@
     <!-- Formulaire de connexion -->
     <div class="verify-container" *ngIf="formConnexion === false" style="max-width: 60%">
         <div class="verify-content" style="display: flex; margin: 0px">
-            <div class="verify-commande">
+
+            <div class="verify-commande"  id="mobile-background-connexion">
                 <p>Connectez-vous et commencez à chercher des médicaments</p><br><br>
                 <form (ngSubmit)="submitLoginForm()">
                     <!-- ... Champs de connexion ... -->
-                    <div class="form-group">
+                    <div class="form-group" >
                         <input type="email" [(ngModel)]="users.username" id="email" name="username" required placeholder="Entrez votre adresse mail">
                     </div>
                     <div class="form-group">

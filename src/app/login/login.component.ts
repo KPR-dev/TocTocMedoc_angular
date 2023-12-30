@@ -24,7 +24,8 @@ class Cart {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../app.component.scss']
+  styleUrls: ['../app.component.scss'],
+
 })
 export class LoginComponent implements OnInit {
 
@@ -164,7 +165,7 @@ export class LoginComponent implements OnInit {
     console.log('compte = ', this.receivedCompte)
     console.log('token store= ', this.receiveToken)
 
-    this.loggedInUser = this.receivedData.user.id
+    this.loggedInUser = this.receivedData.user.lastname
     environment.user_id = this.receivedData.user.id
     environment.token = this.receiveToken
     environment.id_compte = this.receivedCompte
