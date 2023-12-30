@@ -18,11 +18,11 @@
 }
 
 @media only screen and (max-width: 600px) {
-  #mobile-background-login {
-      background-image: url("/assets/_483668e6-f804-4744-91d6-a4b1b632322d.png");
-      background-size: cover;
-      opacity: 0.7;
-  }
+    #mobile-background-login {
+        background-image: url("/assets/_483668e6-f804-4744-91d6-a4b1b632322d.png");
+        background-size: cover;
+        opacity: 0.7;
+    }
 }
 
 .shopping-cart-btn {
@@ -931,5 +931,21 @@ button:hover {
                 /* Couleur légèrement plus sombre au survol */
             }
         }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #mobile-password {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url("../assets/_812b7d02-08fb-482c-b7c1-e8c4ef9b08c4\ 1.png");
+        background-size: cover;
+        opacity: 0.7;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #mobile-profil {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url("../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png");
+        background-size: cover;
+        opacity: 0.7;
     }
 }

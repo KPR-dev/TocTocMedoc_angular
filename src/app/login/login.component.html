@@ -186,7 +186,7 @@
 
         <div class="verify-content">
             <!-- Formulaire -->
-            <div class="verify-commande" id="mobile-background-login">
+            <div class="verify-commande" id="mobile-profil">
                 <p>Information utilisateur</p>
                 <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
                     <div class="form-group">
@@ -269,7 +269,7 @@
 
         <div class="verify-content">
             <!-- Formulaire -->
-            <div class="verify-commande">
+            <div class="verify-commande" id="mobile-password">
                 <p>Information utilisateur</p>
                 <form [formGroup]="registerForm" (ngSubmit)="updatePassword()">
                     <div class="form-group">
@@ -320,8 +320,10 @@
             <h4 style="color: green;">Crédit débiter !!!</h4>
         </div>
     </div>
+
     <div class="verify-container">
         <div class="verify-content">
+
             <div class="verify-produit">
                 <div class="img-container">
                     <img [src]="selectedProduit.photoURL" *ngIf="selectedProduit.photoURL" alt="Image produit">
@@ -332,17 +334,33 @@
                 </div>
                 <button (click)="clear()">Rechercher d'autres produits</button>
             </div>
+            <div class="verify-container" *ngIf="verifier_pharmacie" style="width: 500px">
+                <div class="verify-commande text-center">
+                    <p>Vous ne pouvez pas effectuer cette action</p>
+                    <div>
+                        <p>Vous avez déjà débuté avec une pharmacie <b>{{pharmacieChoisi}}</b>, pour changer ou continuer , supprimez le panier
+                        </p>
+
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button class="btn btn-secondary btn-block" (click)="clear()">Annuler</button>
+                    <button class="btn btn-primary btn-block" (click)="refresh()" style="margin-left: 10px;">Supprimer</button>
+                </div>
+            </div>
             <div class="verify-result" *ngIf="!selectedPharmacy">
                 <h3>
                     <div class="loader-container" *ngIf="verifiedPharmacies.length == 0">
                         <div class="loader"></div>
                     </div>
-                    <span>
+                    <span *ngIf="ajout_pharmacy">
             Recherche de la disponibilité en pharmacie...
           </span>
+
                 </h3>
 
-                <div class="pharmacies">
+                <div class="pharmacies" *ngIf="ajout_pharmacy">
+
                     <div class="pharmacy" *ngFor="let pharmacy of verifiedPharmacies">
                         <div>
                             <p class="name">{{pharmacy.nom}}</p>
