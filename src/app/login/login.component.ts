@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
   produits: any;
   filteredProduit: any[] = [];
   grille: any;
-  addressProduit:any;
+  addressProduit:any[] = [];
 
   listTarif: any[] = [];
   selectedProduit: any;
@@ -620,16 +620,23 @@ export class LoginComponent implements OnInit {
     try {
       this.epharmaService.getLibelleTarif(libelle).subscribe({
         next: (response: any) => {
+          let addresses: any [] = [];
+
           for (let i = 0; i < environment.pharmacies.length; i++) {
             this.epharmaService.getDisponibiliteProduit(cp, environment.pharmacies[i]).subscribe({
               next: (response: any) => {
-                this.addressProduit = response.pharmacy.adresse
+
+                addresses.push(response.pharmacy.adresse);
+
+
               },
               error: (err) => {
                 console.log(err);
               }
             });
           }
+          this.addressProduit = addresses
+          console.log('address = ',  this.addressProduit)
           this.creditUser = response.credit
           console.log('credit reçu =', response.credit);
           this.modal_verifier = true
