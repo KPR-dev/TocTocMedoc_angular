@@ -940,6 +940,14 @@ button:hover {
         background-size: cover;
         opacity: 0.7;
     }
+    #img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #renitialiser {
+        color: white;
+    }
 }
 
 @media only screen and (max-width: 600px) {
@@ -948,4 +956,92 @@ button:hover {
         background-size: cover;
         opacity: 0.7;
     }
+    #row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+    }
+    #col-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    #col-md-8 {
+        flex: 0 0 66.66667%;
+        max-width: 66.66667%;
+    }
+    #col-md-4 {
+        flex: 0 0 33.33333%;
+        max-width: 33.33333%;
+    }
+    /* Styles for smaller screens */
+    @media (max-width: 767px) {
+        #col-md-8,
+        #col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+    /* Additional responsive styles as needed */
+    /* Example: Hide some elements on small screens */
+    #d-sm-none {
+        display: none;
+    }
+    /* Example: Adjust padding and font size for smaller screens */
+    #col-12,
+    #col-md-8,
+    #col-md-4,
+    #card {
+        padding: 0.5rem;
+    }
+    #col-md-8 {
+        margin-top: 20%;
+    }
+    /* Example: Adjust font size for smaller screens */
+    #small-text {
+        font-size: 12px;
+    }
+    #badge {
+        max-width: 100%;
+    }
+}
+
+.produits-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 5%;
+}
+
+.produit {
+    flex-basis: calc(50% - 10px);
+    margin-bottom: 20px;
+}
+
+.card {
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    width: 90%;
+    background-color: #DEE3EB;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.product-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.product-price {
+    font-size: 16px;
+    color: #007bff;
+}
+
+.credit-quantity {
+    font-size: 16px;
+    color: #28a745;
 }
