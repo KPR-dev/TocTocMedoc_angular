@@ -167,7 +167,7 @@ export class LoginComponent implements OnInit {
     console.log('compte = ', this.receivedCompte)
     console.log('token store= ', this.receiveToken)
 
-    this.loggedInUser = this.receivedData.user.lastname
+    this.loggedInUser = this.receivedData.user.id
     environment.user_id = this.receivedData.user.id
     environment.token = this.receiveToken
     environment.id_compte = this.receivedCompte
