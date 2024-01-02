@@ -385,7 +385,7 @@
                 <div class="verify-commande text-center">
                     <p>Vous ne pouvez pas effectuer cette action</p>
                     <div>
-                        <p>Vous avez déjà débuté avec une pharmacie <b>{{pharmacieChoisi}}</b>, pour changer ou continuer , supprimez le panier
+                        <p>Vous avez déjà débuté avec la pharmacie <b>{{pharmacieChoisi}}</b>, pour changer appuyer sur <b>Supprimer</b> ou <b>Annuler</b> pour continuer avec <b>{{pharmacieChoisi}}</b>.
                         </p>
 
                     </div>
@@ -506,7 +506,7 @@
                 </div>
 
 
-                <span>Prix Total: {{totalPrixVente}}</span>
+                <span>Prix Total: <b>{{totalPrixVente}} FCFA</b></span>
                 <div *ngIf="modal_commander">
                     <h3><img src="../assets/add-to-cart.png" alt=""> {{cart.pharmacyName}}</h3>
                     <div class="products-cart">

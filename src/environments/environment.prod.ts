@@ -9,6 +9,8 @@ export const environment = {
   tarif_id: 0,
   produit: null,
   user: [],
+  credit_modal: 0,
+  pharmacy: 'pharmacy',
     // apiURL: "notre_api_backend_prod",
   // apiURL: "https://epg-supervisor-api.pivot40.tech",
   // apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
