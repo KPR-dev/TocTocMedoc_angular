@@ -87,7 +87,7 @@
                         <div style="position: relative; margin: 0px">
 
                             <div class="d-flex" style="position: relative;">
-                                <div class="flex-fill mx-auto px-5">
+                                <div class="flex-fill large-screen-input-container">
                                   <div>
                                     <div id="img">
                                       <img src="../assets/logo.png" alt="" width="100px" height="50px" class="img-fluid">
@@ -98,14 +98,14 @@
                                     </div>
                                   </div>
                                   <div class="d-flex row g-3 mt-2" *ngIf="form1">
-                                    <div class="w-75 mw-100">
+                                    <div class="large-screen-input w-100">
                                       <input id="input" type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control"
                                         placeholder="Pseudo" required>
                                       <div style="color: red;" *ngIf="lastname.errors?.['required'] && lastname.touched">
                                         Veuillez renseigner votre pseudo!
                                       </div>
                                     </div>
-                                    <div class="w-75 mw-100">
+                                    <div class="large-screen-input w-100">
                                               <input id="input" type="email" id="email" formControlName="email" [(ngModel)]="users.email" class="form-control"
                                                 placeholder="Adresse email" required>
                                               <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
@@ -113,7 +113,7 @@
                                               </div>
                                               </div>
 
-                                          <div class="w-75 mw-100">
+                                          <div class="large-screen-input w-100">
                                               <input id="input" type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone" class="form-control"
                                                 placeholder="Numéro de téléphone" required>
                                               <div style="color: red;" *ngIf="phone.errors?.['required'] && phone.touched">
@@ -121,7 +121,7 @@
                                               </div>
                                               </div>
 
-                                          <div class="w-75 mw-100">
+                                          <div class="large-screen-input w-100">
                                             <input id="input" type="password" id="password" formControlName="password" [(ngModel)]="users.password"
                                               class="form-control" placeholder="Mot de passe" required>
                                             <div style="color: red;" *ngIf="password.errors?.['required'] && password.touched">
@@ -129,7 +129,7 @@
                                             </div>
                                           </div>
 
-                                          <div class="w-75 mw-100">
+                                          <div class="large-screen-input w-100">
                                             <input id="input" type="password" id="confirm_password" formControlName="confirm_password"
                                               [(ngModel)]="users.confirm_password" class="form-control" placeholder="Confirmer le mot de passe">
                                             <div style="color: red;" *ngIf="confirm_password.errors?.['required'] && confirm_password.touched">
@@ -137,7 +137,7 @@
                                             </div>
                                           </div>
 
-                                          <div class="d-flex w-75 mw-100">
+                                          <div class="d-flex large-screen-input w-100">
                                             <button id="reset" (click)="forminvisible()" class="btn btn-primary flex-fill">S'inscrire</button>
                                             <button id="change" (click)="clear()" class="btn btn-secondary flex-fill" style="margin-left: 5px;">Fermer</button>
                                           </div>
