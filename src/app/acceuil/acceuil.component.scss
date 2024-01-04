@@ -267,8 +267,8 @@
                 input {
                     padding: 0.5rem;
                     border-radius: 100px;
-                    // width: 400px;
-                    width: 100vw;
+                    width: 400px;
+                    max-width: 100%;
                     border: 1px solid #ccc;
                     font-family: "Poppins", sans-serif;
                     transition: 0.4s;
@@ -926,35 +926,31 @@ button:hover {
     }
 }
 
-
 @media only screen and (min-width: 600px) {
-  .large-screen-input {
-    width: 75%;
-    max-width: 100%;
-
-  }
-
-  .large-screen-input-container {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-
-  }
+    .large-screen-input {
+        width: 75%;
+        max-width: 100%;
+    }
+    .large-screen-input-container {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
 }
-
 
 @media only screen and (max-width: 600px) {
     #mobile-background {
         background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 1)), url("../../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png");
         background-size: cover;
+        border-radius: 10px;
     }
 }
 
 @media only screen and (max-width: 600px) {
     #mobile-background-connexion {
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url("../../assets/connexion.png");
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 1)), url("../../assets/connexion.png");
         background-size: cover;
     }
     #inscripton {
@@ -969,16 +965,15 @@ button:hover {
 
 @media only screen and (max-width: 600px) {
     #mobile-mdp-update {
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url("../../assets/image.png");
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 1)), url("../../assets/image.png");
         background-size: cover;
-        opacity: 0.7;
     }
     #changeMdp {
-        color: white;
+        color: black;
     }
     #verify-container {
         padding: 1rem;
-        background: white;
+        background: transparent;
         max-width: 500px;
         /* Largeur maximale de 1024 pixels */
         width: 100%;

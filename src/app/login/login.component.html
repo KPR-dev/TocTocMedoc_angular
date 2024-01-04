@@ -168,7 +168,7 @@
                 <p>Mes crédits : <b>{{ users.credit}} crédits</b></p><br>
                 <!-- <button class="btn btn-success col-12 mt-2" (click)="open_info_user_tarif()">Souscrire à un tarif</button> -->
                 <p>Acheter des crédits</p>
-                <div class="produits-container" style="overflow-y: scroll; max-height: 400px;">
+                <div class="produits-container" style="overflow-y: scroll; max-height: 200px;">
                     <div class="produit" *ngFor="let produit of listTarif">
                         <div id="card" class="card">
                             <!-- Vous pouvez ajouter ici une image du produit -->
@@ -185,6 +185,7 @@
                             <button class=" btn badge mt-2" style="width: 50%; background-color: #30267F" (click)="clickTarifInfoUser(produit.id, produit.price)"><small id="badge">Acheter</small></button>
                         </div>
                     </div>
+
                 </div>
 
             </div>
@@ -220,7 +221,7 @@
                 <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
                     <div style="display: flex">
                         <div>
-                            <div class="col-md-11">
+                            <div class="col-md-11 mx-2">
                                 <label for="nom">Pseudo :</label>
                                 <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control">
                             </div>

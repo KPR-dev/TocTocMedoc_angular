@@ -74,9 +74,9 @@
     </div>
 
     <div class="" *ngIf="formInscription" style="max-width: 90%; border-radius: 10px; position: relative">
-      <div style="position: absolute; top: 0; left: 0; width:100%; height: 40vh" id="mobile-background" *ngIf="form1">
-        <!-- <img src="../../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png" width="100%" style="border-radius: 5px; background: linear-gradient(#fff, #fff 70%)"> -->
-      </div>
+        <div style="position: absolute; top: 0; left: 0; width:100%; height: 40vh" id="mobile-background" *ngIf="form1">
+            <!-- <img src="../../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png" width="100%" style="border-radius: 5px; background: linear-gradient(#fff, #fff 70%)"> -->
+        </div>
         <!-- loader -->
         <div id="verify-container">
             <div class="verify-content" *ngIf="formInscription">
@@ -88,65 +88,60 @@
 
                             <div class="d-flex" style="position: relative;">
                                 <div class="flex-fill large-screen-input-container">
-                                  <div>
-                                    <div id="img">
-                                      <img src="../assets/logo.png" alt="" width="100px" height="50px" class="img-fluid">
-                                    </div><br><br>
-                                    <h6 id="inscripton" *ngIf="form1"><b>BIENVENU</b></h6>
-                                    <div style="width: 80%;" *ngIf="form1">
-                                      <small id="inscripton">Inscivez-vous pour commencer à chercher des médicaments près de chez vous</small>
+                                    <div>
+                                        <div id="img">
+                                            <img src="../assets/logo.png" alt="" width="100px" height="50px" class="img-fluid">
+                                        </div><br><br>
+                                        <h6 id="inscripton" *ngIf="form1"><b>BIENVENU</b></h6>
+                                        <div style="width: 80%;" *ngIf="form1">
+                                            <small id="inscripton">Inscivez-vous pour commencer à chercher des médicaments près de chez vous</small>
+                                        </div>
                                     </div>
-                                  </div>
-                                  <div class="d-flex row g-3 mt-2" *ngIf="form1">
-                                    <div class="large-screen-input w-100">
-                                      <input id="input" type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control"
-                                        placeholder="Pseudo" required>
-                                      <div style="color: red;" *ngIf="lastname.errors?.['required'] && lastname.touched">
-                                        Veuillez renseigner votre pseudo!
-                                      </div>
-                                    </div>
-                                    <div class="large-screen-input w-100">
-                                              <input id="input" type="email" id="email" formControlName="email" [(ngModel)]="users.email" class="form-control"
-                                                placeholder="Adresse email" required>
-                                              <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
+                                    <div class="d-flex row g-3 mt-2" *ngIf="form1">
+                                        <div class="large-screen-input w-100">
+                                            <input id="input" type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control" placeholder="Pseudo" required>
+                                            <div style="color: red;" *ngIf="lastname.errors?.['required'] && lastname.touched">
+                                                Veuillez renseigner votre pseudo!
+                                            </div>
+                                        </div>
+                                        <div class="large-screen-input w-100">
+                                            <input id="input" type="email" id="email" formControlName="email" [(ngModel)]="users.email" class="form-control" placeholder="Adresse email" required>
+                                            <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
                                                 Email non valide
-                                              </div>
-                                              </div>
+                                            </div>
+                                        </div>
 
-                                          <div class="large-screen-input w-100">
-                                              <input id="input" type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone" class="form-control"
-                                                placeholder="Numéro de téléphone" required>
-                                              <div style="color: red;" *ngIf="phone.errors?.['required'] && phone.touched">
+                                        <div class="large-screen-input w-100">
+                                            <input id="input" type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone" class="form-control" placeholder="Numéro de téléphone" required>
+                                            <div style="color: red;" *ngIf="phone.errors?.['required'] && phone.touched">
                                                 Veuillez renseigner votre numéro de téléphone!
-                                              </div>
-                                              </div>
+                                            </div>
+                                        </div>
 
-                                          <div class="large-screen-input w-100">
-                                            <input id="input" type="password" id="password" formControlName="password" [(ngModel)]="users.password"
-                                              class="form-control" placeholder="Mot de passe" required>
+                                        <div class="large-screen-input w-100">
+                                            <input id="input" type="password" id="password" formControlName="password" [(ngModel)]="users.password" class="form-control" placeholder="Mot de passe" required>
                                             <div style="color: red;" *ngIf="password.errors?.['required'] && password.touched">
-                                              Veuillez renseigner votre mot de passe!
+                                                Veuillez renseigner votre mot de passe!
                                             </div>
-                                          </div>
+                                        </div>
 
-                                          <div class="large-screen-input w-100">
-                                            <input id="input" type="password" id="confirm_password" formControlName="confirm_password"
-                                              [(ngModel)]="users.confirm_password" class="form-control" placeholder="Confirmer le mot de passe">
+                                        <div class="large-screen-input w-100">
+                                            <input id="input" type="password" id="confirm_password" formControlName="confirm_password" [(ngModel)]="users.confirm_password" class="form-control" placeholder="Confirmer le mot de passe">
                                             <div style="color: red;" *ngIf="confirm_password.errors?.['required'] && confirm_password.touched">
-                                              Veuillez renseigner votre mot de passe!
+                                                Veuillez renseigner votre mot de passe!
                                             </div>
-                                          </div>
+                                        </div>
 
-                                          <div class="d-flex large-screen-input w-100">
+                                        <div class="d-flex large-screen-input w-100">
                                             <button id="reset" (click)="forminvisible()" class="btn btn-primary flex-fill">S'inscrire</button>
                                             <button id="change" (click)="clear()" class="btn btn-secondary flex-fill" style="margin-left: 5px;">Fermer</button>
-                                          </div>
+                                        </div>
 
 
-                                  </div>
+                                    </div>
                                 </div>
                                 <div style="margin-left: 20px;" class="d-none d-md-block flex-fill r" *ngIf="form1">
-                                  <img src="../../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png" width="100%" height="auto">
+                                    <img src="../../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png" width="100%" height="auto">
                                 </div>
                             </div>
 
@@ -232,7 +227,7 @@
     <div class="verify-container" id="verify-container" *ngIf="formConnexion === false" style="max-width: 60%">
         <div class="verify-content" style="display: flex; margin: 0px">
 
-            <div class="verify-commande" id="mobile-background-connexion">
+            <div class="verify-commande " id="mobile-background-connexion">
 
                 <form (ngSubmit)="submitLoginForm()">
                     <!-- ... Champs de connexion ... -->
@@ -273,9 +268,9 @@
             <h4 style="color: red;">{{smserror}}</h4>
         </div>
     </div>
-    <div class="verify-container" style="max-width: 50%" *ngIf="changerPass">
+    <div class="verify-container" id="verify-container" *ngIf="changerPass">
 
-        <div class="verify-content" style="display: flex;">
+        <div class="verify-content" style="display: flex">
             <!-- Formulaire de connexion -->
             <div class="verify-commande" id="mobile-mdp-update">
                 <p id="changeMdp">Changer votre mot de passe</p><br>
@@ -296,9 +291,9 @@
                 </form>
             </div>
 
-            <div class="d-none d-md-block">
-                <img src="../assets/image.png" alt="" width="300px" height="300px" style="border-radius: 5px;">
-            </div>
+            <!-- <div class="d-none d-md-block px-3">
+                <img src="../assets/image.png" alt="" width="300px" height="500px" style="border-radius: 5px;">
+            </div> -->
         </div>
     </div>
 </div>
