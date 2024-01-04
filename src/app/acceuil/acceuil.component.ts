@@ -23,6 +23,8 @@ class Cart {
   templateUrl: './acceuil.component.html',
   styleUrls: ['./acceuil.component.scss']
 })
+
+
 export class AcceuilComponent implements OnInit {
   receivedData: any;
   registerForm = new FormGroup({
@@ -754,6 +756,7 @@ export class AcceuilComponent implements OnInit {
 
   select(pharmacy: any) {
     this.selectedPharmacy = pharmacy;
+    console.log('pharmacy = ', pharmacy)
   }
 
   commander(cart: Cart, cartIndex: number) {
@@ -835,6 +838,7 @@ export class AcceuilComponent implements OnInit {
       }
     }
     this.clear()
+    console.log('nom = ', this.selectedPharmacy.nom)
   }
 
   removeFromCart(productCIP: string, cartIndex: number) {

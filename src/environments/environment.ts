@@ -17,6 +17,7 @@ export const environment = {
     produit: null,
     credit_modal: 0,
     user: [],
+    pharmacy: 'pharmacy',
   // apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
    pageItemCount: 500,
    pharmacies: [

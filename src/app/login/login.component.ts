@@ -24,7 +24,8 @@ class Cart {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../app.component.scss']
+  styleUrls: ['../app.component.scss'],
+
 })
 export class LoginComponent implements OnInit {
 
@@ -61,7 +62,7 @@ export class LoginComponent implements OnInit {
   produits: any;
   filteredProduit: any[] = [];
   grille: any;
-  addressProduit:any;
+  addressProduit:any[] = [];
 
   listTarif: any[] = [];
   selectedProduit: any;
@@ -74,6 +75,7 @@ export class LoginComponent implements OnInit {
   buyer!: string;
   buyerPhone!: string;
   buyerEmail!: string;
+  pharmacieChoisi!: string;
   smserror: any;
 
   disponibilites: any[] = [];
@@ -129,7 +131,8 @@ export class LoginComponent implements OnInit {
   modal_info_tarif_user: boolean = false;
   verifier_commander: boolean = false;
   modal_commander: boolean = true;
-
+  verifier_pharmacie: boolean = false
+  ajout_pharmacy : boolean = true;
 
   receivedData: any;
   receivedCompte: any;
@@ -617,16 +620,23 @@ export class LoginComponent implements OnInit {
     try {
       this.epharmaService.getLibelleTarif(libelle).subscribe({
         next: (response: any) => {
+          let addresses: any [] = [];
+
           for (let i = 0; i < environment.pharmacies.length; i++) {
             this.epharmaService.getDisponibiliteProduit(cp, environment.pharmacies[i]).subscribe({
               next: (response: any) => {
-                this.addressProduit = response.pharmacy.adresse
+
+                addresses.push(response.pharmacy.adresse);
+
+
               },
               error: (err) => {
                 console.log(err);
               }
             });
           }
+          this.addressProduit = addresses
+          console.log('address = ',  this.addressProduit)
           this.creditUser = response.credit
           console.log('credit reçu =', response.credit);
           this.modal_verifier = true
@@ -798,8 +808,30 @@ export class LoginComponent implements OnInit {
     return founds[founds.length - 1].success ? founds[founds.length - 1].isAvailable : false;
   }
 
+
   select(pharmacy: any) {
-    this.selectedPharmacy = pharmacy;
+    console.log('nom pharmacy = ', environment.pharmacy)
+
+
+    console.log('nom = ',pharmacy.nom)
+
+    if(environment.pharmacy === 'pharmacy'){
+
+      this.selectedPharmacy = pharmacy;
+      environment.pharmacy = pharmacy.nom
+
+
+    }
+    else if (pharmacy.nom === environment.pharmacy) {
+      this.selectedPharmacy = pharmacy;
+      environment.pharmacy = pharmacy.nom
+    }
+    else{
+      this.verifier_pharmacie = true
+      this.ajout_pharmacy = false
+      this.pharmacieChoisi = environment.pharmacy
+    }
+
   }
 
   // commander(cart: Cart, cartIndex: number) {
@@ -897,6 +929,8 @@ export class LoginComponent implements OnInit {
     this.formModification = false
     this.modal_tarif = false
     this.modal_verifier = false
+    this.verifier_pharmacie = false
+    this.ajout_pharmacy = true
 
   }
   clearInfoTarifUser(){
@@ -946,6 +980,8 @@ export class LoginComponent implements OnInit {
     }
     this.nombreProduit = this.carts[index].products.length
     console.log('cart = ',this.carts[index].products.length)
+    console.log('nom pharmacy2 = ', environment.pharmacy)
+    //  environment.pharmacy = this.selectedPharmacy.nom
     this.clear()
   }
 
@@ -963,6 +999,10 @@ export class LoginComponent implements OnInit {
 
   removeCart(cartIndex: number) {
     this.carts.splice(cartIndex, 1);
+  }
+
+  refresh(){
+    history.go()
   }
 
 }

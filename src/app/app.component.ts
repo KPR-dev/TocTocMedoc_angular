@@ -471,6 +471,7 @@ export class AppComponent implements OnInit {
     password: ''
   };
   loggedInUser: any;
+  id_user: any;
 
   submitLoginForm() {
     if (this.users.username && this.users.password) {

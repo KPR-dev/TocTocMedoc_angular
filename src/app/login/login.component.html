@@ -69,8 +69,13 @@
             <!-- Formulaire d'inscription -->
             <div class="verify-commande">
                 <p>Voulez-vous continuer ?</p>
-                <div>
-                    <p>Disponible à {{addressProduit}}</p>
+                <div *ngIf="addressProduit.length > 0">
+                    <ul>
+                        <p>Disponible à : </p>
+                        <li *ngFor="let address of addressProduit; let i = index">
+                            {{ address }}
+                        </li>
+                    </ul>
                 </div>
                 <div class="tarif">
                     <p>Vous avez <b>{{ users.credit}}</b> crédit(s), cette action vaut <b>{{creditUser}}</b> crédit(s)</p><br>
@@ -113,52 +118,76 @@
 
 <div class="inscription d-flex justify-content-center align-items-center" *ngIf="modal_modification" style="background: #f8f9fa; height: 100vh;">
 
-    <div class="verify-container container" style=" max-width: 90%;">
-
-        <div class="row">
+    <div class="verify-container container" style=" max-width: 100%;">
+        <div class="container d-flex align-items-center justify-content-center" id="img">
+            <img src="../assets/logo.png" alt="" width="100px" height="50px" class="img-fluid">
+        </div>
+        <div class="row" id="row" style="margin-top: 10px;">
 
             <!-- Formulaire -->
-            <div class="verify-commande col-md-8">
-                <p class="text-center"><b>Profil utilisateur</b></p>
 
+            <div id="col-md-8" id="col-12" class="col-md-8" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; width: 20%; padding: 1rem; margin: 0">
                 <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
+                    <p><b>Profil</b></p><br><br>
+                    <div>
 
-                    <div class="input-group">
-                        <div class="form-control">
-                            <label for="nom"><b>Pseudo :</b></label>
-                            <h5 id="nom">{{users.lastname}}</h5>
-                        </div>
+                        <small><b>Pseudo</b></small><br>
+                        <small id="nom">{{users.lastname}}</small>
 
-                        <!-- <div class="form-control">
+
+                        <!-- <div>
                             <label for="prenom"><b>Prénom :</b></label>
                             <h5 id="prenom">{{users.firstname}}</h5>
                         </div> -->
+                    </div><br>
+
+                    <div>
+
+                        <small for="email"><b>Email</b></small><br>
+                        <small id="email">{{users.email}}</small>
+
+                    </div><br>
+
+                    <div>
+
+                        <small for="phone"><b>Téléphone</b></small><br>
+                        <small id="phone">{{users.phone}}</small>
+
                     </div>
 
-                    <div class="input-group">
-                        <div class="form-control">
-                            <label for="email"><b>Email :</b></label>
-                            <h5 id="email">{{users.email}}</h5>
-                        </div>
-
-                        <div class="form-control">
-                            <label for="phone"><b>Téléphone :</b></label>
-                            <h5 id="phone">{{users.phone}}</h5>
-                        </div>
-                    </div>
-
-                    <a class="btn btn-secondary mt-3" (click)="profil()">Modifier le profil</a><br>
-                    <a class="btn btn-primary mt-2" (click)="open_mdp()">Changer de mot de passe</a>
-                    <button class="btn btn-danger mt-2" (click)="clear()">Quitter</button>
+                    <a class="mt-3" (click)="profil()" style="font-size: 10px; cursor: pointer">Modifier le profil</a><br>
+                    <a class="mt-2" (click)="open_mdp()" style="font-size: 10px; cursor: pointer">Changer de mot de passe</a><br><br>
+                    <button class="btn btn-primary mt-2" (click)="clear()" style="width: 50%; background-color: #30267F; color: red">Quitter</button>
 
                 </form>
             </div>
 
             <!-- Informations sur les crédits -->
-            <div class="verify-commande col-md-4">
-                <p><b>Crédits</b></p>
-                <p>{{ users.credit}}</p>
-                <button class="btn btn-success col-12 mt-2" (click)="open_info_user_tarif()">Souscrire à un tarif</button>
+            <div id="col-md-4" id="col-12" class=" col-md-4" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; width: 70%; margin-left: 5%">
+
+                <p>Mes crédits : <b>{{ users.credit}} crédits</b></p><br>
+                <!-- <button class="btn btn-success col-12 mt-2" (click)="open_info_user_tarif()">Souscrire à un tarif</button> -->
+                <p>Acheter des crédits</p>
+                <div class="produits-container" style="overflow-y: scroll; max-height: 200px;">
+                    <div class="produit" *ngFor="let produit of listTarif">
+                        <div id="card" class="card">
+                            <!-- Vous pouvez ajouter ici une image du produit -->
+                            <h6 class="product-title">{{produit.libelle}}</h6>
+                            <div style="display: flex;">
+                                <div>
+                                    <p class="product-price">{{produit.price}} FCFA</p>
+                                </div>
+                                <div style="margin-left: 50%">
+                                    <p class="credit-quantity">{{produit.credit}} crédits</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <button class=" btn badge mt-2" style="width: 50%; background-color: #30267F" (click)="clickTarifInfoUser(produit.id, produit.price)"><small id="badge">Acheter</small></button>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
@@ -186,36 +215,42 @@
 
         <div class="verify-content">
             <!-- Formulaire -->
-            <div class="verify-commande">
-                <p>Information utilisateur</p>
+            <div class="verify-commande" id="mobile-profil">
+                <p>Modifier le profil</p>
+                <hr>
                 <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
-                    <div class="form-group">
-                        <label for="nom">Pseudo *:</label>
-                        <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname">
-                    </div>
+                    <div style="display: flex">
+                        <div>
+                            <div class="col-md-11 mx-2">
+                                <label for="nom">Pseudo :</label>
+                                <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control">
+                            </div>
 
-                    <!-- <div class="form-group">
-                        <label for="prenom">Prénom *:</label>
-                        <input type="text" id="prenom" formControlName="firstname" [(ngModel)]="users.firstname">
-                    </div> -->
-
-                    <div class="form-group">
-                        <label for="email">Email *:</label>
-                        <input type="email" id="email" formControlName="email" [(ngModel)]="users.email">
-                        <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
-                            Email non valide
+                            <div class="col-md-12">
+                                <label for="email">Email :</label>
+                                <input type="email" id="email" formControlName="email" [(ngModel)]="users.email" class="form-control">
+                                <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
+                                    Email non valide
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-md-12">
+                                <label for="phone">Téléphone :</label>
+                                <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone" class="form-control">
+                                <div style="color: red;" *ngIf="phone.errors?.['required']&& phone.touched">
+                                    Veuillez renseigner votre numero télephone!
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="phone">Téléphone *:</label>
-                        <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone">
-                        <div style="color: red;" *ngIf="phone.errors?.['required']&& phone.touched">
-                            Veuillez renseigner votre numero télephone!
-                        </div>
+                    <div style="margin-left: 30%;">
+
+                        <button (click)="clearModification()" id="change" style="background-color: gray">Fermer</button>
+                        <button type="submit" style="margin-left: 5px;">Sauvegarder</button>
+
                     </div>
-                    <!-- ... Vos champs d'inscription existants ... -->
-                    <button type="submit">Mise à jour</button>
-                    <button (click)="clearModification()" id="change">Fermer</button>
+                    <hr>
                 </form><br>
 
             </div>
@@ -265,22 +300,35 @@
             <h4 style="color: red;">{{smserror}}</h4>
         </div>
     </div>
-    <div class="verify-container" *ngIf="showMdpForm">
+    <div *ngIf="showMdpForm" style="max-width: 100%; border-radius: 10px; ">
 
         <div class="verify-content">
             <!-- Formulaire -->
-            <div class="verify-commande">
-                <p>Information utilisateur</p>
-                <form [formGroup]="registerForm" (ngSubmit)="updatePassword()">
-                    <div class="form-group">
-                        <input type="password" id="password" formControlName="password" class="form-control" placeholder="Nouveau mot de passe">
+            <div class="verify-commande" id="mobile-password">
+                <div style="display: flex; ">
+                    <div>
+                        <div id="img">
+                            <img src="../assets/logo.png" alt="" width="100px" height="50px" class="img-fluid">
+                        </div><br><br>
+                        <p id="renitialiser">Réinitialiser mot de passe</p>
+                        <form [formGroup]="registerForm" (ngSubmit)="updatePassword()">
+                            <div class="form-group">
+                                <input type="password" id="password" formControlName="password" class="form-control" placeholder="Nouveau mot de passe" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" formControlName="confirm_password" id="confirm_password" required placeholder="Confirmez le mot de passe" required>
+                            </div>
+                            <button type="submit">Rénitialisé</button>
+                            <button (click)="clearModification()" id="change">Fermer</button>
+                        </form><br>
                     </div>
-                    <div class="form-group">
-                        <input type="password" formControlName="confirm_password" id="confirm_password" required placeholder="Confirmez le mot de passe">
+
+                    <div style="margin-left: 20px;" class="d-none d-md-block">
+                        <img src="../../assets/_812b7d02-08fb-482c-b7c1-e8c4ef9b08c4 1.png" alt="" width="300px" height="400px" style="border-radius: 5px;">
+
                     </div>
-                    <button type="submit">Changer</button>
-                    <button (click)="clearModification()" id="change">Fermer</button>
-                </form><br>
+
+                </div>
 
             </div>
         </div>
@@ -320,8 +368,10 @@
             <h4 style="color: green;">Crédit débiter !!!</h4>
         </div>
     </div>
+
     <div class="verify-container">
         <div class="verify-content">
+
             <div class="verify-produit">
                 <div class="img-container">
                     <img [src]="selectedProduit.photoURL" *ngIf="selectedProduit.photoURL" alt="Image produit">
@@ -332,17 +382,33 @@
                 </div>
                 <button (click)="clear()">Rechercher d'autres produits</button>
             </div>
+            <div class="verify-container" *ngIf="verifier_pharmacie" style="width: 500px">
+                <div class="verify-commande text-center">
+                    <p>Vous ne pouvez pas effectuer cette action</p>
+                    <div>
+                        <p>Vous avez déjà débuté avec la pharmacie <b>{{pharmacieChoisi}}</b>, pour changer appuyer sur <b>Supprimer</b> ou <b>Annuler</b> pour continuer avec <b>{{pharmacieChoisi}}</b>.
+                        </p>
+
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button class="btn btn-secondary btn-block" (click)="clear()">Annuler</button>
+                    <button class="btn btn-primary btn-block" (click)="refresh()" style="margin-left: 10px;">Supprimer</button>
+                </div>
+            </div>
             <div class="verify-result" *ngIf="!selectedPharmacy">
                 <h3>
                     <div class="loader-container" *ngIf="verifiedPharmacies.length == 0">
                         <div class="loader"></div>
                     </div>
-                    <span>
+                    <span *ngIf="ajout_pharmacy">
             Recherche de la disponibilité en pharmacie...
           </span>
+
                 </h3>
 
-                <div class="pharmacies">
+                <div class="pharmacies" *ngIf="ajout_pharmacy">
+
                     <div class="pharmacy" *ngFor="let pharmacy of verifiedPharmacies">
                         <div>
                             <p class="name">{{pharmacy.nom}}</p>
@@ -441,7 +507,7 @@
                 </div>
 
 
-                <span>Prix Total: {{totalPrixVente}}</span>
+                <span>Prix Total: <b>{{totalPrixVente}} FCFA</b></span>
                 <div *ngIf="modal_commander">
                     <h3><img src="../assets/add-to-cart.png" alt=""> {{cart.pharmacyName}}</h3>
                     <div class="products-cart">
