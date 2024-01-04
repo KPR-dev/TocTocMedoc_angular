@@ -221,12 +221,12 @@
                 <form [formGroup]="registerForm" (ngSubmit)="updateForm()">
                     <div style="display: flex">
                         <div>
-                            <div class="col-md-11 mx-2">
+                            <div class="col-md-12 px-2">
                                 <label for="nom">Pseudo :</label>
                                 <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname" class="form-control">
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-11 mx-2">
                                 <label for="email">Email :</label>
                                 <input type="email" id="email" formControlName="email" [(ngModel)]="users.email" class="form-control">
                                 <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
