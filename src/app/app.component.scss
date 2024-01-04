@@ -1021,13 +1021,8 @@ button:hover {
     padding: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    transition: transform 0.3s ease-in-out;
     width: 90%;
     background-color: #DEE3EB;
-}
-
-.card:hover {
-    transform: scale(1.05);
 }
 
 .product-title {
