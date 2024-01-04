@@ -24,6 +24,7 @@ export const environment = {
      "63c2a72fd9da78af9d6ccb54",
      "63b441e4d9da78af9d6c6a50",
      "63f7523dd9da78af9d6e497c",
-     "63fb358bf0335bedb2100991"
+     "63fb358bf0335bedb2100991",
+     "649b0894d43eb8ce837d5674"
   ]
 };

@@ -27,7 +27,8 @@ export const environment = {
     "6237594a2fb38ca16715489f",
     "6248135de657f409c30acdd4",
     "6259ac72e657f409c30ace5f",
-    "637e392c125548fd0b09ac60"
+    "637e392c125548fd0b09ac60",
+    "649b0894d43eb8ce837d5674"
    ]
   // pageItemCount: 1000,
   // pharmacies: [
