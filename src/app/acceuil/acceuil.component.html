@@ -311,7 +311,7 @@
   </div>
 </div>
 
-<div class="inscription" *ngIf="loginFormVisible">
+<div class="inscription d-flex justify-content-center align-items-center" style="" *ngIf="loginFormVisible">
   <div id="popup1" class="overlay" *ngIf="showSnackbar">
     <div class="popup">
       <h4 style="color: green;">Connexion success !!!</h4>
@@ -323,49 +323,54 @@
     </div>
   </div>
   <!-- Formulaire de connexion -->
-  <div class="verify-container position-relative" id="verify-container mobile-background-register" *ngIf="!formConnexion" style="max-width: 90%">
-    <div style="position: absolute; top: 0; left: 0; width:100%; height: 40vh" id="mobile-background-login" *ngIf="loginFormVisible">
-    </div>
-    <div class="verify-content" style="display: flex; margin: 0px">
-
-      <div class="verify-commande">
-
-        <form (ngSubmit)="submitLoginForm()">
-          <!-- ... Champs de connexion ... -->
-          <div style="position: relative; margin: 0px">
-
-            <div class="d-flex" style="position: relative;">
-              <div class="flex-fill large-screen-input-container">
-                <div id="img">
-                  <img src="../assets/logo.png" alt="" width="100px" height="50px" class="img-fluid">
-                </div>
-                <br>
-                <h5 id="changeMdp" style="font-weight: 10px;">BON RETOUR PARMIS NOUS</h5>
-                <small id="changeMdp">Connectez-vous et commencez à chercher des médicaments</small>
-                <div class="d-flex row g-3 mt-2" *ngIf="loginFormVisible">
-
-                  <div class="form-group large-screen-input w-100">
-                    <input type="email" [(ngModel)]="users.username" id="email" name="username" required
-                           placeholder="Entrez votre adresse mail">
-                  </div>
-                  <div class="form-group large-screen-input w-100">
-                    <input type="password" [(ngModel)]="users.password" id="password" name="password" required
-                           placeholder="Mot de passe">
-                  </div>
-                  <a (click)="open_reset_password()" style="font-size: 10px; cursor: pointer">Mot de passe oublié ?</a>
-                  <button type="submit">Se connecter</button>
-                  <button id="change" (click)="clear()" style="float: right; margin-top: 15px">Quitter</button>
-                </div>
-              </div>
-
-              <div style="margin-left: 20px;" class="d-none d-md-block flex-fill" *ngIf="loginFormVisible">
-                <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="100%" height="100%">
-              </div>
-            </div>
+  <div *ngIf="loginFormVisible" style="width: 90vw; border-radius: 10px; position: relative" id="mobile-background-login">
+    <div id="verify-container">
+        <div class="verify-content position-relative" *ngIf="loginFormVisible">
+          <div style="position: absolute; top: 0; left: 0; width:100%; height: 40vh" id="mobile-background-login" *ngIf="loginFormVisible">
           </div>
-        </form>
+
+          <div class="verify-commande">
+            <form (ngSubmit)="submitLoginForm()">
+              <!-- ... Champs de connexion ... -->
+              <div style="position: relative; margin: 0px">
+
+                <div class="d-flex" style="position: relative;">
+                  <div class="flex-fill large-screen-input-container">
+                    <div>
+                      <div id="img">
+                        <img src="../assets/logo.png" alt="" width="100px" height="50px" class="img-fluid">
+                      </div>
+                      <br>
+                      <h5 id="changeMdp" style="font-weight: 10px;">BON RETOUR PARMIS NOUS</h5>
+                      <small id="changeMdp">Connectez-vous et commencez à chercher des médicaments</small>
+                    </div>
+
+                    <div class="d-flex row g-3 mt-2" *ngIf="loginFormVisible">
+
+                      <div class="form-group large-screen-input w-100">
+                        <input type="email" [(ngModel)]="users.username" id="email" name="username" required
+                               placeholder="Entrez votre adresse mail">
+                      </div>
+                      <div class="form-group large-screen-input w-100">
+                        <input type="password" [(ngModel)]="users.password" id="password" name="password" required
+                               placeholder="Mot de passe">
+                      </div>
+                      <a (click)="open_reset_password()" style="font-size: 10px; cursor: pointer">Mot de passe oublié
+                        ?</a>
+                      <button type="submit">Se connecter</button>
+                      <button id="change" (click)="clear()" style="float: right; margin-top: 15px">Quitter</button>
+                    </div>
+                  </div>
+
+                  <div style="margin-left: 20px;" class="d-none d-md-block flex-fill r" *ngIf="loginFormVisible">
+                    <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="100%" height="auto">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
   </div>
 </div>
 
