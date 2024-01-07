@@ -924,15 +924,6 @@ button:hover {
             }
         }
     }
-
-    #large-screen-background {
-        background: url(../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png);
-        background-size: cover;
-        border-radius: 10px;
-        margin-left: 20px;
-
-    }
-
 }
 
 @media only screen and (min-width: 600px) {
@@ -950,16 +941,16 @@ button:hover {
 }
 
 @media only screen and (max-width: 600px) {
-    #mobile-background-register {
+    #mobile-background {
         background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 1)), url("../../assets/_483668e6-f804-4744-91d6-a4b1b632322d.png");
         background-size: cover;
-        //border-radius: 10px;
+        border-radius: 10px;
     }
 }
 
 @media only screen and (max-width: 600px) {
-    #mobile-background-login {
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 1)), url("../../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png");
+    #mobile-background-connexion {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 1)), url("../../assets/connexion.png");
         background-size: cover;
     }
     #inscripton {
