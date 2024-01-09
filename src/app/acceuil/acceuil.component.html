@@ -308,7 +308,7 @@
   </div>
 </div>
 
-<div class="inscription d-flex justify-content-center align-items-center" style="" *ngIf="loginFormVisible">
+<div class="inscription d-flex justify-content-center align-items-center" *ngIf="loginFormVisible">
   <div id="popup1" class="overlay" *ngIf="showSnackbar">
     <div class="popup">
       <h4 style="color: green;">Connexion success !!!</h4>
@@ -320,7 +320,7 @@
     </div>
   </div>
   <!-- Formulaire de connexion -->
-  <div *ngIf="loginFormVisible" style="width: 70vw; border-radius: 10px; position: relative">
+  <div *ngIf="loginFormVisible" style="width: 70vw; border-radius: 10px; position: relative" id="mobile">
     <div id="verify-container">
         <div class="verify-content position-relative" *ngIf="loginFormVisible">
           <div style="position: absolute; top: 0; left: 0; width:100%; height: 40vh" id="mobile-background-login" *ngIf="loginFormVisible"></div>
@@ -468,7 +468,8 @@
 <div class="boutton d-flex">
   <div style="margin-right: 100%;">
     <button *ngIf="loggedInUser" class="inscriptions" (click)="open_modal_modification()">
-      N°00241{{ loggedInUser.id }}
+      <!-- N°00241{{ loggedInUser.id }} -->
+      {{ loggedInUser.lastname }}
     </button>
   </div>
   <!-- fin Bouton inscription -->
