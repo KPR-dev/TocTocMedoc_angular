@@ -6,10 +6,10 @@
 export const environment = {
   production: false,
   //  apiURL: "https://epg-supervisor-api.pivot40.tech",
-    apiURL: "http://31.207.35.25:8000/api_epg",
-    api: "http://31.207.35.25:8000",
-    // apiURL: "http://localhost:8000/api_epg",
-    // api: "http://localhost:8000",
+    // apiURL: "http://31.207.35.25:8000/api_epg",
+    // api: "http://31.207.35.25:8000",
+    apiURL: "http://51.68.46.67:8000/api_epg",
+    api: "http://51.68.46.67:8000",
     token: null,
     user_id: 0,
     id_compte: 0,
@@ -22,14 +22,18 @@ export const environment = {
    pageItemCount: 500,
    pharmacies: [
     // notre pharmacie
-    "633c5a44fa44def3b5dbbaa4",
-    "63c288e7d9da78af9d6ccac1",
-    "623a45be1b6f66b46e99a03d",
-    "6237594a2fb38ca16715489f",
-    "6248135de657f409c30acdd4",
-    "6259ac72e657f409c30ace5f",
-    "637e392c125548fd0b09ac60",
-    "649b0894d43eb8ce837d5674"
+    "666e1cb055766aab443769fb",
+    "6670a91855766aab44376b44",
+    "667188aea32e56624dcf7091",
+    "66719795a32e56624dcf70c0" // Ayitebe
+    // "633c5a44fa44def3b5dbbaa4",
+    // "63c288e7d9da78af9d6ccac1",
+    // "623a45be1b6f66b46e99a03d",
+    // "6237594a2fb38ca16715489f",
+    // "6248135de657f409c30acdd4",
+    // "6259ac72e657f409c30ace5f",
+    // "637e392c125548fd0b09ac60",
+    // "649b0894d43eb8ce837d5674"
    ]
   // pageItemCount: 1000,
   // pharmacies: [
