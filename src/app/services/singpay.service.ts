@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 
-
 export class SingPayService {
   constructor(private http: HttpClient) { }
 
@@ -32,21 +31,29 @@ export class SingPayService {
       'x-wallet': '655cb86504e9de35cdfbca9f',
       'Content-Type': 'application/json'
     });
-
     const body = {
       portefeuille: "655cb86504e9de35cdfbca9f",
-      // reference: "MF1600",
-      // reference: "PHARMACIES241",
       reference: this.genererChaineAleatoire(10),
       redirect_success: url_success, // TODO: Ici mettre la redirection quand ça réussit
-      redirect_error: url_error, // TODO: Ici mettre la redirection quand ça réussit
+      redirect_error: url_error, // TODO: Ici mettre la redirection quand ça échoue
       amount: amount,
       isTransfer: false
     };
-
+// "disbursement": "string",
     return this.http.post('https://gateway.singpay.ga/v1/ext', body, {headers});
   }
 
 
 }
 
+// const headers = new HttpHeaders({
+    //   'x-client-id': '4e950565-d2ab-4962-bcc8-538acbc5cb2d',
+    //   'x-client-secret': 'eb17623132dd53833168cf022f7dab09b88a8930bdce191f761d39f16a548d3d',
+    //   'x-wallet': '655cb86504e9de35cdfbca9f',
+    //   'Content-Type': 'application/json'
+    // });
+
+    // 'x-client-id': '4e950565-d2ab-4962-bcc8-538acbc5cb2d',
+    //   'x-client-secret': 'eb17623132dd53833168cf022f7dab09b88a8930bdce191f761d39f16a548d3d',
+    //   'x-wallet': '655cb86504e9de35cdfbca9f',
+    //   'Content-Type': 'application/json'

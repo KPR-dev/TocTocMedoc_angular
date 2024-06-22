@@ -62,7 +62,7 @@ export class EpharmaService {
   PayToSingPay(amount: any, rateId: string) {
     // Construire l'URL avec les paramètres token et tarif_id
     const token = environment.token;
-    const url_success = `http://31.207.35.25:8000/sing_pay_api/url_success/${token}/${rateId}`;
+    const url_success = `http://51.68.46.67:8000/sing_pay_api/url_success/${token}/${rateId}`;
 
     // Appeler la fonction externalisation avec la nouvelle URL
     this.singPayService.externalisation(amount, url_success, null).subscribe({
@@ -133,7 +133,7 @@ export class EpharmaService {
 
   singPayInscription(id: number, amount: any, rateId: string){
     const token = environment.token;
-    const url_success = `http://31.207.35.25:8000/sing_pay_api/url_success_by_user_id/${id}/${rateId}`;
+    const url_success = `http://51.68.46.67:8000/sing_pay_api/url_success_by_user_id/${id}/${rateId}`;
 
     // Appeler la fonction externalisation avec la nouvelle URL
     this.singPayService.externalisation(amount, url_success, null).subscribe({
