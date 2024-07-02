@@ -5,6 +5,8 @@ import { SingPayService } from '../services/singpay.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
+import { forkJoin, of } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
 
 
 class ProductQuantity {
@@ -28,6 +30,9 @@ class Cart {
 
 })
 export class LoginComponent implements OnInit {
+
+  public loading = false;
+  public isFinished = false;
 
   registerForm = new FormGroup({
     firstname: new FormControl("", [Validators.required]),
@@ -160,6 +165,8 @@ export class LoginComponent implements OnInit {
     this.showSnackbarError4 = false
     this.showSnackbarError5 = false
     this.showSnackbarError6 = false
+    this.loading = false;
+    this.isFinished = false;
     this.receivedData = this.dataService.getSharedData();
     this.receivedCompte = this.dataService.getSharedCompte();
     this.receiveToken = this.dataService.getSharedToken();
@@ -603,15 +610,14 @@ export class LoginComponent implements OnInit {
   }
   //Ma fonction
   clickVerify(libelle: string, cp: any){
+    console.log('1-loading =', this.loading)
+    console.log('2-loading =', this.loading)
     console.log('ID =', environment.user_id)
     this.epharmaService.getUserId(environment.user_id).subscribe({
       next: (response: any) => {
         console.log('information user =', response);
-
         this.users.credit = response.credit
-
         return true
-
       },
       error: (error) => {
         console.error('Erreur lors de la connexion :', error);
@@ -621,35 +627,65 @@ export class LoginComponent implements OnInit {
     try {
       this.epharmaService.getLibelleTarif(libelle).subscribe({
         next: (response: any) => {
-          let addresses: any [] = [];
+          let requests = [];
+          let addresses: string[] = [];
+          this.creditUser = response.credit;
+          this.modal_verifier = true;
+          this.form_modal_verifier = true;
+          this.loading = true;
+          this.isFinished = false;
 
           for (let i = 0; i < environment.pharmacies.length; i++) {
-            this.epharmaService.getDisponibiliteProduit(cp, environment.pharmacies[i]).subscribe({
-              next: (response: any) => {
+            requests.push(
+              this.epharmaService.getDisponibiliteProduit(cp, environment.pharmacies[i]).pipe(
+                tap((res: any) => {
+                  addresses.push(res.pharmacy.adresse); // Mettre à jour l'adresse ici
 
-                addresses.push(response.pharmacy.adresse);
-
-
-              },
-              error: (err) => {
-                console.log(err);
-              }
-            });
+                  if (addresses.length > 0) {
+                    this.loading = false;
+                    this.addressProduit = addresses;
+                    // this.modal_verifier = true;
+                    // this.form_modal_verifier = true;
+                  } else {
+                    this.loading = true;
+                  }
+                }),
+                catchError(err => {
+                  console.error(`Erreur pour la pharmacie ${environment.pharmacies[i]}:`, err);
+                  return of(null); // Retourner null en cas d'erreur pour ne pas interrompre forkJoin
+                })
+              )
+            );
           }
-          this.addressProduit = addresses
-          console.log('address = ',  this.addressProduit)
-          this.creditUser = response.credit
-          console.log('credit reçu =', response.credit);
-          this.modal_verifier = true
-          this.form_modal_verifier = true
-          environment.produit = cp
 
+          forkJoin(requests).subscribe({
+            next: () => {
+              // Filtrer les résultats pour enlever les null
+              this.addressProduit = addresses;
+              console.log('address = ', this.addressProduit);
+              console.log('credit reçu =', this.creditUser);
+              // this.modal_verifier = true;
+              // this.form_modal_verifier = true;
+              environment.produit = cp;
+              // Envoyer le message ici après que toutes les requêtes soient terminées
+              console.log('Toutes les requêtes sont terminées');
+              this.loading = false;
+              this.isFinished = true;
+            },
+            error: (err) => {
+              console.error('Erreur lors de la récupération des disponibilités des produits:', err);
+              this.loading = false;
+            }
+          });
         },
         error: (error) => {
+          console.error('Erreur lors de la récupération du libellé tarif:', error);
+          this.loading = false;
         }
       });
-    } catch {
-      // ... (votre bloc catch existant)
+    } catch (error) {
+      console.error('Erreur non gérée:', error);
+      this.loading = false;
     }
   }
 
