@@ -97,24 +97,46 @@
   <div *ngIf="form_modal_verifier">
     <div *ngIf="loading; else findit"></div>
     <ng-template class="verify-content" #findit>
-      <div class="verify-commande">
+      <div class="verify-commande p-0 rounded-2">
         <div *ngIf="addressProduit.length > 0; else addressIsNull">
-          <ul>
-            <p>Disponible à : </p>
-            <li *ngFor="let address of addressProduit; let i = index">
-              {{ address }}
-            </li>
-          </ul>
+          <div class="bg bg-primary border rounded-top-2">
+            <div class="tarif p-1" *ngIf="addressProduit.length > 0">
+              <p class="text-black fw-bold">Vous avez <b>{{ users.credit}}</b> crédit(s), cette action vaut <b>{{creditUser}}</b> crédit(s)</p><br>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <ul>
+              <p class="mt-3">Votre médicament est disponible à : </p>
+              <div class= "container d-flex justify-content-center align-items-center ">
+                <th class="col d-md-block justify-content-center align-items-center">
+                  <tr>
+                    <td class=" ps-2 pe-3 text-primary">Adresse de la pharmacie</td>
+                  </tr>
+                  <tr>
+                    <td class="bg bg-secondary-50">
+                      <li *ngFor="let address of addressProduit; let i = index" class="list-unstyled">
+                        <div class="d-inline-block mt-1 me-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                          <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                        </svg></div>{{ address }}
+                      </li>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </th>
+              </div>
+            </ul>
+          </div>
           <p *ngIf="!isFinished">Nous continuons de chercher des pharmacies...</p>
-          <p *ngIf="isFinished">Recherche terminée!</p>
-          <p>Voulez-vous continuer ?</p>
+            <p *ngIf="isFinished">Recherche terminée!</p>
+            <p class="text-primary">Voulez-vous continuer ?</p>
         </div>
-        <ng-template #addressIsNull><p>Pas de résultat trouvé</p></ng-template>
-        <div class="tarif" *ngIf="addressProduit.length > 0">
-          <p>Vous avez <b>{{ users.credit}}</b> crédit(s), cette action vaut <b>{{creditUser}}</b> crédit(s)</p><br>
+        <ng-template #addressIsNull><p class="pt-3 px-3">Pas de résultat trouvé</p></ng-template>
+        <div class="container1 ms-3 mt-4 pb-4">
+          <button class="btn btn-secondary ms-2" (click)="clear()">Annuler</button><button (click)="validerCredit(creditUser)"
+          class="btn btn-primary ms-4 me-2" *ngIf="addressProduit.length > 0">Confirmer</button>
         </div>
-        <button class="btn btn-secondary" (click)="clear()">Annuler</button><button (click)="validerCredit(creditUser)"
-        class="btn btn-primary mx-2" *ngIf="addressProduit.length > 0">Confirmer</button>
       </div>
     </ng-template>
   </div>
