@@ -137,7 +137,7 @@ export class LoginComponent implements OnInit {
   verifier_commander: boolean = false;
   modal_commander: boolean = true;
   verifier_pharmacie: boolean = false
-  ajout_pharmacy : boolean = true;
+  ajout_pharmacy: boolean = true;
 
   receivedData: any;
   receivedCompte: any;
@@ -858,12 +858,10 @@ export class LoginComponent implements OnInit {
       environment.pharmacy = pharmacy.nom
 
 
-    }
-    else if (pharmacy.nom === environment.pharmacy) {
+    } else if (pharmacy.nom === environment.pharmacy) {
       this.selectedPharmacy = pharmacy;
       environment.pharmacy = pharmacy.nom
-    }
-    else{
+    } else{
       this.verifier_pharmacie = true
       this.ajout_pharmacy = false
       this.pharmacieChoisi = environment.pharmacy
@@ -982,6 +980,7 @@ export class LoginComponent implements OnInit {
   }
 
   addToCart(productCIP: string, productName: string, prix_vente: number) {
+    console.log("pharmacy = ", this.selectedPharmacy )
 
     let index = -1;
     for (let i = 0; i < this.carts.length; i++) {
