@@ -138,6 +138,7 @@ export class LoginComponent implements OnInit {
   modal_commander: boolean = true;
   verifier_pharmacie: boolean = false
   ajout_pharmacy: boolean = true;
+  test: any;
 
   receivedData: any;
   receivedCompte: any;
@@ -634,12 +635,14 @@ export class LoginComponent implements OnInit {
           this.form_modal_verifier = true;
           this.loading = true;
           this.isFinished = false;
+          let test1: any[] = [];
 
           for (let i = 0; i < environment.pharmacies.length; i++) {
             requests.push(
               this.epharmaService.getDisponibiliteProduit(cp, environment.pharmacies[i]).pipe(
                 tap((res: any) => {
                   addresses.push(res.pharmacy.adresse); // Mettre à jour l'adresse ici
+                  test1.push(res.disponibilites);
 
                   if (addresses.length > 0) {
                     this.loading = false;
@@ -671,6 +674,12 @@ export class LoginComponent implements OnInit {
               console.log('Toutes les requêtes sont terminées');
               this.loading = false;
               this.isFinished = true;
+              this.test = test1
+              console.log("réponces des pharmacies " + this.test)
+
+              for (let i = 0; i < test1.length; i++) {
+                console.log("réponces des pharmacies1 " + test1[i])
+              }
             },
             error: (err) => {
               console.error('Erreur lors de la récupération des disponibilités des produits:', err);
@@ -1009,10 +1018,12 @@ export class LoginComponent implements OnInit {
 
 
       for (let i = 0; i < produits.length; i++) {
-        this.totalPrixVente += produits[i].prix_vente;
+        this.totalPrixVente += produits[i].prix_vente * produits[i].quantity;
       }
 
       console.log("Total des prix de vente :", this.totalPrixVente);
+      console.log("panier :", this.carts);
+      console.log("produits :", produits);
     }
     this.nombreProduit = this.carts[index].products.length
     console.log('cart = ',this.carts[index].products.length)
