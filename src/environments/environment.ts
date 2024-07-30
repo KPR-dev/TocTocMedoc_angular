@@ -5,10 +5,10 @@
 //pour les acces de l'api
 export const environment = {
   production: false,
-    // apiURL: "http://51.68.46.67:8000/api_epg",
-    // api: "http://51.68.46.67:8000",
-    apiURL: "http://127.0.0.1:8000/api_epg",
-    api: "http://127.0.0.1:8000",
+    apiURL: "http://51.68.46.67:8000/api_epg",
+    api: "http://51.68.46.67:8000",
+    //apiURL: "http://127.0.0.1:8000/api_epg",
+    //api: "http://127.0.0.1:8000",
     token: null,
     user_id: 0,
     id_compte: 0,
