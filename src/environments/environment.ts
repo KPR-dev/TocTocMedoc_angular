@@ -5,10 +5,10 @@
 //pour les acces de l'api
 export const environment = {
   production: false,
-    apiURL: "http://51.68.46.67:8000/api_epg",
-    api: "http://51.68.46.67:8000",
-    // apiURL: "http://127.0.0.1:8000/api_epg",
-    // api: "http://127.0.0.1:8000",
+    // apiURL: "http://51.68.46.67:8000/api_epg",
+    // api: "http://51.68.46.67:8000",
+    apiURL: "http://127.0.0.1:8000/api_epg",
+    api: "http://127.0.0.1:8000",
     token: null,
     user_id: 0,
     id_compte: 0,
@@ -21,7 +21,7 @@ export const environment = {
    pageItemCount: 500,
    pharmacies: [
     // notre pharmacie
-    "666e1cb055766aab443769fb",
+    "666e1cb055766aab443769fb", // dermosphere
     "6670a91855766aab44376b44",
     "667188aea32e56624dcf7091",
     "66719795a32e56624dcf70c0", // Ayitebe

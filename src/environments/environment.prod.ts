@@ -16,7 +16,7 @@ export const environment = {
   // apiKey: "dbab1b45-f454-4568-9fcc-47692b8e6319",
   pageItemCount: 500,
   pharmacies: [
-    "666e1cb055766aab443769fb",
+    "666e1cb055766aab443769fb", // dermosphere
     "6670a91855766aab44376b44",
     "667188aea32e56624dcf7091",
     "66719795a32e56624dcf70c0", // Ayitebe

@@ -217,4 +217,8 @@ export class EpharmaService {
       produits
     }, {headers: headers })
   }
+
+  getAllProductsBySearch(libelle: string) {
+    return this.http.get(`${environment.apiURL}/products_by_search/${libelle}`)
+  }
 }

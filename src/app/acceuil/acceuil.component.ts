@@ -75,6 +75,7 @@ export class AcceuilComponent implements OnInit {
   smserror: any;
 
   disponibilites: any[] = [];
+  productsSearched: any[] = [];
 
   currentPageIndex: number = 0;
   pageCount: number = 0;
@@ -178,6 +179,23 @@ export class AcceuilComponent implements OnInit {
         console.log(err);
       }
     })
+  }
+  //Nouvelle fonctionnalité de recherche des produits depuis la bare de recherche ttm
+  searchProducts(event: any): void {
+    const inputValue = event.target.value;
+    if (inputValue.length >= 3) {
+      this.filteredProduit = [];
+      this.hasResult = false;
+      this.epharmaService.getAllProductsBySearch(inputValue).subscribe({
+        next: (response: any) => {
+          this.hasResult = true;
+          this.filteredProduit = response
+        }, error: (err) => {
+          console.log(err);
+        }
+      })
+      console.log("ça arrive ici: ", inputValue)
+    }
   }
 
   grilleTarifaire(){
@@ -357,34 +375,6 @@ export class AcceuilComponent implements OnInit {
     this.modal_info_tarif_user = true
   }
 
-  // clickTarifInfoUser(idTarif: any){
-  //   console.log('tarif = ',idTarif)
-
-  //   this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString()).subscribe({
-  //     next: (response: any) => {
-  //       console.log('compte subscribe =', response);
-  //       this.modal_info_tarif_user = false
-  //     },
-  //     error: (error) => {
-  //       console.error('Erreur lors d enregistrement :', error);
-  //     }
-  //   });
-  // }
-
-  // submitCompteUser(){
-  //   const formData = {
-  //     idTarif: environment.tarif_id
-  //   }
-
-  //   this.epharmaService.getSubscribeCompte(formData).subscribe({
-  //     next: (response: any) => {
-  //       console.log('compte subscribe =', response);
-  //     },
-  //     error: (error) => {
-  //       console.error('Erreur lors d enrefistrement :', error);
-  //     }
-  //   });
-  // }
 
   getCompteUser(id: number){
     this.epharmaService.getUserId(id).subscribe({
@@ -715,28 +705,6 @@ export class AcceuilComponent implements OnInit {
   }
 
 
-  // verify(cip: any) {
-  //   this.selectedProduit = this.filteredProduit.find(p => p.CIP == cip);
-  //   this.verifiedPharmacies = [];
-  //   for (let i = 0; i < environment.pharmacies.length; i++) {
-  //     this.epharmaService.getDisponibiliteProduit(cip, environment.pharmacies[i]).subscribe({
-  //       next: (response: any) => {
-  //         this.disponibilites.push(response.disponibilites[0]);
-  //         if (response.disponibilites) {
-  //           for (let j = 0; j < response.disponibilites.length; j++) {
-  //             if (response.disponibilites[j].isAvailable) {
-  //               //Display pharmacy for commande
-  //               this.verifiedPharmacies.push(response.pharmacy);
-  //             }
-  //           }
-  //         }
-  //       }, error: (err) => {
-  //         console.log(err);
-  //       }
-  //     })
-  //   }
-  // }
-
   applyFilter(event: any) {
     const value = event.target.value.toLowerCase().trim();
     if (value == "") {
@@ -856,5 +824,4 @@ export class AcceuilComponent implements OnInit {
   removeCart(cartIndex: number) {
     this.carts.splice(cartIndex, 1);
   }
-
 }
