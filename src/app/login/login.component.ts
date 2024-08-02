@@ -9,6 +9,7 @@ import { forkJoin, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 
 
+
 class ProductQuantity {
   produitCIP!: string;
   quantity!: number;
@@ -67,7 +68,7 @@ export class LoginComponent implements OnInit {
   produits: any;
   filteredProduit: any[] = [];
   grille: any;
-  addressProduit:any[] = [];
+  addressProduit: any[] = [];
 
   listTarif: any[] = [];
   selectedProduit: any;
@@ -143,7 +144,7 @@ export class LoginComponent implements OnInit {
   receivedData: any;
   receivedCompte: any;
   receiveToken: any;
-  constructor(private epharmaService: EpharmaService, private singPayService: SingPayService , private router: Router, private dataService: DataService) { }
+  constructor(private epharmaService: EpharmaService, private singPayService: SingPayService, private router: Router, private dataService: DataService) { }
 
 
 
@@ -201,7 +202,7 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  grilleTarifaire(){
+  grilleTarifaire() {
     this.hasResult = false;
     this.grille = []
     this.epharmaService.getAllPriceCredit().subscribe({
@@ -259,16 +260,16 @@ export class LoginComponent implements OnInit {
     // console.log("ça passe")
   }
 
-  open_reset_password(){
+  open_reset_password() {
     this.ResetPassword = true
     this.changerPass = true
   }
 
-  open_tarif(){
+  open_tarif() {
     this.modal_tarif = true
   }
 
-  open_inscription(){
+  open_inscription() {
     this.loginFormVisible = true
   }
 
@@ -278,7 +279,7 @@ export class LoginComponent implements OnInit {
     console.log('Utilisateur déconnecté');
   }
 
-  open_modal_modification(){
+  open_modal_modification() {
     this.modal_modification = true
     this.formModification = true
 
@@ -300,10 +301,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  open_verifier(){
+  open_verifier() {
     this.modal_verifier = true
   }
-  updatePassword(){
+  updatePassword() {
 
     console.log(this.password.value)
     this.users.password = this.password.value
@@ -329,7 +330,7 @@ export class LoginComponent implements OnInit {
         }
       });
     }
-    else{
+    else {
       console.log('les mots de passe ne sont pas identique !')
       this.smserror = "les mots de passe ne sont pas identique !";
       setTimeout(() => {
@@ -338,13 +339,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  forminvisible(){
+  forminvisible() {
 
     if (this.users.password === this.users.confirm_password) {
       this.form1 = false
       this.contrat = true
     }
-    else{
+    else {
 
       this.smserror = "les mots de passe ne sont pas identique !"
       this.showSnackbarError1 = true;
@@ -355,13 +356,13 @@ export class LoginComponent implements OnInit {
 
   }
 
-  profil(){
+  profil() {
     this.modal_modification1 = true
     this.formModification1 = true
   }
 
-  clickTarif(idTarif: any, price: any){
-    console.log('tarif = ',idTarif)
+  clickTarif(idTarif: any, price: any) {
+    console.log('tarif = ', idTarif)
     environment.tarif_id = idTarif
     this.modal_tarif = false
     this.formInscription = true
@@ -380,7 +381,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  clickCommande(commande: string){
+  clickCommande(commande: string) {
     try {
       this.epharmaService.getLibelleTarif(commande).subscribe({
         next: (response: any) => {
@@ -400,19 +401,19 @@ export class LoginComponent implements OnInit {
 
   }
 
-  close_verif_commande(){
+  close_verif_commande() {
     this.verifier_commander = false
     this.modal_commander = true
   }
 
-  open_info_user_tarif(){
+  open_info_user_tarif() {
     this.modal_info_tarif_user = true
   }
 
 
 
-  clickTarifInfoUser(idTarif: any, price: any){
-    console.log('tarif = ',idTarif)
+  clickTarifInfoUser(idTarif: any, price: any) {
+    console.log('tarif = ', idTarif)
 
     this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString(), price).subscribe({
       next: (response: any) => {
@@ -457,7 +458,7 @@ export class LoginComponent implements OnInit {
   //   });
   // }
 
-  getCompteUser(id: number){
+  getCompteUser(id: number) {
     this.epharmaService.getUserId(id).subscribe({
       next: (response: any) => {
         console.log('compte réussi =', response);
@@ -468,7 +469,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  deconnexion(){
+  deconnexion() {
     location.reload();
   }
 
@@ -524,31 +525,31 @@ export class LoginComponent implements OnInit {
             }
           });
         }
-        else{
+        else {
           console.log('incorrect mdp !!!')
         }
-      } catch(error) {
-       console.error('errer du catch :', error);
+      } catch (error) {
+        console.error('errer du catch :', error);
       }
     } else {
       console.error('remplir le formulaire');
     }
   }
 
-  videForm(){
+  videForm() {
     this.users.lastname = '',
-    this.users.firstname = '',
-    this.users.email = '',
-    this.users.phone = '',
-    this.users.password = ''
+      this.users.firstname = '',
+      this.users.email = '',
+      this.users.phone = '',
+      this.users.password = ''
   }
-  annulerText(){
+  annulerText() {
     this.modal_text = false
     this.modal_register = false
     this.contrat = false
   }
 
-  accepterText(){
+  accepterText() {
     this.modal_text = false
   }
 
@@ -560,7 +561,7 @@ export class LoginComponent implements OnInit {
 
 
 
-  updateForm(){
+  updateForm() {
     console.log('ID =', environment.user_id)
     try {
       const formData = {
@@ -581,18 +582,18 @@ export class LoginComponent implements OnInit {
 
 
           this.showSnackbar2 = true;
-            setTimeout(() => {
-              this.showSnackbar2 = false;
-              this.modal_modification1 = false
-              this.formModification1 = false
-            }, 2000);
+          setTimeout(() => {
+            this.showSnackbar2 = false;
+            this.modal_modification1 = false
+            this.formModification1 = false
+          }, 2000);
         },
         error: (error) => {
           this.smserror = error.error.detail
           this.showSnackbarError2 = true;
-            setTimeout(() => {
-              this.showSnackbarError2 = false;
-            }, 2000);
+          setTimeout(() => {
+            this.showSnackbarError2 = false;
+          }, 2000);
         }
       });
     } catch {
@@ -610,7 +611,7 @@ export class LoginComponent implements OnInit {
 
   }
   //Ma fonction
-  clickVerify(libelle: string, cp: any){
+  clickVerify(libelle: string, cp: any) {
     console.log('1-loading =', this.loading)
     console.log('2-loading =', this.loading)
     console.log('ID =', environment.user_id)
@@ -698,7 +699,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  validerCredit(credit: number){
+  validerCredit(credit: number) {
     this.epharmaService.souscrireCredit(environment.id_compte, credit).subscribe({
       next: (response: any) => {
         console.log('credit enlever =', response);
@@ -722,7 +723,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  validerCommande(credit: number){
+  validerCommande(credit: number) {
     this.epharmaService.getUserId(environment.user_id).subscribe({
       next: (response: any) => {
         console.log('information user =', response);
@@ -757,25 +758,25 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  changePassword(){
+  changePassword() {
     console.log(this.email.value)
     this.epharmaService.changerPassword(this.email.value).subscribe({
       next: (response: any) => {
         console.log('change mdp =', response);
         this.changerPass = false
         this.showSnackbar5 = true;
-          setTimeout(() => {
-            this.showSnackbar5 = false;
-            this.ResetPassword = false
-          }, 2000);
+        setTimeout(() => {
+          this.showSnackbar5 = false;
+          this.ResetPassword = false
+        }, 2000);
       },
       error: (error) => {
-       console.log(error)
+        console.log(error)
       }
     });
   }
 
-  addresseProduit(cip: any){
+  addresseProduit(cip: any) {
     for (let i = 0; i < environment.pharmacies.length; i++) {
       this.epharmaService.getDisponibiliteProduit(cip, environment.pharmacies[i]).subscribe({
         next: (response: any) => {
@@ -794,7 +795,7 @@ export class LoginComponent implements OnInit {
     for (let i = 0; i < environment.pharmacies.length; i++) {
       this.epharmaService.getDisponibiliteProduit(cip, environment.pharmacies[i]).subscribe({
         next: (response: any) => {
-          console.log('medoc = ',response)
+          console.log('medoc = ', response)
           if (response.disponibilites && response.disponibilites.length > 0) {
             this.disponibilites.push(response.disponibilites[0]);
             for (let j = 0; j < response.disponibilites.length; j++) {
@@ -859,9 +860,9 @@ export class LoginComponent implements OnInit {
     console.log('nom pharmacy = ', environment.pharmacy)
 
 
-    console.log('nom = ',pharmacy.nom)
+    console.log('nom = ', pharmacy.nom)
 
-    if(environment.pharmacy === 'pharmacy'){
+    if (environment.pharmacy === 'pharmacy') {
 
       this.selectedPharmacy = pharmacy;
       environment.pharmacy = pharmacy.nom
@@ -870,7 +871,7 @@ export class LoginComponent implements OnInit {
     } else if (pharmacy.nom === environment.pharmacy) {
       this.selectedPharmacy = pharmacy;
       environment.pharmacy = pharmacy.nom
-    } else{
+    } else {
       this.verifier_pharmacie = true
       this.ajout_pharmacy = false
       this.pharmacieChoisi = environment.pharmacy
@@ -955,7 +956,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  open_mdp(){
+  open_mdp() {
     this.changeMdp = true
     this.showMdpForm = true
   }
@@ -977,11 +978,11 @@ export class LoginComponent implements OnInit {
     this.ajout_pharmacy = true
 
   }
-  clearInfoTarifUser(){
+  clearInfoTarifUser() {
     this.modal_info_tarif_user = false
   }
 
-  clearModification(){
+  clearModification() {
     this.modal_modification1 = false
     this.changeMdp = false
     this.ResetPassword = false;
@@ -989,67 +990,81 @@ export class LoginComponent implements OnInit {
   }
 
   addToCart(productCIP: string, productName: string, prix_vente: number) {
-    console.log("pharmacy = ", this.selectedPharmacy )
-
-    let index = -1;
-    for (let i = 0; i < this.carts.length; i++) {
-      if (this.carts[i].pharmacyId == this.selectedPharmacy._id) {
-        index = i;
-      }
-    }
+    console.log("pharmacy = ", this.selectedPharmacy);
+  
+    let index = this.carts.findIndex(cart => cart.pharmacyId === this.selectedPharmacy._id);
+  
     if (index < 0) {
-      this.carts.push({ pharmacyId: this.selectedPharmacy._id, pharmacyName: this.selectedPharmacy.nom, products: [] });
+      this.carts.push({
+        pharmacyId: this.selectedPharmacy._id,
+        pharmacyName: this.selectedPharmacy.nom,
+        products: []
+      });
       index = this.carts.length - 1;
     }
+  
     if (this.quantity) {
-      let addNew = true;
-      for (let i = 0; i < this.carts[index].products.length; i++) {
-        if (this.carts[index].products[i].produitCIP == productCIP) {
-          this.carts[index].products[i].quantity += this.quantity;
-          addNew = false;
-        }
-
+      let productIndex = this.carts[index].products.findIndex(product => product.produitCIP === productCIP);
+  
+      if (productIndex >= 0) {
+        // Mise à jour du total en soustrayant l'ancien coût du produit
+        this.totalPrixVente -= this.carts[index].products[productIndex].prix_vente * this.carts[index].products[productIndex].quantity;
+        // Mise à jour de la quantité
+        this.carts[index].products[productIndex].quantity += this.quantity;
+        // Ajout du nouveau coût au total
+        this.totalCount = prix_vente * this.quantity;
+        this.totalPrixVente += this.totalCount;
+      } else {
+        // Ajout du nouveau produit
+        this.carts[index].products.push({
+          quantity: this.quantity,
+          produitCIP: productCIP,
+          produitName: productName,
+          prix_vente: prix_vente
+        });
+        // Ajout du prix du nouveau produit au total
+        this.totalPrixVente += prix_vente * this.quantity;
       }
-      if (addNew) {
-        this.carts[index].products.push({ quantity: this.quantity, produitCIP: productCIP, produitName: productName, prix_vente: prix_vente })
-      }
-
-      let produits = this.carts[index].products;
-
-
-      for (let i = 0; i < produits.length; i++) {
-        this.totalPrixVente += produits[i].prix_vente * produits[i].quantity;
-      }
-
+  
       console.log("Total des prix de vente :", this.totalPrixVente);
       console.log("panier :", this.carts);
-      console.log("produits :", produits);
     }
-    this.nombreProduit = this.carts[index].products.length
-    console.log('cart = ',this.carts[index].products.length)
-    console.log('nom pharmacy2 = ', environment.pharmacy)
-    //  environment.pharmacy = this.selectedPharmacy.nom
-    this.clear()
+  
+    this.nombreProduit = this.carts[index].products.length;
+    console.log('cart = ', this.carts[index].products.length);
+    console.log('nom pharmacy2 = ', environment.pharmacy);
   }
 
+ 
   removeFromCart(productCIP: string, cartIndex: number) {
-    for (let i = 0; i < this.carts[cartIndex].products.length; i++) {
-      if (this.carts[cartIndex].products[i].produitCIP == productCIP) {
-        this.carts[cartIndex].products.splice(i, 1);
-        break;
+    let productIndex = this.carts[cartIndex].products.findIndex(product => product.produitCIP === productCIP);
+  
+    if (productIndex >= 0) {
+      // Soustraction du coût total du produit retiré
+      this.totalPrixVente -= this.carts[cartIndex].products[productIndex].prix_vente * this.carts[cartIndex].products[productIndex].quantity;
+  
+      this.carts[cartIndex].products.splice(productIndex, 1);
+  
+      if (this.carts[cartIndex].products.length === 0) {
+        this.carts.splice(cartIndex, 1);
       }
     }
-    if (this.carts[cartIndex].products.length == 0) {
+  
+    // Mise à jour du nombre total de produits après suppression
+    this.nombreProduit = this.carts.reduce((total, cart) => total + cart.products.length, 0);
+  }
+  
+  removeCart(cartIndex: number) {
+    if (this.carts[cartIndex]) {
+      for (let product of this.carts[cartIndex].products) {
+        // Soustraction du coût total des produits dans le panier supprimé
+        this.totalPrixVente -= product.prix_vente * product.quantity;
+      }
+  
       this.carts.splice(cartIndex, 1);
     }
+  
+    // Mise à jour du nombre total de produits après suppression du panier
+    this.nombreProduit = this.carts.reduce((total, cart) => total + cart.products.length, 0);
   }
-
-  removeCart(cartIndex: number) {
-    this.carts.splice(cartIndex, 1);
-  }
-
-  refresh(){
-    history.go()
-  }
-
-}
+}  

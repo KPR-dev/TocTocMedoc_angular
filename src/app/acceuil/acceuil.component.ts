@@ -184,8 +184,8 @@ export class AcceuilComponent implements OnInit {
   searchProducts(event: any): void {
     const inputValue = event.target.value;
     if (inputValue.length >= 3) {
-      this.filteredProduit = [];
       this.hasResult = false;
+      this.filteredProduit = [];
       this.epharmaService.getAllProductsBySearch(inputValue).subscribe({
         next: (response: any) => {
           this.hasResult = true;
