@@ -202,6 +202,24 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  //Nouvelle fonctionnalité de recherche des produits depuis la bare de recherche ttm
+  searchProducts(event: any): void {
+    const inputValue = event.target.value;
+    if (inputValue.length >= 3) {
+      this.hasResult = false;
+      this.filteredProduit = [];
+      this.epharmaService.getAllProductsBySearch(inputValue).subscribe({
+        next: (response: any) => {
+          this.hasResult = true;
+          this.filteredProduit = response
+        }, error: (err) => {
+          console.log(err);
+        }
+      })
+      console.log("ça arrive ici: ", inputValue)
+    }
+  }
+
   grilleTarifaire() {
     this.hasResult = false;
     this.grille = []
@@ -991,9 +1009,9 @@ export class LoginComponent implements OnInit {
 
   addToCart(productCIP: string, productName: string, prix_vente: number) {
     console.log("pharmacy = ", this.selectedPharmacy);
-  
+
     let index = this.carts.findIndex(cart => cart.pharmacyId === this.selectedPharmacy._id);
-  
+
     if (index < 0) {
       this.carts.push({
         pharmacyId: this.selectedPharmacy._id,
@@ -1002,10 +1020,10 @@ export class LoginComponent implements OnInit {
       });
       index = this.carts.length - 1;
     }
-  
+
     if (this.quantity) {
       let productIndex = this.carts[index].products.findIndex(product => product.produitCIP === productCIP);
-  
+
       if (productIndex >= 0) {
         // Mise à jour du total en soustrayant l'ancien coût du produit
         this.totalPrixVente -= this.carts[index].products[productIndex].prix_vente * this.carts[index].products[productIndex].quantity;
@@ -1025,46 +1043,46 @@ export class LoginComponent implements OnInit {
         // Ajout du prix du nouveau produit au total
         this.totalPrixVente += prix_vente * this.quantity;
       }
-  
+
       console.log("Total des prix de vente :", this.totalPrixVente);
       console.log("panier :", this.carts);
     }
-  
+
     this.nombreProduit = this.carts[index].products.length;
     console.log('cart = ', this.carts[index].products.length);
     console.log('nom pharmacy2 = ', environment.pharmacy);
   }
 
- 
+
   removeFromCart(productCIP: string, cartIndex: number) {
     let productIndex = this.carts[cartIndex].products.findIndex(product => product.produitCIP === productCIP);
-  
+
     if (productIndex >= 0) {
       // Soustraction du coût total du produit retiré
       this.totalPrixVente -= this.carts[cartIndex].products[productIndex].prix_vente * this.carts[cartIndex].products[productIndex].quantity;
-  
+
       this.carts[cartIndex].products.splice(productIndex, 1);
-  
+
       if (this.carts[cartIndex].products.length === 0) {
         this.carts.splice(cartIndex, 1);
       }
     }
-  
+
     // Mise à jour du nombre total de produits après suppression
     this.nombreProduit = this.carts.reduce((total, cart) => total + cart.products.length, 0);
   }
-  
+
   removeCart(cartIndex: number) {
     if (this.carts[cartIndex]) {
       for (let product of this.carts[cartIndex].products) {
         // Soustraction du coût total des produits dans le panier supprimé
         this.totalPrixVente -= product.prix_vente * product.quantity;
       }
-  
+
       this.carts.splice(cartIndex, 1);
     }
-  
+
     // Mise à jour du nombre total de produits après suppression du panier
     this.nombreProduit = this.carts.reduce((total, cart) => total + cart.products.length, 0);
   }
-}  
+}
