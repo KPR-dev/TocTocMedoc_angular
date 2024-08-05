@@ -5,7 +5,7 @@
 </div>
 
 
-<div class="wrapper pt-0">
+<div class="wrapper pt-0" style="background-color: #0F7ABB;">
   <main>
     <header>
       <div class="d-flex justify-content-center align-items-center mt-5">
@@ -26,7 +26,7 @@
 
       <div class="form-group-search">
         <input type="search" name="search" id="search" (keyup)="searchProducts($event)"
-               placeholder="Trouver un produit...">
+          placeholder="Trouver un produit...">
       </div>
 
       <div class="loader-container" *ngIf="filteredProduit.length == 0 && hasResult == false">
@@ -80,7 +80,8 @@
     <!-- loader -->
     <div id="verify-container">
       <div class="verify-content position-relative" *ngIf="formInscription">
-        <div style="position: absolute; top: 0; left: 0; width:100%; height: 40vh" id="mobile-background-register" *ngIf="form1"></div>
+        <div style="position: absolute; top: 0; left: 0; width:100%; height: 40vh" id="mobile-background-register"
+          *ngIf="form1"></div>
         <!-- Formulaire d'inscription -->
         <div class="verify-commande">
 
@@ -96,20 +97,21 @@
                     <br><br>
                     <h6 id="inscripton" *ngIf="form1"><b>BIENVENU</b></h6>
                     <div style="width: 80%;" *ngIf="form1">
-                      <small id="inscripton">Inscivez-vous pour commencer à chercher des médicaments près de chez vous</small>
+                      <small id="inscripton">Inscivez-vous pour commencer à chercher des médicaments près de chez
+                        vous</small>
                     </div>
                   </div>
                   <div class="d-flex row g-3 mt-2" *ngIf="form1">
                     <div class="large-screen-input w-100">
                       <input id="input" type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname"
-                             class="form-control" placeholder="Pseudo" required>
+                        class="form-control" placeholder="Pseudo" required>
                       <div style="color: red;" *ngIf="lastname.errors?.['required'] && lastname.touched">
                         Veuillez renseigner votre pseudo!
                       </div>
                     </div>
                     <div class="large-screen-input w-100">
                       <input id="input" type="email" id="email" formControlName="email" [(ngModel)]="users.email"
-                             class="form-control" placeholder="Adresse email" required>
+                        class="form-control" placeholder="Adresse email" required>
                       <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
                         Email non valide
                       </div>
@@ -117,7 +119,7 @@
 
                     <div class="large-screen-input w-100">
                       <input id="input" type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone"
-                             class="form-control" placeholder="Numéro de téléphone" required>
+                        class="form-control" placeholder="Numéro de téléphone" required>
                       <div style="color: red;" *ngIf="phone.errors?.['required'] && phone.touched">
                         Veuillez renseigner votre numéro de téléphone!
                       </div>
@@ -125,7 +127,7 @@
 
                     <div class="large-screen-input w-100">
                       <input id="input" type="password" id="password" formControlName="password"
-                             [(ngModel)]="users.password" class="form-control" placeholder="Mot de passe" required>
+                        [(ngModel)]="users.password" class="form-control" placeholder="Mot de passe" required>
                       <div style="color: red;" *ngIf="password.errors?.['required'] && password.touched">
                         Veuillez renseigner votre mot de passe!
                       </div>
@@ -133,18 +135,18 @@
 
                     <div class="large-screen-input w-100">
                       <input id="input" type="password" id="confirm_password" formControlName="confirm_password"
-                             [(ngModel)]="users.confirm_password" class="form-control"
-                             placeholder="Confirmer le mot de passe">
+                        [(ngModel)]="users.confirm_password" class="form-control"
+                        placeholder="Confirmer le mot de passe">
                       <div style="color: red;"
-                           *ngIf="confirm_password.errors?.['required'] && confirm_password.touched">
+                        *ngIf="confirm_password.errors?.['required'] && confirm_password.touched">
                         Veuillez renseigner votre mot de passe!
                       </div>
                     </div>
 
                     <div class="d-flex large-screen-input w-100">
-                      <button id="reset" (click)="forminvisible()" class="btn btn-primary flex-fill">S'inscrire</button>
+                      <button id="reset" (click)="forminvisible()" class="btn flex-fill">S'inscrire</button>
                       <button id="change" (click)="clear()" class="btn btn-secondary flex-fill"
-                              style="margin-left: 5px;">Fermer
+                        style="margin-left: 5px;background-color: #0F7ABB;">Fermer
                       </button>
                     </div>
 
@@ -162,47 +164,68 @@
                 <div class="verify-commande " style="max-height: 400px; overflow-y: auto;">
                   <p><u>Conditions d'Utilisation de l'Application de Disponibilité des Médicaments TOCTOC MEDOC</u></p>
                   <br> Dernière mise à jour : Novembre 2023
-                  Bienvenue sur l'application de disponibilité des médicaments TOCTOCMEDOC. Cette application est exploitée par la société E-pharma GA En utilisant cette application, vous acceptez les conditions énoncées ci-dessous. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser l'application. <br>
+                  Bienvenue sur l'application de disponibilité des médicaments TOCTOCMEDOC. Cette application est
+                  exploitée par la société E-pharma GA En utilisant cette application, vous acceptez les conditions
+                  énoncées ci-dessous. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser l'application.
+                  <br>
 
                   <p class="text-justify">
                     <li>1. Objectif de l'Application</li>
                   </p>
-                  L'objectif principal de l'Application est de fournir aux utilisateurs des informations en temps réel sur la disponibilité des médicaments dans les pharmacies locales. Ces informations sont fournies à titre indicatif et ne remplacent en aucun cas les conseils professionnels d'un professionnel de la santé.
+                  L'objectif principal de l'Application est de fournir aux utilisateurs des informations en temps réel
+                  sur la disponibilité des médicaments dans les pharmacies locales. Ces informations sont fournies à
+                  titre indicatif et ne remplacent en aucun cas les conseils professionnels d'un professionnel de la
+                  santé.
 
                   <p class="text-justify">
                     <li>2. Utilisation Responsable</li>
                   </p>
-                  En utilisant l'Application, vous acceptez de l'utiliser de manière responsable. Vous vous engagez à ne pas utiliser l'Application à des fins illégales, nuisibles, frauduleuses ou qui pourraient causer un préjudice à d'autres utilisateurs ou à l'entreprise.
+                  En utilisant l'Application, vous acceptez de l'utiliser de manière responsable. Vous vous engagez à ne
+                  pas utiliser l'Application à des fins illégales, nuisibles, frauduleuses ou qui pourraient causer un
+                  préjudice à d'autres utilisateurs ou à l'entreprise.
 
                   <p class="text-justify">
                     <li>3. Exactitude des Informations</li>
                   </p>
-                  Bien que nous nous efforcions de fournir des informations précises, nous ne garantissons pas l'exactitude, l'exhaustivité ou l'actualité des données fournies par l'Application. Les utilisateurs sont encouragés à vérifier directement auprès des pharmacies pour confirmer la disponibilité des médicaments.
+                  Bien que nous nous efforcions de fournir des informations précises, nous ne garantissons pas
+                  l'exactitude, l'exhaustivité ou l'actualité des données fournies par l'Application. Les utilisateurs
+                  sont encouragés à vérifier directement auprès des pharmacies pour confirmer la disponibilité des
+                  médicaments.
 
                   <p class="text-justify">
                     <li>4. Protection des Données Personnelles</li>
                   </p>
-                  Nous prenons la protection de vos données personnelles au sérieux. En utilisant l'Application, vous consentez à la collecte et à l'utilisation de vos données conformément à notre politique de confidentialité. Veuillez consulter notre politique de confidentialité pour plus d'informations sur la manière dont nous traitons vos données.
+                  Nous prenons la protection de vos données personnelles au sérieux. En utilisant l'Application, vous
+                  consentez à la collecte et à l'utilisation de vos données conformément à notre politique de
+                  confidentialité. Veuillez consulter notre politique de confidentialité pour plus d'informations sur la
+                  manière dont nous traitons vos données.
 
                   <p class="text-justify">
                     <li>5. Responsabilité</li>
                   </p>
-                  L'entreprise ne peut être tenue responsable des préjudices résultant de l'utilisation de l'Application. Les utilisateurs comprennent et acceptent que l'utilisation de l'Application est à leurs propres risques.
+                  L'entreprise ne peut être tenue responsable des préjudices résultant de l'utilisation de
+                  l'Application. Les utilisateurs comprennent et acceptent que l'utilisation de l'Application est à
+                  leurs propres risques.
 
                   <p class="text-justify">
                     <li>6. Modifications des Conditions</li>
                   </p>
-                  Nous nous réservons le droit de modifier ces conditions d'utilisation à tout moment. Les modifications seront publiées sur l'Application, et il vous incombe de les consulter régulièrement. En continuant à utiliser l'Application après la publication des modifications, vous acceptez les conditions mises à jour.
+                  Nous nous réservons le droit de modifier ces conditions d'utilisation à tout moment. Les modifications
+                  seront publiées sur l'Application, et il vous incombe de les consulter régulièrement. En continuant à
+                  utiliser l'Application après la publication des modifications, vous acceptez les conditions mises à
+                  jour.
                   <p class="text-justify">
                     <li>7. Contact</li>
                   </p>
-                  Pour toute question ou préoccupation concernant ces conditions d'utilisation, veuillez nous contacter à l’adresse e-mail : contact@epharma.ga                  
+                  Pour toute question ou préoccupation concernant ces conditions d'utilisation, veuillez nous contacter
+                  à l’adresse e-mail : contact@epharma.ga
                   <br><br>Merci d'utiliser notre Application !
                 </div>
                 <button type="button" class="btn btn-secondary btn-block mt-2" (click)="annulerText()"
-                        style="margin-right: 20px">Annuler
+                  style="margin-right: 20px">Annuler
                 </button>
-                <button type="submit" class="btn btn-primary btn-block mt-2" id="reset">Accepter</button>
+                <button type="submit" class="btn btn-block mt-2" id="reset"
+                  style="background-color: #0F7ABB;">Accepter</button>
               </div>
             </div>
 
@@ -287,7 +310,7 @@
 </div>
 
 <div class="inscription d-flex justify-content-center align-items-center" *ngIf="loginFormVisible">
-  <div id="popup1" class="overlay" *ngIf="showSnackbar">
+  <div id="popup1" class="overlay" style="z-index: 99999;" *ngIf="showSnackbar">
     <div class="popup">
       <h4 style="color: green;">Connexion success !!!</h4>
     </div>
@@ -300,51 +323,52 @@
   <!-- Formulaire de connexion -->
   <div *ngIf="loginFormVisible" style="width: 70vw; border-radius: 10px; position: relative" id="mobile">
     <div id="verify-container">
-        <div class="verify-content position-relative" *ngIf="loginFormVisible">
-          <div style="position: absolute; top: 0; left: 0; width:100%; height: 40vh" id="mobile-background-login" *ngIf="loginFormVisible"></div>
+      <div class="verify-content position-relative" *ngIf="loginFormVisible">
+        <div style="position: absolute; top: 0; left: 0; width:100%; height: 40vh" id="mobile-background-login"
+          *ngIf="loginFormVisible"></div>
 
-          <div class="verify-commande">
-            <form (ngSubmit)="submitLoginForm()">
-              <!-- ... Champs de connexion ... -->
-              <div style="position: relative; margin: 0px">
+        <div class="verify-commande">
+          <form (ngSubmit)="submitLoginForm()">
+            <!-- ... Champs de connexion ... -->
+            <div style="position: relative; margin: 0px">
 
-                <div class="d-flex" style="position: relative;">
-                  <div class="flex-fill large-screen-input-container">
-                    <div>
-                      <div id="img">
-                        <img src="../assets/Fichier 12.svg" alt="" width="150px" height="100px" class="img-fluid">
-                      </div>
-                      <br>
-                      <h5 id="changeMdp" style="font-weight: 10px;">BON RETOUR PARMIS NOUS</h5>
-                      <small id="changeMdp">Connectez-vous et commencez à chercher des médicaments</small>
+              <div class="d-flex" style="position: relative;">
+                <div class="flex-fill large-screen-input-container">
+                  <div>
+                    <div id="img">
+                      <img src="../assets/Fichier 12.svg" alt="" width="150px" height="100px" class="img-fluid">
                     </div>
-
-                    <div class="d-flex row g-3 mt-2" *ngIf="loginFormVisible">
-
-                      <div class="form-group large-screen-input w-100">
-                        <input type="email" [(ngModel)]="users.username" id="email" name="username" required
-                               placeholder="Entrez votre adresse mail">
-                      </div>
-                      <div class="form-group large-screen-input w-100">
-                        <input type="password" [(ngModel)]="users.password" id="password" name="password" required
-                               placeholder="Mot de passe">
-                      </div>
-                      <a (click)="open_reset_password()" style="font-size: 10px; cursor: pointer">Mot de passe oublié
-                        ?</a>
-                      <button type="submit">Se connecter</button>
-                      <button id="change" (click)="clear()" style="float: right; margin-top: 15px">Quitter</button>
-                    </div>
+                    <br>
+                    <h5 id="changeMdp" style="font-weight: 10px;">BON RETOUR PARMIS NOUS</h5>
+                    <small id="changeMdp">Connectez-vous et commencez à chercher des médicaments</small>
                   </div>
 
-                  <div style="margin-left: 20px;" class="d-none d-md-block flex-fill r" *ngIf="loginFormVisible">
-                    <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="100%" height="auto">
+                  <div class="d-flex row g-3 mt-2" *ngIf="loginFormVisible">
+
+                    <div class="form-group large-screen-input w-100">
+                      <input type="email" [(ngModel)]="users.username" id="email" name="username" required
+                        placeholder="Entrez votre adresse mail">
+                    </div>
+                    <div class="form-group large-screen-input w-100">
+                      <input type="password" [(ngModel)]="users.password" id="password" name="password" required
+                        placeholder="Mot de passe">
+                    </div>
+                    <a (click)="open_reset_password()" style="font-size: 10px; cursor: pointer">Mot de passe oublié
+                      ?</a>
+                    <button type="submit">Se connecter</button>
+                    <button id="change" (click)="clear()" style="float: right; margin-top: 15px">Quitter</button>
                   </div>
                 </div>
+
+                <div style="margin-left: 20px;" class="d-none d-md-block flex-fill r" *ngIf="loginFormVisible">
+                  <img src="../assets/_48438b55-a0f0-4a9a-afee-88d44dad7f1c.png" alt="" width="100%" height="auto">
+                </div>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
+    </div>
   </div>
 </div>
 
@@ -375,7 +399,7 @@
           <div class="form-group">
 
             <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre mail"
-                   required>
+              required>
             <div *ngIf="registerForm.get('email')?.hasError('required')">
               Le champ email ne peut pas être vide.
             </div>
@@ -424,7 +448,7 @@
                 </div>
                 <hr>
                 <button class=" btn badge mt-2" style="width: 50%; background-color: #30267F"
-                        (click)="clickTarif(produit.id, produit.price)"><small id="badge">Acheter</small></button>
+                  (click)="clickTarif(produit.id, produit.price)"><small id="badge">Acheter</small></button>
               </div>
             </div>
           </div>
@@ -454,7 +478,7 @@
 
   <div>
     <button class="connexion bg-black text-white" *ngIf="loggedInUser" (click)="deconnexion()"><i
-      class="fa fa-sign-out " aria-hidden="true"></i> Déconnexion
+        class="fa fa-sign-out " aria-hidden="true"></i> Déconnexion
     </button>
 
   </div>
@@ -470,8 +494,8 @@
   </div>
 
 </div>
-<button class="shopping-cart-btn" (click)="openCartView()"><span class="count"
-                                                                 *ngIf="carts.length > 0">{{ carts.length }}</span>
+<button class="shopping-cart-btn" (click)="openCartView()"><span class="count" *ngIf="carts.length > 0">{{ carts.length
+    }}</span>
   <img src="../assets/add-to-cart.png" alt="Panier">
 </button>
 
@@ -542,8 +566,7 @@
             <label for="quantite">Quantité</label>
             <input type="number" [(ngModel)]="quantity" name="quantite">
           </div>
-          <button *ngIf="quantity > 0"
-                  (click)="addToCart(selectedProduit.CIP, selectedProduit.libelle)">Valider
+          <button *ngIf="quantity > 0" (click)="addToCart(selectedProduit.CIP, selectedProduit.libelle)">Valider
           </button>
 
         </div>
@@ -552,7 +575,7 @@
           <div class="result-message">{{ commandeResult.message }}</div>
 
           <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
-            récuperation</strong></p>
+              récuperation</strong></p>
         </div>
 
       </div>
@@ -568,7 +591,7 @@
         <div class="result-message">{{ commandeResult.message }}</div>
 
         <p *ngIf="commandeResult.success"><strong>Veuillez bien conserver le numéro de réservation pour la
-          récuperation. Les réservations expirent après 24h.</strong></p>
+            récuperation. Les réservations expirent après 24h.</strong></p>
       </div>
       <div class="cart" *ngFor="let cart of carts; let i = index">
         <h3><img src="../assets/add-to-cart.png" alt=""> {{ cart.pharmacyName }}</h3>
@@ -583,7 +606,7 @@
           <div class="loader"></div>
         </div>
         <button (click)="commander(cart, i)"
-                *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander
+          *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander
         </button>
       </div>
     </div>

@@ -7,10 +7,10 @@
 <!-- fin NavBar-->
 
 <!-- Recherche médicament -->
-<div class="wrapper pt-0">
+<div class="wrapper pt-0" style="background-color: #0F7ABB;">
   <main>
     <header>
-      <div class="d-flex justify-content-center align-items-center">
+      <div class="d-flex justify-content-center align-items-center mt-5">
         <img src="../assets/Fichier 12.svg" width="200" height="150" alt="" class="image-fluid">
       </div>
       <h2>By E-Pharma GA</h2>
@@ -100,7 +100,7 @@
     <ng-template class="verify-content" #findit>
       <div class="verify-commande p-0 rounded-2">
         <div *ngIf="addressProduit.length > 0; else addressIsNull">
-          <div class="bg bg-primary border rounded-top-2">
+          <div class="bg border rounded-top-2" style="background-color: #0F7ABB;">
             <div class="tarif p-1" *ngIf="addressProduit.length > 0">
               <p class="text-black fw-bold">Vous avez <b>{{ users.credit}}</b> crédit(s), cette action vaut
                 <b>{{creditUser}}</b> crédit(s)
@@ -200,7 +200,8 @@
           <a class="mt-2" (click)="open_mdp()" style="font-size: 10px; cursor: pointer">Changer de mot de
             passe</a><br><br>
           <button class="btn btn-primary mt-2" (click)="clear()"
-            style="width: 50%; background-color: #30267F; color: red">Quitter</button>
+            style="width: 50%; background-color: #0F7ABB; color: white">Quitter
+          </button>
 
         </form>
       </div>
@@ -226,8 +227,12 @@
                 </div>
               </div>
               <hr>
-              <button class=" btn badge mt-2" style="width: 50%; background-color: #30267F"
-                (click)="clickTarifInfoUser(produit.id, produit.price)"><small id="badge">Acheter</small></button>
+              <div class="d-flex justify-content-center mb-1">
+                <button class=" btn badge py-2" style="width: 50%; background-color: #0F7ABB"
+                  (click)="clickTarifInfoUser(produit.id, produit.price)"><small id="badge"
+                    class="text-center text-white">Acheter</small>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -438,7 +443,7 @@
         </div>
         <div class="button-container">
           <button class="btn btn-secondary btn-block" (click)="clear()">Annuler</button>
-          <button class="btn btn-primary btn-block" style="margin-left: 10px;">Supprimer</button>
+          <button class="btn  btn-block" style="margin-left: 10px; background-color: #0F7ABB;">Supprimer</button>
         </div>
       </div>
       <div class="verify-result" *ngIf="!selectedPharmacy">
@@ -497,7 +502,7 @@
             <input type="number" [(ngModel)]="quantity" name="quantite">
           </div>
           <!-- Votre bouton -->
-          <button *ngIf="quantity > 0" type="button" class="btn btn-primary"
+          <button *ngIf="quantity > 0" type="button" class="btn btn" style="background-color: #0F7ABB;">
             (click)="addToCart(selectedProduit.CIP, selectedProduit.libelle, selectedProduit.prix_vente); clear()">
             Valider
           </button>
@@ -551,7 +556,7 @@
             </div>
             <div class="button-container">
               <button class="btn btn-secondary btn-block" (click)="close_verif_commande()">Annuler</button>
-              <button class="btn btn-primary btn-block" (click)="commander(cart, i, creditUser)">Confirmer</button>
+              <button class="btn  btn-block" style="background-color: #0F7ABB;" (click)="commander(cart, i, creditUser)">Confirmer</button>
             </div>
           </div>
         </div>
