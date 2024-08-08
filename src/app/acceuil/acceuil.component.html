@@ -9,9 +9,9 @@
   <main>
     <header>
       <div class="d-flex justify-content-center align-items-center mt-5">
-        <img src="../assets/Fichier 12.svg" width="250" height="200" alt="" class="image-fluid">
+        <img src="../assets/Fichier 12.svg" width="350" height="200" alt="" class="image-fluid">
       </div>
-      <h2>By E-Pharma GA</h2>
+      <h2 class="mt-4">By E-Pharma GA</h2>
       <p>Cette solution vous permet d'avoir la disponibilité des produits et faire des réservations dans toutes les
         pharmacies possédant le logiciel ePharma</p>
 
@@ -425,36 +425,27 @@
     <div class="verify-content">
       <!-- Formulaire d'inscription -->
       <div class="verify-commande">
-        <p>Choisir un tarif</p>
-
         <div>
           <div class="container d-flex align-items-center justify-content-center">
             <img src="../assets/Fichier 12.svg" alt="" width="150px" height="100px" class="img-fluid">
           </div>
           <br><br>
 
-          <div class="produits-container">
-            <div class="produit" *ngFor="let produit of listTarif">
-              <div id="card" class="card">
-                <!-- Vous pouvez ajouter ici une image du produit -->
-                <h6 class="product-title">{{ produit.libelle }}</h6>
-                <div style="display: flex;">
-                  <div>
-                    <p class="product-price">{{ produit.price }} FCFA</p>
-                  </div>
-                  <div style="margin-left: 30%">
-                    <p class="credit-quantity">{{ produit.credit }} crédits</p>
-                  </div>
-                </div>
-                <hr>
-                <button class=" btn badge mt-2" style="width: 50%; background-color: #30267F"
-                  (click)="clickTarif(produit.id, produit.price)"><small id="badge">Acheter</small></button>
-              </div>
+          <div class="text-container pb-4">
+            <div>
+              <p class="text-center">
+                Félicitation ! <br>
+                Pour votre inscription, vous bénéficiez de 10 crédits gratuits pour recherher le produit que 
+                vous voulez. <br>
+                Pour plus de crédits, allez y dans les paramètre de votre compte.
+              </p>
             </div>
+          </div>
+          <div class="d-flex justify-content-center pb-3">
+            <button class="btn" id="change" (click)="clear()">Compris</button>
           </div>
         </div>
       </div>
-      <button id="change" (click)="clear()">Fermer</button>
     </div>
   </div>
 </div>

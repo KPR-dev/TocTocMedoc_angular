@@ -11,14 +11,13 @@
   <main>
     <header>
       <div class="d-flex justify-content-center align-items-center mt-5">
-        <img src="../assets/Fichier 12.svg" width="200" height="150" alt="" class="image-fluid">
+        <img src="../assets/Fichier 12.svg" width="350" height="150" alt="" class="image-fluid">
       </div>
-      <h2>By E-Pharma GA</h2>
+      <h2 class="mt-4">By E-Pharma GA</h2>
       <p>Cette solution vous permet d'avoir la disponibilité des produits et faire des réservations dans toutes les
         pharmacies possédant le logiciel ePharma</p>
       <p>
         <a href="https://epharma.ga">En savoir plus</a>
-
       </p>
     </header>
 
@@ -225,7 +224,7 @@
               </div>
               <hr>
               <div class="d-flex justify-content-center mb-1">
-                <button class=" btn badge py-2" style="width: 50%; background-color: #0F7ABB"
+                <button class=" btn  badge py-2" style="width: 50%; background-color: #0F7ABB"
                   (click)="clickTarifInfoUser(produit.id, produit.price)"><small id="badge"
                     class="text-center text-white">Acheter</small>
                 </button>
@@ -575,8 +574,10 @@
           <!-- Bouton pour commander
           <button (click)="clickCommande('Commander les produits')"
             *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander</button> -->
-          <button (click)="clickCommande('Commander les produits')"
-            *ngIf="!(commandeResult.start == true && commandeResult.success == null)">Commander</button>
+          <!--<button (click)="clickCommande('Commander les produits')"
+            *ngIf="!(commandeResult.start == true && commandeResult.success == null)">
+            Commander
+          </button>-->
         </div>
       </div>
     </div>
