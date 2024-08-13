@@ -405,8 +405,6 @@ export class LoginComponent implements OnInit {
         next: (response: any) => {
 
           this.creditUser = response.credit
-          console.log('credit reçu =', response.credit);
-
           this.verifier_commander = true
           this.modal_commander = false
         },
@@ -431,11 +429,9 @@ export class LoginComponent implements OnInit {
 
 
   clickTarifInfoUser(idTarif: any, price: any) {
-    console.log('tarif = ', idTarif)
 
     this.epharmaService.getSubscribeCompte(environment.id_compte, idTarif.toString(), price).subscribe({
       next: (response: any) => {
-        console.log('compte subscribe =', response);
         this.modal_info_tarif_user = false
         setTimeout(() => {
           this.open_modal_modification();
@@ -452,7 +448,6 @@ export class LoginComponent implements OnInit {
   PayToSingPay(price: any) {
     this.singPayService.externalisation(price, 'url_success', 'url_error').subscribe({
       next: (response: any) => {
-        console.log('Singpay =', response);
         window.open(response.link, '_blank'); // TODO: J'ai fais une redirection pour l'interface de singpay
       },
       error: (error) => {
@@ -630,12 +625,8 @@ export class LoginComponent implements OnInit {
   }
   //Ma fonction
   clickVerify(libelle: string, cp: any) {
-    console.log('1-loading =', this.loading)
-    console.log('2-loading =', this.loading)
-    console.log('ID =', environment.user_id)
     this.epharmaService.getUserId(environment.user_id).subscribe({
       next: (response: any) => {
-        console.log('information user =', response);
         this.users.credit = response.credit
         return true
       },
@@ -660,16 +651,15 @@ export class LoginComponent implements OnInit {
             requests.push(
               this.epharmaService.getDisponibiliteProduit(cp, environment.pharmacies[i]).pipe(
                 tap((res: any) => {
-                  addresses.push(res.pharmacy.adresse); // Mettre à jour l'adresse ici
-                  test1.push(res.disponibilites);
-
-                  if (addresses.length > 0) {
-                    this.loading = false;
-                    this.addressProduit = addresses;
-                    // this.modal_verifier = true;
-                    // this.form_modal_verifier = true;
-                  } else {
-                    this.loading = true;
+                  if (res.disponibilites[0].isAvailable) {
+                    addresses.push(res.pharmacy.adresse); // Mettre à jour l'adresse ici
+                    test1.push(res.disponibilites);
+                    if (addresses.length > 0) {
+                      this.loading = false;
+                      this.addressProduit = addresses;
+                    } else {
+                      this.loading = true;
+                    }
                   }
                 }),
                 catchError(err => {
@@ -683,22 +673,12 @@ export class LoginComponent implements OnInit {
           forkJoin(requests).subscribe({
             next: () => {
               // Filtrer les résultats pour enlever les null
-              this.addressProduit = addresses;
-              console.log('address = ', this.addressProduit);
-              console.log('credit reçu =', this.creditUser);
-              // this.modal_verifier = true;
-              // this.form_modal_verifier = true;
+              // this.addressProduit = addresses;
               environment.produit = cp;
               // Envoyer le message ici après que toutes les requêtes soient terminées
-              console.log('Toutes les requêtes sont terminées');
               this.loading = false;
               this.isFinished = true;
               this.test = test1
-              console.log("réponces des pharmacies " + this.test)
-
-              for (let i = 0; i < test1.length; i++) {
-                console.log("réponces des pharmacies1 " + test1[i])
-              }
             },
             error: (err) => {
               console.error('Erreur lors de la récupération des disponibilités des produits:', err);
@@ -813,7 +793,6 @@ export class LoginComponent implements OnInit {
     for (let i = 0; i < environment.pharmacies.length; i++) {
       this.epharmaService.getDisponibiliteProduit(cip, environment.pharmacies[i]).subscribe({
         next: (response: any) => {
-          console.log('medoc = ', response)
           if (response.disponibilites && response.disponibilites.length > 0) {
             this.disponibilites.push(response.disponibilites[0]);
             for (let j = 0; j < response.disponibilites.length; j++) {
