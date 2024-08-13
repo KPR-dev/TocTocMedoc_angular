@@ -1004,13 +1004,10 @@ export class LoginComponent implements OnInit {
       let productIndex = this.carts[index].products.findIndex(product => product.produitCIP === productCIP);
 
       if (productIndex >= 0) {
-        // Mise à jour du total en soustrayant l'ancien coût du produit
-        this.totalPrixVente -= this.carts[index].products[productIndex].prix_vente * this.carts[index].products[productIndex].quantity;
         // Mise à jour de la quantité
         this.carts[index].products[productIndex].quantity += this.quantity;
-        // Ajout du nouveau coût au total
-        this.totalCount = prix_vente * this.quantity;
-        this.totalPrixVente += this.totalCount;
+        // Recalcule du total en prenant en compte la nouvelle quantité
+        this.totalPrixVente += prix_vente * this.quantity;
       } else {
         // Ajout du nouveau produit
         this.carts[index].products.push({
@@ -1031,6 +1028,7 @@ export class LoginComponent implements OnInit {
     console.log('cart = ', this.carts[index].products.length);
     console.log('nom pharmacy2 = ', environment.pharmacy);
   }
+
 
 
   removeFromCart(productCIP: string, cartIndex: number) {
