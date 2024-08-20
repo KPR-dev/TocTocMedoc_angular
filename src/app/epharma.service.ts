@@ -208,7 +208,6 @@ export class EpharmaService {
      const headers = new HttpHeaders({
        'Authorization': `Bearer ${environment.token}`
      });
-     console.log('headers=', headers);
     return this.http.post(`${environment.apiURL}/reservation`, {
       pharmacy,
       buyer,
