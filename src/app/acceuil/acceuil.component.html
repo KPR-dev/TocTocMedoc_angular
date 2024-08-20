@@ -18,7 +18,102 @@
       <p>
         <a href="https://epharma.ga">En savoir plus</a>
       </p>
+      <div class="d-flex justify-content-center">
+        <button (click)="openModal()" class="text-primary"
+          style="border-radius: 30px;border-color: white; padding-top: 10px;padding-bottom: 10px;padding-left: 20px;padding-right: 20px; background-color: white;">
+          Utilisation des données
+        </button>
+      </div>
     </header>
+
+
+    <!--Début du modal sur les termes d'utilisation des données personnelles-->
+    <div id="myModal" class="modal" style="display:none;">
+      <div class="modal-content text-center">
+        <div class="d-flex justify-content-center">
+          <img src="../assets/Fichier 12.svg" width="200" height="200" alt="">
+        </div>
+        <div>
+          <h3 class="fw-bold" style="font-size: 16px;font-family: sans-serif;">Bienvenue sur TOCTOCMEDOC !</h3>
+          <p style="font-size: 16px;font-family: sans-serif;">
+            Nous attachons une grande importance à la protection de vos données personnelles et nous
+            voulons nous assurer que vous comprenez comment nous utilisons et protégeons ces informations.
+            Veuillez lire attentivement les informations ci-dessous et donner votre consentement pour
+            l'utilisation de vos données personnelles.
+          </p>
+        </div>
+        <div>
+          <h6 class="fw-bold" style="font-size: 16px; font-family: sans-serif;">
+            1. Collecte des Données Personnelles
+          </h6>
+          <p>
+            En utilisant TOCTOCMEDOC, vous consentez à la collecte des informations suivantes : <br>
+            - Informations d'identification (nom, prénom, adresse e-mail, etc.) <br>
+            - Informations de compte et de connexion <br>
+            - Informations de paiement (le cas échéant) <br>
+          </p>
+          <h6 class="fw-bold" style="font-size: 16px; font-family: sans-serif;">
+            2. Utilisation des Données Personnelles
+          </h6>
+          <p>
+            Nous utilisons vos données personnelles dans les buts suivants :
+            - Fourniture des services demandés
+            - Personnalisation de l'expérience utilisateur
+            - Traitement des transactions et paiements
+            - Communication relative au service (notifications, mises à jour, etc.)
+          </p>
+          <h6 class="fw-bold" style="font-size: 16px; font-family: sans-serif;">
+            3. Partage des Données Personnelles
+          </h6>
+          <p>
+            Nous ne partageons pas vos données personnelles avec des tiers sauf dans les cas suivants :
+            - Lorsque cela est nécessaire pour fournir les services demandés
+            - Conformément aux lois et réglementations applicables
+          </p>
+          <h6 class="fw-bold" style="font-size: 16px; font-family: sans-serif;">
+            1. Collecte des Données Personnelles
+          </h6>
+          <p>
+            En utilisant TOCTOCMEDOC, vous consentez à la collecte des informations suivantes : <br>
+            - Informations d'identification (nom, prénom, adresse e-mail, etc.) <br>
+            - Informations de compte et de connexion <br>
+            - Informations de paiement (le cas échéant) <br>
+          </p>
+          <h6 class="fw-bold" style="font-size: 16px; font-family: sans-serif;">
+            4. Sécurité des Données
+          </h6>
+          <p>
+            Nous mettons en place des mesures de sécurité appropriées pour protéger vos données
+            personnelles contre tout
+            accès non autorisé ou utilisation abusive.
+          </p>
+          <h6 class="fw-bold" style="font-size: 16px; font-family: sans-serif;">
+            5. Durée de Conservation des Données
+          </h6>
+          <p>
+            Vos données personnelles seront conservées pendant la durée nécessaire pour atteindre les objectifs
+            mentionnés ci-dessus, sauf si une période de conservation plus longue est requise ou autorisée par la loi.
+          </p>
+          <h6 class="fw-bold" style="font-size: 16px; font-family: sans-serif;">
+            6. Votre Consentement
+          </h6>
+          <p>
+            En utilisant nos services, vous consentez à la collecte, au traitement, à l'utilisation et au partage de vos
+            données personnelles conformément aux conditions énoncées ci-dessus.
+            Si vous avez des questions ou des préoccupations concernant notre utilisation de vos données personnelles,
+            n'hésitez pas à nous contacter à l’adresse contact@epharma.ga
+          </p>
+        </div>
+        <span>Merci pour votre confiance !</span>
+        <div class="d-flex justify-content-center mt-2">
+          <button class="btn border border-1" (click)="closeModal()">Fermer</button>
+        </div>
+      </div>
+    </div>
+    <!--Fin du modal sur les termes d'utilisation des données personnelles-->
+
+
+
 
     <div class="produit-container">
       <p class="search-title">Recherchez des produits sur la page actuelle, utilisez les flèches pour changer de page
@@ -58,6 +153,7 @@
     </div>
   </main>
 </div>
+
 
 <div class="inscription" *ngIf="modal_register">
   <div id="popup1" class="overlay" *ngIf="showSnackbar1">
@@ -435,7 +531,7 @@
             <div>
               <p class="text-center">
                 Félicitation ! <br>
-                Pour votre inscription, vous bénéficiez de 10 crédits gratuits pour recherher le produit que 
+                Pour votre inscription, vous bénéficiez de 10 crédits gratuits pour recherher le produit que
                 vous voulez. <br>
                 Pour plus de crédits, allez y dans les paramètre de votre compte.
               </p>

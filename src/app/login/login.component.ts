@@ -319,9 +319,31 @@ export class LoginComponent implements OnInit {
     });
   }
 
+
+
+
+  
+  openModal(): void {
+    // Sélectionnez l'élément modal par son ID et affichez-le
+    const modal = document.getElementById('myModal');
+    if (modal) {
+      modal.style.display = 'block';
+    }
+  }
+  closeModal(): void {
+    const modal = document.getElementById('myModal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+  }
+
+
+
   open_verifier() {
     this.modal_verifier = true
   }
+
+
   updatePassword() {
 
     console.log(this.password.value)

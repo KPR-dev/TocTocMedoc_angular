@@ -90,6 +90,7 @@ export class AcceuilComponent implements OnInit {
   showMdpForm: boolean = false;
   changeMdp: boolean = false;
   modal_register: boolean = false;
+  modal_data: boolean = false;
   modal_text: boolean = false;
   modal: boolean = false;
   modal_modification: boolean = false;
@@ -256,6 +257,7 @@ export class AcceuilComponent implements OnInit {
     // console.log("ça passe")
   }
 
+
   open_reset_password(){
     this.ResetPassword = true
     this.changerPass = true
@@ -281,13 +283,29 @@ export class AcceuilComponent implements OnInit {
         this.users.phone = response.user.phone
         this.users.credit = response.credit
         return true
-
       },
       error: (error) => {
         console.error('Erreur lors de la connexion :', error);
       }
     });
   }
+
+
+
+  openModal(): void {
+    // Sélectionnez l'élément modal par son ID et affichez-le
+    const modal = document.getElementById('myModal');
+    if (modal) {
+      modal.style.display = 'block';
+    }
+  }
+  closeModal(): void {
+    const modal = document.getElementById('myModal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+  }
+
 
   open_verifier(){
     this.modal_verifier = true
