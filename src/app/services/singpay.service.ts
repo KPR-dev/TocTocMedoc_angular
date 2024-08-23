@@ -45,15 +45,3 @@ export class SingPayService {
 
 
 }
-
-// const headers = new HttpHeaders({
-    //   'x-client-id': '4e950565-d2ab-4962-bcc8-538acbc5cb2d',
-    //   'x-client-secret': 'eb17623132dd53833168cf022f7dab09b88a8930bdce191f761d39f16a548d3d',
-    //   'x-wallet': '655cb86504e9de35cdfbca9f',
-    //   'Content-Type': 'application/json'
-    // });
-
-    // 'x-client-id': '4e950565-d2ab-4962-bcc8-538acbc5cb2d',
-    //   'x-client-secret': 'eb17623132dd53833168cf022f7dab09b88a8930bdce191f761d39f16a548d3d',
-    //   'x-wallet': '655cb86504e9de35cdfbca9f',
-    //   'Content-Type': 'application/json'
