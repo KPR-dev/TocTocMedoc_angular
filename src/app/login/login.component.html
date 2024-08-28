@@ -22,7 +22,7 @@
       <div class="d-flex justify-content-center">
         <button class="text-primary" (click)="openModal()"
           style="border-radius: 30px;border-color: white; padding-top: 10px;padding-bottom: 10px;padding-left: 20px;padding-right: 20px; background-color: white;">
-          Utilisation des données
+          Politique de confidentialité
         </button>
       </div>
     </header>
@@ -249,11 +249,10 @@
 
 
 <!-- modal des modification user -->
+<div class="inscription d-flex justify-content-center align-items-start" *ngIf="modal_modification"
+  style="background: #f8f9fa; min-height: 100vh; overflow-y: auto;">
 
-<div class="inscription d-flex justify-content-center align-items-center" *ngIf="modal_modification"
-  style="background: #f8f9fa; height: 100vh;">
-
-  <div class="verify-container container" style=" max-width: 100%;">
+  <div class="verify-container container" style="max-width: 100%;">
     <div class="container d-flex align-items-center justify-content-center" id="img">
       <img src="../assets/Fichier 12.svg" alt="logo" width="150" height="100" class="img-fluid">
     </div>
@@ -270,11 +269,6 @@
             <small><b>Pseudo</b></small><br>
             <small id="nom">{{users.lastname}}</small>
 
-
-            <!-- <div>
-                            <label for="prenom"><b>Prénom :</b></label>
-                            <h5 id="prenom">{{users.firstname}}</h5>
-                        </div> -->
           </div><br>
 
           <div>
@@ -299,19 +293,18 @@
           </button>
 
         </form>
+
       </div>
 
       <!-- Informations sur les crédits -->
-      <div id="col-md-4" id="col-12" class=" col-md-4"
+      <div id="col-md-4" id="col-12" class="col-md-4"
         style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; width: 70%; margin-left: 5%">
 
         <p>Mes crédits : <b>{{ users.credit}} crédits</b></p><br>
-        <!-- <button class="btn btn-success col-12 mt-2" (click)="open_info_user_tarif()">Souscrire à un tarif</button> -->
         <p>Acheter des crédits</p>
-        <div class="produits-container" style="overflow-y: scroll; max-height: 200px;">
-          <div class="produit" *ngFor="let produit of listTarif">
+        <div class="produits-container">
+          <div class="produit" *ngFor="let produit of listTarif" style="max-height: 200px;">
             <div id="card" class="card">
-              <!-- Vous pouvez ajouter ici une image du produit -->
               <h6 class="product-title">{{produit.libelle}}</h6>
               <div style="display: flex;">
                 <div>
@@ -339,6 +332,7 @@
   </div>
 
 </div>
+
 
 
 <div class="inscription" *ngIf="modal_modification1">

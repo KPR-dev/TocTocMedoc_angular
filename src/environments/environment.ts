@@ -26,7 +26,7 @@ export const environment = {
     "667188aea32e56624dcf7091",
     "66719795a32e56624dcf70c0", // Ayitebe
     "66719bd9a32e56624dcf70d9", // avolenzame
-    "6682f805f4ecc22f34273536", //test
+    //"6682f805f4ecc22f34273536", //test
     // "633c5a44fa44def3b5dbbaa4",
     // "63c288e7d9da78af9d6ccac1",
     // "623a45be1b6f66b46e99a03d",
