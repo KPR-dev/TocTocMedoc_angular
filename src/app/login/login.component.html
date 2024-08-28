@@ -28,11 +28,12 @@
     </header>
 
 
-    
+
     <!--Début du modal sur les termes d'utilisation des données personnelles-->
-    <div id="myModal" class="modal" 
+    <div id="myModal" class="modal"
       style="display:none;position: fixed;z-index: 1;left: 0;top: 0;width: 100%;height: 100%;background-color: rgb(0, 0, 0);background-color: rgba(0, 0, 0, 0.4);">
-      <div class="modal-content text-center" style="background-color: #fefefe;margin: 15% auto;padding: 20px;border: 1px solid #888;width: 60%;overflow: auto;">
+      <div class="modal-content text-center"
+        style="background-color: #fefefe;margin: 15% auto;padding: 20px;border: 1px solid #888;width: 60%;overflow: auto;">
         <div class="d-flex justify-content-center">
           <img src="../assets/Fichier 12.svg" width="200" height="200" alt="">
         </div>
@@ -323,8 +324,7 @@
               <hr>
               <div class="d-flex justify-content-center mb-1">
                 <button class=" btn  badge py-2" style="width: 50%; background-color: #0F7ABB"
-                  (click)="clickTarifInfoUser(produit.id, produit.price)"><small id="badge"
-                    class="text-center text-white">Acheter</small>
+                  (click)="takeIdTarif = produit.id; takePrice = produit.price; getInfoPayment = true"><small id="badge" class="text-center text-white">Acheter</small>
                 </button>
               </div>
             </div>
@@ -682,3 +682,62 @@
     </div>
   </div>
 </div>
+
+
+<!-- tarif à l'espace info users -->
+<div class="inscription verify-container" *ngIf="getInfoPayment">
+
+  <div id="popup1" class="overlay" *ngIf="showSnackbar2">
+    <div class="popup">
+      <h4 [ngStyle]="{ 'color': dynamicColor }">{{smserror}}</h4>
+    </div>
+  </div>
+
+  <div class="verify-container">
+
+    <div class="verify-content">
+
+      <!-- Formulaire -->
+      <div class="verify-commande" id="mobile-profil">
+        <p>Informations de paiement Airtel Money</p>
+        <hr>
+        <form [formGroup]="registerForm" (ngSubmit)="takeTarification()">
+          <div style="display: flex">
+            <div>
+              <div class="col-md-12 px-2">
+                <label for="nom">Pseudo :</label>
+                <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname"
+                  class="form-control">
+              </div>
+
+              <div class="col-md-11 mx-2">
+                <label for="email">Email :</label>
+                <input type="email" id="email" formControlName="email" [(ngModel)]="users.email" class="form-control">
+                <div style="color: red;" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
+                  Email non valide
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="col-md-12">
+                <label for="phone">Téléphone :</label>
+                <input type="text" id="phone" formControlName="phone" [(ngModel)]="users.phone" class="form-control">
+                <div style="color: red;" *ngIf="phone.errors?.['required']&& phone.touched">
+                  Veuillez renseigner votre numero télephone!
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-left: 30%;">
+
+            <button (click)="getInfoPayment = false" id="change" style="background-color: gray">Fermer</button>
+            <button type="submit" style="margin-left: 5px;">Sauvegarder</button>
+
+          </div>
+          <hr>
+        </form><br>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fin -->

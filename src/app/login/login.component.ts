@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EpharmaService } from '../epharma.service';
+import { MyPayGaService } from '../services/MyPayGa.service';
 import { SingPayService } from '../services/singpay.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -144,7 +145,13 @@ export class LoginComponent implements OnInit {
   receivedData: any;
   receivedCompte: any;
   receiveToken: any;
-  constructor(private epharmaService: EpharmaService, private singPayService: SingPayService, private router: Router, private dataService: DataService) { }
+
+  getInfoPayment: boolean = false;
+  takeIdTarif: any;
+  takePrice: any;
+  dynamicColor = "green"
+
+  constructor(private epharmaService: EpharmaService, private myPayGaService: MyPayGaService, private singPayService: SingPayService, private router: Router, private dataService: DataService) { }
 
 
 
@@ -322,7 +329,7 @@ export class LoginComponent implements OnInit {
 
 
 
-  
+
   openModal(): void {
     // Sélectionnez l'élément modal par son ID et affichez-le
     const modal = document.getElementById('myModal');
@@ -448,6 +455,52 @@ export class LoginComponent implements OnInit {
     this.modal_info_tarif_user = true
   }
 
+  modal_payment(idTarif: any, price: any) {
+    this.takeIdTarif = idTarif;
+    this.takePrice = price
+    console.log("ça idtarif ", this.takeIdTarif)
+    console.log("ça prix", this.takePrice)
+    this.getInfoPayment = true
+  }
+
+  takeTarification() {
+    this.loading = true
+    console.log("ça idtarif ", this.takeIdTarif)
+    console.log("ça prix", this.takePrice)
+    console.log("ça pseuod", this.users.lastname)
+    console.log("ça tel", this.users.phone)
+    console.log("ça mail", this.users.email)
+
+    this.myPayGaService.myPayGaApi(this.users.phone, this.takePrice, this.users.lastname, this.users.email).subscribe({
+      next: (response: any) => {
+        console.log("ça response ", response)
+        if (response.request_status != 200) {
+          this.dynamicColor = "red"
+          this.smserror = response.message
+          this.showSnackbar2 = true;
+          setTimeout(() => {
+            this.showSnackbar2 = false;
+          }, 4000);
+        } else {
+          this.dynamicColor = "green"
+          this.smserror = "Paiement réussit"
+          this.showSnackbar2 = true;
+          setTimeout(() => {
+            this.showSnackbar2 = false;
+          }, 2000);
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors du paiement :', error);
+        this.dynamicColor = "red"
+          this.smserror = error
+          this.showSnackbar2 = true;
+          setTimeout(() => {
+            this.showSnackbar2 = false;
+          }, 2000);
+      }
+    })
+  }
 
 
   clickTarifInfoUser(idTarif: any, price: any) {
@@ -467,16 +520,17 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  PayToSingPay(price: any) {
-    this.singPayService.externalisation(price, 'url_success', 'url_error').subscribe({
-      next: (response: any) => {
-        window.open(response.link, '_blank'); // TODO: J'ai fais une redirection pour l'interface de singpay
-      },
-      error: (error) => {
-        console.error('Erreur lors d enregistrement :', error);
-      }
-    })
-  }
+
+  // PayToSingPay(price: any) {
+  //   this.singPayService.externalisation(price, 'url_success', 'url_error').subscribe({
+  //     next: (response: any) => {
+  //       window.open(response.link, '_blank'); // TODO: J'ai fais une redirection pour l'interface de singpay
+  //     },
+  //     error: (error) => {
+  //       console.error('Erreur lors d enregistrement :', error);
+  //     }
+  //   })
+  // }
 
   // submitCompteUser(){
   //   const formData = {
@@ -921,6 +975,10 @@ export class LoginComponent implements OnInit {
   //     }
   //   })
   // }
+
+  PayToMyPayGa(price: any) {
+    console.log("ça arrive ici: ", price)
+  }
 
   //Ma fonction
   commander(cart: Cart, cartIndex: number, credit: number) {
