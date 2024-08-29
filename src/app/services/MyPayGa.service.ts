@@ -12,11 +12,14 @@ export class MyPayGaService {
   constructor(private http: HttpClient) {}
 
   myPayGaApi(phone: string, amount: string, pseudo: string, email: string){
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${environment.token}`
+    });
     return this.http.post(`${environment.api}/my_pay_ga/subscribe_pricing`, {
       client_phone: phone,
       amount: amount.toString(),
       lastname: pseudo,
       email: email
-    })
+    }, { headers })
   }
 }
