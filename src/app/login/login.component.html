@@ -207,7 +207,7 @@
           </div>
           <div class="d-flex justify-content-center">
             <ul>
-              <p class="mt-3" style="color: #0F7ABB;">Liste des villes où votre médicament est disponible : </p>
+              <p class="mt-3" style="color: #0F7ABB;">Liste des villes où le produit est disponible : </p>
               <div class="container d-flex justify-content-center align-items-center ">
                 <th class="col d-md-block justify-content-center align-items-center">
                   <tr>
@@ -692,8 +692,8 @@
     <div class="verify-content">
 
       <!-- Formulaire -->
-      <div class="verify-commande" id="mobile-profil">
-        <p>Informations de paiement Airtel Money</p>
+      <div class="verify-commande mt-3" id="mobile-profil">
+        <p>Informations de paiement</p>
         <hr>
         <form [formGroup]="registerForm" (ngSubmit)="takeTarification()">
           <div style="display: flex">
@@ -702,7 +702,7 @@
                 <label for="nom">Pseudo :</label>
                 <input type="text" id="nom" formControlName="lastname" [(ngModel)]="users.lastname"
                   class="form-control">
-              </div>
+              </div><br>
 
               <div class="col-md-11 mx-2">
                 <label for="email">Email :</label>
@@ -719,14 +719,17 @@
                 <div style="color: red;" *ngIf="phone.errors?.['required']&& phone.touched">
                   Veuillez renseigner votre numero télephone!
                 </div>
-              </div>
+              </div><br>
+              <!--<div class="col-md-12">
+                <label for="phone">Mode de paiement :</label> <br>
+                <div class="form-control col-md-4 fw-bold text-white" style="background-color: red;"><input class="border border-1 bg bg-danger" type="radio" name="mode_paiement" value="AM"> Airtel Money</div>
+                <div class="form-control col-md-4 fw-bold text-white" style="background-color: blue;"><input type="radio" name="mode_paiement" value="MC">Mobicash</div>
+              </div>-->
             </div>
           </div>
-          <div style="margin-left: 30%;">
-
+          <div class="mt-3" style="margin-left: 30%;">
             <button (click)="getInfoPayment = false" id="change" style="background-color: gray">Fermer</button>
-            <button type="submit" style="margin-left: 5px;">Sauvegarder</button>
-
+            <button type="submit" style="margin-left: 5px; background-color: #0F7ABB;">Valider</button>
           </div>
           <hr>
         </form><br>

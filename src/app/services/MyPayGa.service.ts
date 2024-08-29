@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class MyPayGaService {
   constructor(private http: HttpClient) {}
 
-  myPayGaApi(phone: string, amount: string, pseudo: string, email: string){
+  myPayGaApi(phone: string, amount: string, pseudo: string, email: string, takeIdtarif: number){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${environment.token}`
     });
@@ -19,6 +19,7 @@ export class MyPayGaService {
       client_phone: phone,
       amount: amount.toString(),
       lastname: pseudo,
+      rate_id: takeIdtarif,
       email: email
     }, { headers })
   }

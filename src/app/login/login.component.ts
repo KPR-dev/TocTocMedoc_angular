@@ -3,9 +3,9 @@ import { environment } from 'src/environments/environment';
 import { EpharmaService } from '../epharma.service';
 import { MyPayGaService } from '../services/MyPayGa.service';
 import { SingPayService } from '../services/singpay.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 
@@ -471,7 +471,8 @@ export class LoginComponent implements OnInit {
     console.log("ça tel", this.users.phone)
     console.log("ça mail", this.users.email)
 
-    this.myPayGaService.myPayGaApi(this.users.phone, this.takePrice, this.users.lastname, this.users.email).subscribe({
+
+    this.myPayGaService.myPayGaApi(this.users.phone, this.takePrice, this.users.lastname, this.users.email, this.takeIdTarif).subscribe({
       next: (response: any) => {
         console.log("ça response ", response)
         if (response.request_status != 200) {
