@@ -470,8 +470,9 @@ export class LoginComponent implements OnInit {
     console.log("ça pseuod", this.users.lastname)
     console.log("ça tel", this.users.phone)
     console.log("ça mail", this.users.email)
-
-    this.myPayGaService.myPayGaApi(this.users.phone, this.takePrice, this.users.lastname, this.users.email).subscribe({
+   
+    
+    this.myPayGaService.myPayGaApi(this.users.phone, this.takePrice, this.users.lastname, this.users.email, this.takeIdTarif, this.users.token).subscribe({
       next: (response: any) => {
         console.log("ça response ", response)
         if (response.request_status != 200) {
