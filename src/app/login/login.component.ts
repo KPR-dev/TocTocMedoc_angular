@@ -455,6 +455,9 @@ export class LoginComponent implements OnInit {
     this.modal_info_tarif_user = true
   }
 
+
+
+
   modal_payment(idTarif: any, price: any) {
     this.takeIdTarif = idTarif;
     this.takePrice = price
@@ -462,6 +465,13 @@ export class LoginComponent implements OnInit {
     console.log("ça prix", this.takePrice)
     this.getInfoPayment = true
   }
+
+  
+  //Chargement pour le paiement
+  isLoading: boolean = false;
+  paymentSuccess = false;
+  paymentFailed = false;
+  //Fin du paiement de crédits
 
   takeTarification() {
     this.loading = true
@@ -479,12 +489,16 @@ export class LoginComponent implements OnInit {
           this.dynamicColor = "red"
           this.smserror = response.message
           this.showSnackbar2 = true;
+          this.paymentFailed = true;
           setTimeout(() => {
             this.showSnackbar2 = false;
           }, 4000);
+          this.isLoading = false;
         } else {
           this.dynamicColor = "green"
           this.smserror = "Paiement réussit"
+          this.paymentFailed = false;
+          this.paymentSuccess = true;
           this.showSnackbar2 = true;
           setTimeout(() => {
             this.showSnackbar2 = false;
@@ -494,11 +508,11 @@ export class LoginComponent implements OnInit {
       error: (error) => {
         console.error('Erreur lors du paiement :', error);
         this.dynamicColor = "red"
-          this.smserror = error
-          this.showSnackbar2 = true;
-          setTimeout(() => {
-            this.showSnackbar2 = false;
-          }, 2000);
+        this.smserror = error
+        this.showSnackbar2 = true;
+        setTimeout(() => {
+          this.showSnackbar2 = false;
+        }, 2000);
       }
     })
   }
