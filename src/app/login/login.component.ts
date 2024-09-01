@@ -150,6 +150,8 @@ export class LoginComponent implements OnInit {
   takeIdTarif: any;
   takePrice: any;
   dynamicColor = "green"
+  //Pour avoir les prix des produit on doit passer par une deuxième pour stoqier les prix
+  stockAvailable: any = []
 
   constructor(private epharmaService: EpharmaService, private myPayGaService: MyPayGaService, private singPayService: SingPayService, private router: Router, private dataService: DataService) { }
 
@@ -202,6 +204,7 @@ export class LoginComponent implements OnInit {
         this.produits = response;
         this.hasResult = true;
         this.pageCount = response.pageCount;
+        console.log("ça arrive response:", response)
         this.filteredProduit = this.produits.items;
       }, error: (err) => {
         console.log(err);
@@ -466,21 +469,24 @@ export class LoginComponent implements OnInit {
     this.getInfoPayment = true
   }
 
-  
+
   //Chargement pour le paiement
   isLoading: boolean = false;
   paymentSuccess = false;
   paymentFailed = false;
   //Fin du paiement de crédits
 
+  refreshPage() {
+    this.getInfoPayment = false
+    // Naviguer vers la même URL, avec l'option 'skipLocationChange' pour éviter de pousser l'URL dans l'historique du navigateur
+    if (this.paymentSuccess) {
+      window.location.reload();
+    }
+  }
+
   takeTarification() {
     this.loading = true
-    console.log("ça idtarif ", this.takeIdTarif)
-    console.log("ça prix", this.takePrice)
-    console.log("ça pseuod", this.users.lastname)
-    console.log("ça tel", this.users.phone)
-    console.log("ça mail", this.users.email)
-
+    this.isLoading = true;
 
     this.myPayGaService.myPayGaApi(this.users.phone, this.takePrice, this.users.lastname, this.users.email, this.takeIdTarif).subscribe({
       next: (response: any) => {
@@ -488,21 +494,22 @@ export class LoginComponent implements OnInit {
         if (response.request_status != 200) {
           this.dynamicColor = "red"
           this.smserror = response.message
-          this.showSnackbar2 = true;
+          // this.showSnackbar2 = true;
           this.paymentFailed = true;
-          setTimeout(() => {
-            this.showSnackbar2 = false;
-          }, 4000);
           this.isLoading = false;
+          // setTimeout(() => {
+          //   this.showSnackbar2 = false;
+          // }, 4000);
         } else {
           this.dynamicColor = "green"
           this.smserror = "Paiement réussit"
           this.paymentFailed = false;
           this.paymentSuccess = true;
-          this.showSnackbar2 = true;
-          setTimeout(() => {
-            this.showSnackbar2 = false;
-          }, 2000);
+          // this.showSnackbar2 = true;
+          this.isLoading = false;
+          // setTimeout(() => {
+          //   this.showSnackbar2 = false;
+          // }, 2000);
         }
       },
       error: (error) => {
@@ -743,6 +750,8 @@ export class LoginComponent implements OnInit {
               this.epharmaService.getDisponibiliteProduit(cp, environment.pharmacies[i]).pipe(
                 tap((res: any) => {
                   if (res.disponibilites[0].isAvailable) {
+                    this.stockAvailable.push(res.disponibilites[0])
+                    console.log("ça disponible:", this.stockAvailable)
                     addresses.push(res.pharmacy.adresse); // Mettre à jour l'adresse ici
                     test1.push(res.disponibilites);
                     if (addresses.length > 0) {
@@ -879,12 +888,15 @@ export class LoginComponent implements OnInit {
   }
 
   verify(cip: any) {
+    console.log("ça filteredProduit:", this.filteredProduit)
     this.selectedProduit = this.filteredProduit.find(p => p.CIP === cip);
+    console.log("ça selectedProduit:", this.selectedProduit)
     this.verifiedPharmacies = [];
     for (let i = 0; i < environment.pharmacies.length; i++) {
       this.epharmaService.getDisponibiliteProduit(cip, environment.pharmacies[i]).subscribe({
         next: (response: any) => {
           if (response.disponibilites && response.disponibilites.length > 0) {
+            console.log("ça arrive ici:", this.disponibilites)
             this.disponibilites.push(response.disponibilites[0]);
             for (let j = 0; j < response.disponibilites.length; j++) {
               if (response.disponibilites[j].isAvailable) {
@@ -948,7 +960,7 @@ export class LoginComponent implements OnInit {
     console.log('nom pharmacy = ', environment.pharmacy)
 
 
-    console.log('nom = ', pharmacy.nom)
+    console.log('nom = ', pharmacy)
 
     if (environment.pharmacy === 'pharmacy') {
 
